@@ -27,7 +27,7 @@ public class Statistic extends Application {
 
         // Создаем кнопку для открытия модального окна
         Button openModalButton = new Button("Показать статистику");
-        openModalButton.setOnAction(e -> openModalWindow());
+        openModalButton.setOnAction(e -> openModalWindow(10));
 
         VBox layout = new VBox(10);
         layout.setAlignment(Pos.CENTER); // Центрируем содержимое по центру
@@ -40,13 +40,13 @@ public class Statistic extends Application {
     }
 
     // Метод для открытия модального окна
-    public void openModalWindow() {
+    public void openModalWindow(long startTime) {
         Stage modalStage = new Stage();
         modalStage.initModality(Modality.APPLICATION_MODAL);
         modalStage.setTitle("Модальное окно со статистикой");
 
         // Здесь можно добавить содержимое модального окна, например:
-        String text = "Легковых автомобилей:" + Passenger.intPassenger + "\nГрузовыx автомобилей:" + Truck.intTruck + "\nВремя: "+ ((System.currentTimeMillis() - helloController.initializationTime)/1000);
+        String text = "Легковых автомобилей:" + Passenger.intPassenger + "\nГрузовыx автомобилей:" + Truck.intTruck + "\nВремя: "+ ((startTime - helloController.initializationTime - helloController.pauseTime)/1000);
         TextArea textArea = new TextArea(text);
         textArea.setEditable(false);
         Button okButton = new Button("OK");
@@ -57,9 +57,13 @@ public class Statistic extends Application {
         cancelButton.setPrefSize(70, 30);
 
         okButton.setOnAction(e -> {
+            helloController.startFlag =false;
+            helloController.finishFlag =true;
             modalStage.close();
         });
         cancelButton.setOnAction(e -> {
+            helloController.startFlag =true;
+            helloController.finishFlag =false;
             modalStage.close();
             helloController.start();
         });

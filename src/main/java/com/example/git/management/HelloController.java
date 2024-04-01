@@ -54,10 +54,13 @@ public class HelloController implements Initializable {
     boolean closeFlag = false;
     boolean startFlag = false;
     boolean finishFlag = false;
+    long pauseTime = 0;
     @FXML
     public void model(){
+        long start = System.currentTimeMillis();
         Statistic statistic = new Statistic(this);
-        statistic.openModalWindow();
+        statistic.openModalWindow(start);
+        pauseTime += System.currentTimeMillis() - start;
     }
     @FXML
     public void menuBox () {
@@ -76,10 +79,13 @@ public class HelloController implements Initializable {
             int truckValue = Integer.parseInt(truckInput);
             int passengerValue = Integer.parseInt(passengerInput);
 
-            if (truckValue == 0 || truckValue > 100 || passengerValue == 0 || passengerValue > 100) {
-                throw new IllegalArgumentException("Значения должны быть больше 0 и не превышать 100");
+            if (truckValue == 0 || truckValue > 100) {
+                truckTextField.setText("1");
+                throw new IllegalArgumentException();
+            } else if (passengerValue == 0 || passengerValue > 100) {
+                passengerTextField.setText("1");
+                throw new IllegalArgumentException();
             }
-
         } catch (IllegalArgumentException e) {
             showAlert();
         }
@@ -88,7 +94,7 @@ public class HelloController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Ошибка");
         alert.setHeaderText("Неверное значение");
-        alert.setContentText("Значения должны быть цифрой которая больше 0 и не превышать 100");
+        alert.setContentText("Значения должны быть цифрой, которая больше 0 и не превышать 100");
         alert.showAndWait();
     }
     @FXML
@@ -180,6 +186,8 @@ public class HelloController implements Initializable {
         startButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
+                startFlag = true;
+                finishFlag =false;
                 stopInitialize();
                 start();
             }
@@ -187,6 +195,7 @@ public class HelloController implements Initializable {
         stopButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
+                startFlag = false;
                 pauseIntialize();
                 if (CheckBoxMain.isSelected()) {
                     model();
@@ -202,34 +211,47 @@ public class HelloController implements Initializable {
         imgPane.getScene().setOnKeyReleased((KeyEvent event) ->{
             switch (event.getCode()){
                 case B -> {
-                    start();
+                    if (startFlag ==false) {
+                        startFlag = true;
+                        finishFlag =false;
+                        stopInitialize();
+                        start();
+                    }
                 }
                 case E -> {
-                    pauseIntialize();
-                    if (CheckBoxMain.isSelected()) {
-                        model();
+                    if (finishFlag == false) {
+                        startFlag = false;
+                        pauseIntialize();
+                        if (CheckBoxMain.isSelected()) {
+                            model();
+                        }
                     }
                 }
                 case T -> {
-                    if (!finishFlag) {
-                        timerLabel.setVisible(!timerLabel.isVisible());
-                        textTimer.setVisible(!textTimer.isVisible());
-                    }if (openFlag ==false){
-                        open.setSelected(true);
-                        openFlag = true;
-                        closeFlag = false;
+                    timerLabel.setVisible(!timerLabel.isVisible());
+                    textTimer.setVisible(!textTimer.isVisible());
+                    if (open.isSelected()){
+                        close.setSelected(!close.isSelected());
+                        MenuRadioBtnHide.setSelected(!MenuRadioBtnHide.isSelected());
                     }
-                    else if (!closeFlag){
-                        close.setSelected(true);
-                        openFlag = false;
-                        closeFlag= true;
+                    else {
+                        open.setSelected(!open.isSelected());
+                        MenuRadioBtnShow.setSelected(!MenuRadioBtnShow.isSelected());
                     }
+                    open.setDisable(!open.isDisabled());
+                    close.setDisable(!close.isDisabled());
+
+
+                    MenuRadioBtnShow.setDisable(!MenuRadioBtnShow.isDisable());
+
+
+                    MenuRadioBtnHide.setDisable(!MenuRadioBtnHide.isDisable());
                 }
             }
         });
     }
     private void startTimer(){
-        long time = System.currentTimeMillis() - initializationTime;
+        long time = System.currentTimeMillis() - initializationTime - pauseTime;
         timerLabel.setText(String.valueOf(time / 1000));
     }
     public void start() {
@@ -239,15 +261,15 @@ public class HelloController implements Initializable {
         passengerComboBox.setDisable(true);
         startButton.setDisable(true);
         stopButton.setDisable(false);
-        MenuRadioBtnShow.setDisable(false);
+        MenuRadioBtnShow.setDisable(true);
         MenuRadioBtnShow.setSelected(true);
-        MenuRadioBtnHide.setDisable(true);
+        MenuRadioBtnHide.setDisable(false);
         open.setSelected(true);
         close.setSelected(false);
         openFlag = true;
         closeFlag = false;
         close.setDisable(false);
-        open.setDisable(false);
+        open.setDisable(true);
         timerLabel.setVisible(true);
         textTimer.setVisible(true);
         habitat.setTruckTime(Integer.parseInt(truckTextField.getText()));

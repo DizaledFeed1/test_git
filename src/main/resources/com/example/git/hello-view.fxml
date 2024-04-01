@@ -22,10 +22,7 @@
     <children>
         <Pane fx:id="modalPane"  VBox.vgrow="ALWAYS" focusTraversable="true" prefHeight="200.0" prefWidth="1920.0" style="-fx-background-color: #5CA4EA;">
             <children>
-                <RadioButton fx:id="close" layoutX="554.0" layoutY="44.0" mnemonicParsing="false" text="Скрыть таймер">
-                    <toggleGroup>
-                        <ToggleGroup fx:id="tgTimer" />
-                    </toggleGroup></RadioButton>
+                <RadioButton fx:id="close" layoutX="554.0" layoutY="44.0" mnemonicParsing="false" text="Скрыть таймер"/>
                 <Button fx:id="startButton" layoutX="665.0" layoutY="35.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="96.0" style="-fx-background-color: #ffffff; -fx-background-radius: 100;" text="Start" />
                 <Label fx:id="textTimer" alignment="TOP_RIGHT" contentDisplay="RIGHT" layoutX="543.0" layoutY="91.0" prefHeight="18.0" prefWidth="49.0" text="Timer:">
                     <font>
@@ -36,7 +33,7 @@
                         <Font name="Dubai Regular" size="16.0" />
                     </font></Label>
                 <Button fx:id="stopButton" layoutX="665.0" layoutY="98.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="96.0" style="-fx-background-radius: 100px; -fx-background-color: #ffffff;" text="Stop" />
-                <RadioButton fx:id="open" layoutX="433.0" layoutY="44.0" mnemonicParsing="false" text="Показать таймер " />
+                <RadioButton fx:id="open" layoutX="433.0" layoutY="44.0" mnemonicParsing="false" text="Показать таймер " disable="true" />
                 <MenuBar prefHeight="25.0" prefWidth="1920.0" style="-fx-background-color: #ffffff;">
                     <menus>
                         <Menu mnemonicParsing="false" text="Menu">
@@ -44,7 +41,7 @@
                                 <MenuItem fx:id="MenuStartBtn" mnemonicParsing="false" text="Start" />
                                 <MenuItem fx:id="MenuStopBtn" mnemonicParsing="false" text="Stop" />
                                 <SeparatorMenuItem mnemonicParsing="false" />
-                                <RadioMenuItem fx:id="MenuRadioBtnShow" mnemonicParsing="true" selected="true" text="Show Timer">
+                                <RadioMenuItem fx:id="MenuRadioBtnShow" mnemonicParsing="true" selected="true" text="Show Timer" disable="true">
                                     <toggleGroup>
                                         <ToggleGroup fx:id="tg1" />
                                     </toggleGroup>
