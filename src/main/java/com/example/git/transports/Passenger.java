@@ -13,8 +13,8 @@ public class Passenger extends Transport implements IBehaviour {
     public static int intPassenger = 0;
     private static Image img = new Image("Car.png");
 
-    public Passenger(int x,int y,int id,long birthTime, long lifetime) throws FileNotFoundException {
-        super(x,y, img, id, birthTime, lifetime);
+    public Passenger(int x,int y,int id, long lifetime) throws FileNotFoundException {
+        super(x,y, img, id, lifetime);
         intPassenger++;
     }
 }

@@ -48,7 +48,7 @@ public class HelloController implements Initializable {
     @FXML
     private ComboBox<String> passengerComboBox,truckComboBox;
     @FXML
-    private TextField truckTextField,passengerTextField;
+    private TextField truckTextField,passengerTextField,passengerText,truckText;
 
     boolean openFlag = true;
     boolean closeFlag = false;
@@ -75,15 +75,27 @@ public class HelloController implements Initializable {
         String truckInput = truckTextField.getText();
         String passengerInput = passengerTextField.getText();
 
+        String truckInputTime = truckText.getText();
+        String passengerInputTime = passengerText.getText();
+
         try {
             int truckValue = Integer.parseInt(truckInput);
             int passengerValue = Integer.parseInt(passengerInput);
+
+            int truckTimeLive = Integer.parseInt(truckInputTime);
+            int passengerTimeLive = Integer.parseInt(passengerInputTime);
 
             if (truckValue == 0 || truckValue > 100) {
                 truckTextField.setText("1");
                 throw new IllegalArgumentException();
             } else if (passengerValue == 0 || passengerValue > 100) {
                 passengerTextField.setText("1");
+                throw new IllegalArgumentException();
+            } else if (truckTimeLive == 0 || truckTimeLive > 100) {
+                truckText.setText("1");
+                throw new IllegalArgumentException();
+            } else if (passengerTimeLive == 0 || passengerTimeLive > 100) {
+                passengerText.setText("1");
                 throw new IllegalArgumentException();
             }
         } catch (IllegalArgumentException e) {
@@ -256,7 +268,9 @@ public class HelloController implements Initializable {
     }
     public void start() {
         truckTextField.setDisable(true);
+        truckText.setDisable(true);
         passengerTextField.setDisable(true);
+        passengerText.setDisable(true);
         truckComboBox.setDisable(true);
         passengerComboBox.setDisable(true);
         startButton.setDisable(true);
@@ -293,6 +307,7 @@ public class HelloController implements Initializable {
                                 imgPane.getChildren().add(carContainer.getCarList().get(carContainer.getCarList().size()-1).getImageView());
                                 imgPane.getChildren().add(carContainer.getCarList().get(carContainer.getCarList().size()-2).getImageView());
                             }
+                            checkDeath(carContainer);
                         } catch (FileNotFoundException e) {
                             throw new RuntimeException(e);
                         }
@@ -300,13 +315,29 @@ public class HelloController implements Initializable {
                 }
             }, 0, 1000);
         }
+    private void checkDeath(CarContainer carContainer) {
+        if (!(carContainer.getBirthTimeMap().isEmpty())) {
+            long currentTime = System.currentTimeMillis();
+            for (Integer id : carContainer.getIdSet()) {
+                long birthTime = carContainer.getBirthTimeMap().get(id);
+                long lifeTime = calculateLifeTime(id); // Здесь должен быть метод для вычисления срока жизни объекта по его идентификатору
+                if (currentTime - birthTime >= lifeTime) {
+                    // Срок жизни объекта истек, удаляем его
+                    carContainer.removeCar(id);
+                }
+            }
+        }
+    }
+
     private void pauseIntialize() {
         truckTextField.setDisable(false);
+        truckText.setDisable(false);
         passengerTextField.setDisable(false);
+        passengerText.setDisable(false);
         truckComboBox.setDisable(false);
         passengerComboBox.setDisable(false);
-        stopButton.setDisable(true); // Отключаем кнопку "стоп"
-        startButton.setDisable(false); // Включаем кнопку "старт"
+        stopButton.setDisable(true);
+        startButton.setDisable(false);
 
         MenuStartBtn.setDisable(false);
         MenuStopBtn.setDisable(true);
@@ -331,6 +362,7 @@ public class HelloController implements Initializable {
             close.setSelected(true);
             open.setDisable(true);
             timer.cancel();
+            pauseTime = 0;
             timer = null;
             initializationTime =0;
             Passenger.intPassenger =0;

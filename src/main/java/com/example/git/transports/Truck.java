@@ -9,8 +9,8 @@ public class Truck extends Transport implements IBehaviour {
 
     public static int intTruck = 0;
     private static Image img = new Image("police.png");
-    public Truck(int x,int y,int id,long birthTime, long lifetime) throws FileNotFoundException {
-        super(x,y, img, id, birthTime, lifetime);
+    public Truck(int x,int y,int id, long lifetime) throws FileNotFoundException {
+        super(x,y, img, id, lifetime);
         intTruck++;
     }
 }

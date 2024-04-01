@@ -75,9 +75,9 @@
                 </ComboBox>
             <Text layoutX="541.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Время жизни (сек)" />
             <Text layoutX="493.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Легковых автомобилей" />
-            <Text layoutX="493.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Грузовых автомобилей" />
-            <TextField layoutX="631.0" layoutY="65.0" prefHeight="25.0" prefWidth="33.0" text="5" />
-            <TextField layoutX="631.0" layoutY="103.0" prefHeight="25.0" prefWidth="33.0" text="7" />
+            <Text  layoutX="493.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Грузовых автомобилей" />
+            <TextField fx:id="passengerText" layoutX="631.0" layoutY="65.0" onAction="#check" onKeyTyped="#handleNumericInput" prefHeight="25.0" prefWidth="33.0" text="5" />
+            <TextField fx:id="truckText" layoutX="631.0" layoutY="103.0" onAction="#check" onKeyTyped="#handleNumericInput" prefHeight="25.0" prefWidth="33.0" text="7" />
             </children>
         </Pane>
         <Pane fx:id="imgPane" layoutY="200.0" prefHeight="818.0" prefWidth="1920.0" style="-fx-background-color: #E3DED3;" VBox.vgrow="ALWAYS" />

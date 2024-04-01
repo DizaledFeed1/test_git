@@ -48,13 +48,13 @@ public class Habitat {
         try {
             if ((newTime % n1 == 0) && (p1 >= p)) {
                 number++;
-                Truck truck = new Truck(rand.nextInt(0, width - 80), rand.nextInt(0, height - 180), rand.nextInt(Integer.MAX_VALUE), time, lifeTimeN1);
-                carContainer.addCar(truck);
+                Truck truck = new Truck(rand.nextInt(0, width - 80), rand.nextInt(0, height - 180), rand.nextInt(Integer.MAX_VALUE), lifeTimeN1);
+                carContainer.addCar(truck,time);
             }
             if ((newTime % n2 == 0) && (p2 >= p)) {
                 number++;
-                Passenger passenger = new Passenger(rand.nextInt(0, width - 80) , rand.nextInt(0, height - 180), rand.nextInt(Integer.MAX_VALUE), time, lifeTimeN2);
-                carContainer.addCar(passenger);
+                Passenger passenger = new Passenger(rand.nextInt(0, width - 80) , rand.nextInt(0, height - 180), rand.nextInt(Integer.MAX_VALUE), lifeTimeN2);
+                carContainer.addCar(passenger,time);
             }
         }
         catch(FileNotFoundException ex){
