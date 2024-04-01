@@ -17,8 +17,8 @@ public class Habitat {
     private float p2 = 0.5f; //вероятность пассажирских авто
     private int n1 = 2;
     private int n2 = 3;
-    private int lifeTimeN1 = 5;
-    private int lifeTimeN2 = 7;
+    public int lifeTimeN1 = 5;
+    public int lifeTimeN2 = 7;
 
     public void setTruckProbability(float probability) {
         this.p1 = probability;

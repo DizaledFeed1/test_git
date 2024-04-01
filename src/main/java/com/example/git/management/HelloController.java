@@ -1,6 +1,7 @@
 package com.example.git.management;
 
 import com.example.git.transports.Passenger;
+import com.example.git.transports.Transport;
 import com.example.git.transports.Truck;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -317,17 +318,40 @@ public class HelloController implements Initializable {
         }
     private void checkDeath(CarContainer carContainer) {
         if (!(carContainer.getBirthTimeMap().isEmpty())) {
-            long currentTime = System.currentTimeMillis();
-            for (Integer id : carContainer.getIdSet()) {
-                long birthTime = carContainer.getBirthTimeMap().get(id);
-                long lifeTime = calculateLifeTime(id); // Здесь должен быть метод для вычисления срока жизни объекта по его идентификатору
-                if (currentTime - birthTime >= lifeTime) {
-                    // Срок жизни объекта истек, удаляем его
-                    carContainer.removeCar(id);
-                }
+            long currentTime = (System.currentTimeMillis() - initializationTime) / 1000;
+            for (Transport transport : carContainer.getCarList()) {
+                int id = transport.getId();
+                long birthTime = carContainer.getBirthTimeMap().get(id) / 1000;
+                long lifeTime = currentTime - birthTime;
+
+                if (transport instanceof Truck) {
+                    if (lifeTime >= habitat.lifeTimeN1) {
+                        imgPane.getChildren().remove(transport.getImageView());
+                        carContainer.getCarList().remove(transport);
+                        carContainer.getBirthTimeMap().remove(id);
+                        carContainer.getIdSet().remove(id);
+                        System.out.println("Удалили грузовик");
+                    }
+                } else if (transport instanceof Passenger) {
+                    if (lifeTime >= habitat.lifeTimeN2) {
+                        imgPane.getChildren().remove(transport.getImageView());
+                        carContainer.getCarList().remove(transport);
+                        carContainer.getBirthTimeMap().remove(id);
+                        carContainer.getIdSet().remove(id);
+                        System.out.println("Удалили легковушку");
+                    }
+                } else System.out.println("Ничего не удаляем");
             }
         }
     }
+
+
+//    private long calculateLifeTime(Integer id, CarContainer carContainer) {
+//        long birthTime = carContainer.getBirthTimeMap().get(id);
+//        long currentTime = System.currentTimeMillis();
+//        return currentTime - birthTime;
+//    }
+
 
     private void pauseIntialize() {
         truckTextField.setDisable(false);
