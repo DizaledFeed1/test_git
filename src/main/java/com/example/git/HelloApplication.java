@@ -16,7 +16,7 @@ public class HelloApplication extends Application {
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root, Habitat.getWidth(), Habitat.getHeight());
         stage.setScene(scene);
-        stage.setMaximized(false); // hahahah
+        stage.setMaximized(false); // hahahahaa
         stage.show();
     }
 
