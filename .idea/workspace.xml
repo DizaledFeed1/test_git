@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f32cf832-ed7d-4a95-8d2b-1e70564c6b12" name="Changes" comment="3-я лаба реализация метода checkDeath">
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/management/Habitat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/Habitat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/HelloApplication.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,7 +16,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="c3f411f03347b8d6102c908ef5b89fe9a5d8782e" />
+        <entry key="$PROJECT_DIR$" value="f90b101eb5f001c86e54a5c47905487993fa5399" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
