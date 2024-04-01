@@ -10,11 +10,6 @@ import java.io.FileNotFoundException;
 import java.util.Random;
 
 public class Habitat {
-    @FXML
-    private ChoiceBox<String> passengerChoiceBox,truckChoiceBox;
-    @FXML
-    private TextField truckTextField,passengerTextField;
-
     private static final int width = 1920;
     private static final int height = 1018;
     private CarContainer carContainer = CarContainer.getInstance();
@@ -22,6 +17,8 @@ public class Habitat {
     private float p2 = 0.5f; //вероятность пассажирских авто
     private int n1 = 2;
     private int n2 = 3;
+    private int lifeTimeN1 = 5;
+    private int lifeTimeN2 = 7;
 
     public void setTruckProbability(float probability) {
         this.p1 = probability;
@@ -51,12 +48,12 @@ public class Habitat {
         try {
             if ((newTime % n1 == 0) && (p1 >= p)) {
                 number++;
-                Truck truck = new Truck(rand.nextInt(0, width - 80)  , rand.nextInt(0, height - 180)  );
+                Truck truck = new Truck(rand.nextInt(0, width - 80), rand.nextInt(0, height - 180), rand.nextInt(Integer.MAX_VALUE), time, lifeTimeN1);
                 carContainer.addCar(truck);
             }
             if ((newTime % n2 == 0) && (p2 >= p)) {
                 number++;
-                Passenger passenger = new Passenger(rand.nextInt(0, width - 80) , rand.nextInt(0, height - 180) );
+                Passenger passenger = new Passenger(rand.nextInt(0, width - 80) , rand.nextInt(0, height - 180), rand.nextInt(Integer.MAX_VALUE), time, lifeTimeN2);
                 carContainer.addCar(passenger);
             }
         }

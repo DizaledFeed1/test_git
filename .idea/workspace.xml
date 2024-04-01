@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f32cf832-ed7d-4a95-8d2b-1e70564c6b12" name="Changes" comment="готовая 2-я лаба по проге">
+    <list default="true" id="f32cf832-ed7d-4a95-8d2b-1e70564c6b12" name="Changes" comment="Готовая 2-я лаба с исправленными багульками">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/management/HelloController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/HelloController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/management/Statistic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/Statistic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/management/Habitat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/Habitat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/transports/Passenger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/transports/Passenger.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/transports/Transport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/transports/Transport.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/transports/Truck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/transports/Truck.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/git/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/git/hello-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -83,7 +85,8 @@
       <updated>1711899099160</updated>
       <workItem from="1711899100225" duration="430000" />
       <workItem from="1711899628581" duration="1558000" />
-      <workItem from="1711945173504" duration="5903000" />
+      <workItem from="1711945173504" duration="6080000" />
+      <workItem from="1711951386943" duration="3020000" />
     </task>
     <task id="LOCAL-00001" summary="start">
       <option name="closed" value="true" />
@@ -117,7 +120,15 @@
       <option name="project" value="LOCAL" />
       <updated>1711901084990</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Готовая 2-я лаба с исправленными багульками">
+      <option name="closed" value="true" />
+      <created>1711951210081</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1711951210081</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -138,6 +149,7 @@
     <MESSAGE value="start" />
     <MESSAGE value="2" />
     <MESSAGE value="готовая 2-я лаба по проге" />
-    <option name="LAST_COMMIT_MESSAGE" value="готовая 2-я лаба по проге" />
+    <MESSAGE value="Готовая 2-я лаба с исправленными багульками" />
+    <option name="LAST_COMMIT_MESSAGE" value="Готовая 2-я лаба с исправленными багульками" />
   </component>
 </project>
