@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f32cf832-ed7d-4a95-8d2b-1e70564c6b12" name="Changes" comment="оптимизированный код">
+    <list default="true" id="f32cf832-ed7d-4a95-8d2b-1e70564c6b12" name="Changes" comment="Лаба 3: добавлена зависимость размеров Pane от экрана">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/HelloApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/management/CarContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/CarContainer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/management/Habitat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/Habitat.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/management/HelloController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/HelloController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/git/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/git/hello-view.fxml" afterDir="false" />
@@ -31,6 +31,9 @@
         <option name="mavenHome" value="Use Maven wrapper" />
       </MavenGeneralSettings>
     </option>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
@@ -87,7 +90,7 @@
       <workItem from="1711945173504" duration="6080000" />
       <workItem from="1711951386943" duration="16332000" />
       <workItem from="1712292683695" duration="1162000" />
-      <workItem from="1712293853663" duration="10082000" />
+      <workItem from="1712293853663" duration="15622000" />
     </task>
     <task id="LOCAL-00001" summary="start">
       <option name="closed" value="true" />
@@ -161,7 +164,15 @@
       <option name="project" value="LOCAL" />
       <updated>1712302439831</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Лаба 3: добавлена зависимость размеров Pane от экрана">
+      <option name="closed" value="true" />
+      <created>1712303981575</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1712303981575</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -198,6 +209,7 @@
     <MESSAGE value="3-я лаба добавил идендификаторы(id),время жизни,время рождения, поля для ввода пользовательских значений." />
     <MESSAGE value="3-я лаба реализация метода checkDeath" />
     <MESSAGE value="оптимизированный код" />
-    <option name="LAST_COMMIT_MESSAGE" value="оптимизированный код" />
+    <MESSAGE value="Лаба 3: добавлена зависимость размеров Pane от экрана" />
+    <option name="LAST_COMMIT_MESSAGE" value="Лаба 3: добавлена зависимость размеров Pane от экрана" />
   </component>
 </project>

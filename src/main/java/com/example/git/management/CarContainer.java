@@ -8,7 +8,7 @@ public class CarContainer {
     private static CarContainer instance;
     private ArrayList<Transport> carList;
     private TreeSet<Integer> idSet;
-    private HashMap<Integer, Long> birthTimeMap;
+    private HashMap<Long, Integer> birthTimeMap;
 
     private CarContainer() {
         carList = new ArrayList<>();
@@ -27,13 +27,13 @@ public class CarContainer {
         carList.add(transport);
         int id = transport.getId();
         idSet.add(id);
-        birthTimeMap.put(id,birthTime);
+        birthTimeMap.put(birthTime,id);
     }
 
     public ArrayList<Transport> getCarList() {
         return carList;
     }
-    public HashMap<Integer, Long> getBirthTimeMap(){
+    public HashMap<Long, Integer> getBirthTimeMap(){
         return  birthTimeMap;
     }
     public TreeSet<Integer> getIdSet(){

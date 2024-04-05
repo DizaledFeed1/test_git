@@ -26,12 +26,17 @@ public class Habitat {
     public void setTruckTime(int time) {
         this.n1 = time;
     }
-
+    public void setLifeTimeN1(int lifeTimeN1){
+        this.lifeTimeN1 = lifeTimeN1;
+    }
     public void setPassengerProbability(float probability) {
         this.p2 = probability;
     }
     public void setPassengerTime(int time) {
         this.n2 = time;
+    }
+    public void setLifeTimeN2(int lifeTimeN2){
+        this.lifeTimeN2 = lifeTimeN2;
     }
     public static int getWidth() {
         return width;
@@ -49,12 +54,12 @@ public class Habitat {
             if ((newTime % n1 == 0) && (p1 >= p)) {
                 number++;
                 Truck truck = new Truck(rand.nextInt(0, width - 80), rand.nextInt(0, height - 180), rand.nextInt(Integer.MAX_VALUE), lifeTimeN1);
-                carContainer.addCar(truck,time);
+                carContainer.addCar(truck,newTime);
             }
             if ((newTime % n2 == 0) && (p2 >= p)) {
                 number++;
                 Passenger passenger = new Passenger(rand.nextInt(0, width - 80) , rand.nextInt(0, height - 180), rand.nextInt(Integer.MAX_VALUE), lifeTimeN2);
-                carContainer.addCar(passenger,time);
+                carContainer.addCar(passenger,newTime);
             }
         }
         catch(FileNotFoundException ex){

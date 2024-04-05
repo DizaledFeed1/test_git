@@ -13,9 +13,7 @@ import javafx.stage.Screen;
 
 import java.io.FileNotFoundException;
 import java.net.URL;
-import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 public class HelloController implements Initializable {
     Habitat habitat = new Habitat();
@@ -40,7 +38,7 @@ public class HelloController implements Initializable {
     @FXML
     private ComboBox<String> passengerComboBox,truckComboBox;
     @FXML
-    private TextField truckTextField,passengerTextField,passengerText,truckText;
+    private TextField truckTextField,passengerTextField,lifeTimeTruck,lifeTimePassenger;
     long pauseTime = 0;
 
     @FXML
@@ -56,8 +54,8 @@ public class HelloController implements Initializable {
         String truckInput = truckTextField.getText();
         String passengerInput = passengerTextField.getText();
 
-        String truckInputTime = truckText.getText();
-        String passengerInputTime = passengerText.getText();
+        String truckInputTime = lifeTimeTruck.getText();
+        String passengerInputTime = lifeTimePassenger.getText();
 
         try {
             int truckValue = Integer.parseInt(truckInput);
@@ -73,10 +71,10 @@ public class HelloController implements Initializable {
                 passengerTextField.setText("1");
                 throw new IllegalArgumentException();
             } else if (truckTimeLive == 0 || truckTimeLive > 100) {
-                truckText.setText("1");
+                lifeTimeTruck.setText("1");
                 throw new IllegalArgumentException();
             } else if (passengerTimeLive == 0 || passengerTimeLive > 100) {
-                passengerText.setText("1");
+                lifeTimePassenger.setText("1");
                 throw new IllegalArgumentException();
             }
         } catch (IllegalArgumentException e) {
@@ -223,6 +221,8 @@ public class HelloController implements Initializable {
         swapDisable();
         habitat.setTruckTime(Integer.parseInt(truckTextField.getText()));
         habitat.setPassengerTime(Integer.parseInt(passengerTextField.getText()));
+        habitat.setLifeTimeN1(Integer.parseInt(lifeTimeTruck.getText()));
+        habitat.setLifeTimeN2(Integer.parseInt(lifeTimePassenger.getText()));
             if(initializationTime == 0) {
                 initializationTime = System.currentTimeMillis();
             }
@@ -251,33 +251,39 @@ public class HelloController implements Initializable {
             }, 0, 1000);
         }
     private void checkDeath(CarContainer carContainer) {
-        if (!(carContainer.getBirthTimeMap().isEmpty())) {
+        if (!carContainer.getBirthTimeMap().isEmpty()) {
             long currentTime = (System.currentTimeMillis() - initializationTime) / 1000;
-            for (Transport transport : carContainer.getCarList()) {
-                int id = transport.getId();
-                long birthTime = carContainer.getBirthTimeMap().get(id) / 1000;
-                long lifeTime = currentTime - birthTime;
+            Iterator<Map.Entry<Long, Integer>> iterator = carContainer.getBirthTimeMap().entrySet().iterator(); //обходим HasMap получаем все ключи и значения
+            while (iterator.hasNext()) {
+                Map.Entry<Long, Integer> entry = iterator.next();
+                long birthTimee = entry.getKey();
+                int id = entry.getValue();
+                long lifeTime = currentTime - birthTimee;
 
-                if (transport instanceof Truck) {
-                    if (lifeTime >= habitat.lifeTimeN1) {
+                Transport transport = carContainer.getCarList().stream()  // Теперь ищем в carContainer объект с нашим(id)
+                        .filter(t -> t.getId() == id) //проверяет id
+                        .findFirst() //возвращает 1-ый объект с подходящим id
+                        .orElse(null); // возвращает объект|null
+
+                if (transport != null) {
+                    if (transport instanceof Truck && lifeTime >= habitat.lifeTimeN1) {
                         imgPane.getChildren().remove(transport.getImageView());
+                        iterator.remove();
                         carContainer.getCarList().remove(transport);
-                        carContainer.getBirthTimeMap().remove(id);
-                        carContainer.getIdSet().remove(id);
                         System.out.println("Удалили грузовик");
-                    }
-                } else if (transport instanceof Passenger) {
-                    if (lifeTime >= habitat.lifeTimeN2) {
+                    } else if (transport instanceof Passenger && lifeTime >= habitat.lifeTimeN2) {
                         imgPane.getChildren().remove(transport.getImageView());
+                        iterator.remove();
                         carContainer.getCarList().remove(transport);
-                        carContainer.getBirthTimeMap().remove(id);
-                        carContainer.getIdSet().remove(id);
                         System.out.println("Удалили легковушку");
+                    } else {
+                        System.out.println("Ничего не удаляем");
                     }
-                } else System.out.println("Ничего не удаляем");
+                }
             }
         }
     }
+
     private void pauseIntialize() {
         swapDisable();
         timer.cancel();
@@ -290,11 +296,11 @@ public class HelloController implements Initializable {
         MenuStopBtn.setDisable(stopButton.isDisabled());
 
         truckTextField.setDisable(!(truckTextField.isDisabled()));
-        truckText.setDisable(!(truckText.isDisabled()));
+        lifeTimeTruck.setDisable(!(lifeTimeTruck.isDisabled()));
         truckComboBox.setDisable(!(truckComboBox.isDisabled()));
 
         passengerTextField.setDisable(!(passengerTextField.isDisabled()));
-        passengerText.setDisable(!(passengerText.isDisabled()));
+        lifeTimePassenger.setDisable(!(lifeTimePassenger.isDisabled()));
         passengerComboBox.setDisable(!(passengerComboBox.isDisabled()));
     }
     public void stopInitialize()
