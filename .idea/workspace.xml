@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f32cf832-ed7d-4a95-8d2b-1e70564c6b12" name="Changes" comment="3-я лаба реализация метода checkDeath">
+    <list default="true" id="f32cf832-ed7d-4a95-8d2b-1e70564c6b12" name="Changes" comment="оптимизированный код">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/HelloApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/management/Habitat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/Habitat.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/management/HelloController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/HelloController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/management/Statistic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/Statistic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/transports/Transport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/transports/Transport.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/git/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/git/hello-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -87,7 +87,7 @@
       <workItem from="1711945173504" duration="6080000" />
       <workItem from="1711951386943" duration="16332000" />
       <workItem from="1712292683695" duration="1162000" />
-      <workItem from="1712293853663" duration="8529000" />
+      <workItem from="1712293853663" duration="10082000" />
     </task>
     <task id="LOCAL-00001" summary="start">
       <option name="closed" value="true" />
@@ -145,7 +145,23 @@
       <option name="project" value="LOCAL" />
       <updated>1711962215823</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="оптимизированный код">
+      <option name="closed" value="true" />
+      <created>1712302429738</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1712302429738</updated>
+    </task>
+    <task id="LOCAL-00009" summary="оптимизированный код">
+      <option name="closed" value="true" />
+      <created>1712302439831</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1712302439831</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -181,6 +197,7 @@
     <MESSAGE value="Готовая 2-я лаба с исправленными багульками" />
     <MESSAGE value="3-я лаба добавил идендификаторы(id),время жизни,время рождения, поля для ввода пользовательских значений." />
     <MESSAGE value="3-я лаба реализация метода checkDeath" />
-    <option name="LAST_COMMIT_MESSAGE" value="3-я лаба реализация метода checkDeath" />
+    <MESSAGE value="оптимизированный код" />
+    <option name="LAST_COMMIT_MESSAGE" value="оптимизированный код" />
   </component>
 </project>

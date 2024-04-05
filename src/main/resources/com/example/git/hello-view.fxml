@@ -18,9 +18,9 @@
 <?import javafx.scene.text.Text?>
 
 <?import javafx.scene.control.ComboBox?>
-<Pane fx:id="root" onKeyReleased="#onKey" prefHeight="590.0" prefWidth="775.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.git.management.HelloController">
+<Pane fx:id="root" onKeyReleased="#onKey" prefHeight="720.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.git.management.HelloController">
     <children>
-        <Pane fx:id="modalPane" focusTraversable="true" prefHeight="200.0" prefWidth="1920.0" style="-fx-background-color: #5CA4EA;" VBox.vgrow="ALWAYS">
+        <Pane fx:id="modalPane" focusTraversable="true" prefHeight="200.0" prefWidth="1150.0" style="-fx-background-color: #5CA4EA;" VBox.vgrow="ALWAYS">
             <children>
                 <RadioButton fx:id="close" layoutX="916.0" layoutY="48.0" mnemonicParsing="false" text="Скрыть таймер" />
                 <Button fx:id="startButton" layoutX="1028.0" layoutY="40.0" mnemonicParsing="false" disable="false" prefHeight="35.0" prefWidth="96.0" style="-fx-background-color: #ffffff; -fx-background-radius: 100;" text="Start" />
@@ -80,6 +80,6 @@
             <TextField fx:id="truckText" layoutX="631.0" layoutY="103.0" onAction="#check" onKeyTyped="#handleNumericInput" prefHeight="25.0" prefWidth="33.0" text="7" />
             </children>
         </Pane>
-        <Pane fx:id="imgPane" layoutY="200.0" prefHeight="818.0" prefWidth="1920.0" style="-fx-background-color: #E3DED3;" VBox.vgrow="ALWAYS" />
+        <Pane fx:id="imgPane" layoutY="200.0" prefHeight="520.0" prefWidth="1150.0" style="-fx-background-color: #E3DED3;" VBox.vgrow="ALWAYS" />
     </children>
 </Pane>

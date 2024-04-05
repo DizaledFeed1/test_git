@@ -4,13 +4,12 @@ import com.example.git.transports.Passenger;
 import com.example.git.transports.Transport;
 import com.example.git.transports.Truck;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.stage.Screen;
 
 import java.io.FileNotFoundException;
 import java.net.URL;
@@ -22,7 +21,7 @@ public class HelloController implements Initializable {
     Habitat habitat = new Habitat();
     Timer timer;
     @FXML
-    public Pane root,imgPane;
+    public Pane root,imgPane,modalPane;
     public long initializationTime;
     @FXML
     private Label timerLabel,textTimer;
@@ -102,6 +101,19 @@ public class HelloController implements Initializable {
         passengerComboBox.setValue("50"); // Установка начального значения
         truckComboBox.getItems().addAll("0", "10", "20", "30", "40", "50", "60", "70", "80", "90", "100");
         truckComboBox.setValue("50"); // Установка начального значения
+
+        double screenWidth = Screen.getPrimary().getBounds().getWidth();
+        double screenHeight = Screen.getPrimary().getBounds().getHeight();
+
+        // Устанавливаем размеры Pane равными размерам экрана
+        root.setPrefWidth(screenWidth);
+        root.setPrefHeight(screenHeight);
+
+        modalPane.setPrefWidth(screenWidth);
+        modalPane.setPrefHeight(screenHeight);
+
+        imgPane.setPrefWidth(screenWidth);
+        imgPane.setPrefHeight(screenHeight);
 
         passengerComboBox.setOnAction(event -> {
             String selectedValue = passengerComboBox.getValue();

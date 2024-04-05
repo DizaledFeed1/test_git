@@ -10,8 +10,8 @@ import java.io.FileNotFoundException;
 import java.util.Random;
 
 public class Habitat {
-    private static final int width = 1920;
-    private static final int height = 1018;
+    private static final int width = 1150;
+    private static final int height = 720;
     private CarContainer carContainer = CarContainer.getInstance();
     private float p1 = 0.5f; //вероятность грузовых авто
     private float p2 = 0.5f; //вероятность пассажирских авто
