@@ -57,13 +57,9 @@ public class Statistic extends Application {
         cancelButton.setPrefSize(70, 30);
 
         okButton.setOnAction(e -> {
-            helloController.startFlag =false;
-            helloController.finishFlag =true;
             modalStage.close();
         });
         cancelButton.setOnAction(e -> {
-            helloController.startFlag =true;
-            helloController.finishFlag =false;
             modalStage.close();
             helloController.start();
         });

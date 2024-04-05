@@ -22,22 +22,14 @@ public class HelloController implements Initializable {
     Habitat habitat = new Habitat();
     Timer timer;
     @FXML
-    public Pane root;
-    @FXML
-    public Pane imgPane;
+    public Pane root,imgPane;
     public long initializationTime;
     @FXML
-    private Label timerLabel;
+    private Label timerLabel,textTimer;
     @FXML
-    private Label textTimer;
+    private Button startButton,stopButton;
     @FXML
-    private Button startButton;
-    @FXML
-    private Button stopButton;
-    @FXML
-    private RadioButton open;
-    @FXML
-    private RadioButton close;
+    private RadioButton open,close;
     @FXML
     private CheckBox CheckBoxMain;
     @FXML
@@ -50,19 +42,8 @@ public class HelloController implements Initializable {
     private ComboBox<String> passengerComboBox,truckComboBox;
     @FXML
     private TextField truckTextField,passengerTextField,passengerText,truckText;
-
-    boolean openFlag = true;
-    boolean closeFlag = false;
-    boolean startFlag = false;
-    boolean finishFlag = false;
     long pauseTime = 0;
-    @FXML
-    public void model(){
-        long start = System.currentTimeMillis();
-        Statistic statistic = new Statistic(this);
-        statistic.openModalWindow(start);
-        pauseTime += System.currentTimeMillis() - start;
-    }
+
     @FXML
     public void menuBox () {
         CheckBoxMain.setSelected(CheckBoxMenu.isSelected());
@@ -103,13 +84,6 @@ public class HelloController implements Initializable {
             showAlert();
         }
     }
-    private void showAlert() {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Ошибка");
-        alert.setHeaderText("Неверное значение");
-        alert.setContentText("Значения должны быть цифрой, которая больше 0 и не превышать 100");
-        alert.showAndWait();
-    }
     @FXML
     public void handleNumericInput(KeyEvent event) {
         TextField textField = (TextField) event.getSource();
@@ -120,7 +94,6 @@ public class HelloController implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        open.setSelected(true);
         ToggleGroup group = new ToggleGroup();
         open.setToggleGroup(group);
         close.setToggleGroup(group);
@@ -130,7 +103,6 @@ public class HelloController implements Initializable {
         truckComboBox.getItems().addAll("0", "10", "20", "30", "40", "50", "60", "70", "80", "90", "100");
         truckComboBox.setValue("50"); // Установка начального значения
 
-
         passengerComboBox.setOnAction(event -> {
             String selectedValue = passengerComboBox.getValue();
             habitat.setPassengerProbability(Float.parseFloat(selectedValue) / 100);
@@ -139,36 +111,9 @@ public class HelloController implements Initializable {
             String selectedValue = truckComboBox.getValue();
             habitat.setTruckProbability(Float.parseFloat(selectedValue) / 100);
         });
-        close.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                timerLabel.setVisible(!timerLabel.isVisible());
-                textTimer.setVisible(!textTimer.isVisible());
-                MenuRadioBtnHide.setSelected(true);
-                MenuRadioBtnShow.setDisable(false);
-                open.setDisable(false);
-                MenuRadioBtnHide.setDisable(true);
-                close.setDisable(true);
-            }
-        });
-        open.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                    timerLabel.setVisible(!timerLabel.isVisible());
-                    textTimer.setVisible(!textTimer.isVisible());
-                    MenuRadioBtnShow.setSelected(true);
-                    open.setSelected(true);
-                    MenuRadioBtnShow.setDisable(true);
-                    open.setDisable(true);
-                    MenuRadioBtnHide.setDisable(false);
-                    close.setDisable(false);
-            }
-        });
-
         MenuStartBtn.setOnAction(event -> {
             stopInitialize();
             start();
-
         });
 
         MenuStopBtn.setOnAction(event -> {
@@ -176,64 +121,45 @@ public class HelloController implements Initializable {
             if (CheckBoxMenu.isSelected()) {
                   model();
             }
-
+        });
+        open.setOnAction(event -> {
+            swapTimer();
+            MenuRadioBtnShow.setSelected(true);
+        });
+        close.setOnAction(event -> {
+            swapTimer();
+            MenuRadioBtnHide.setSelected(true);
         });
         MenuRadioBtnShow.setOnAction(event -> {
-                timerLabel.setVisible(!timerLabel.isVisible());
-                textTimer.setVisible(!textTimer.isVisible());
+            swapTimer();
                 open.setSelected(true);
-                MenuRadioBtnShow.setDisable(true);
-                open.setDisable(true);
-                MenuRadioBtnHide.setDisable(false);
-                close.setDisable(false);
         });
         MenuRadioBtnHide.setOnAction(event -> {
-                timerLabel.setVisible(!timerLabel.isVisible());
-                textTimer.setVisible(!textTimer.isVisible());
+            swapTimer();
                 close.setSelected(true);
-                MenuRadioBtnShow.setDisable(false);
-                open.setDisable(false);
-                MenuRadioBtnHide.setDisable(true);
-                close.setDisable(true);
         });
-        startButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                startFlag = true;
-                finishFlag =false;
-                stopInitialize();
-                start();
+        startButton.setOnAction(event ->{
+            stopInitialize();
+            start();
+        });
+        stopButton.setOnAction(event ->{
+            pauseIntialize();
+            if (CheckBoxMain.isSelected()) {
+                model();
             }
         });
-        stopButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                startFlag = false;
-                pauseIntialize();
-                if (CheckBoxMain.isSelected()) {
-                    model();
-                }
-            }
-
-        });
-    }
-    public HelloController() {
-        super();
     }
     public void onKey(){
         imgPane.getScene().setOnKeyReleased((KeyEvent event) ->{
             switch (event.getCode()){
                 case B -> {
-                    if (startFlag ==false) {
-                        startFlag = true;
-                        finishFlag =false;
+                    if (startButton.isDisabled() == false) {
                         stopInitialize();
                         start();
                     }
                 }
                 case E -> {
-                    if (finishFlag == false) {
-                        startFlag = false;
+                    if (stopButton.isDisabled() == false) {
                         pauseIntialize();
                         if (CheckBoxMain.isSelected()) {
                             model();
@@ -254,39 +180,35 @@ public class HelloController implements Initializable {
                     open.setDisable(!open.isDisabled());
                     close.setDisable(!close.isDisabled());
 
-
                     MenuRadioBtnShow.setDisable(!MenuRadioBtnShow.isDisable());
-
-
                     MenuRadioBtnHide.setDisable(!MenuRadioBtnHide.isDisable());
                 }
             }
         });
+    }
+    private void swapTimer(){
+        timerLabel.setVisible(!timerLabel.isVisible());
+        textTimer.setVisible(!textTimer.isVisible());
+
+        MenuRadioBtnShow.setDisable(!(MenuRadioBtnShow.isDisable()));
+        MenuRadioBtnHide.setDisable(!(MenuRadioBtnHide.isDisable()));
+
+        open.setDisable(!(open.isDisabled()));
+        close.setDisable(!(close.isDisabled()));
+    }
+    private void showAlert() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Ошибка");
+        alert.setHeaderText("Неверное значение");
+        alert.setContentText("Значения должны быть цифрой, которая больше 0 и не превышать 100");
+        alert.showAndWait();
     }
     private void startTimer(){
         long time = System.currentTimeMillis() - initializationTime - pauseTime;
         timerLabel.setText(String.valueOf(time / 1000));
     }
     public void start() {
-        truckTextField.setDisable(true);
-        truckText.setDisable(true);
-        passengerTextField.setDisable(true);
-        passengerText.setDisable(true);
-        truckComboBox.setDisable(true);
-        passengerComboBox.setDisable(true);
-        startButton.setDisable(true);
-        stopButton.setDisable(false);
-        MenuRadioBtnShow.setDisable(true);
-        MenuRadioBtnShow.setSelected(true);
-        MenuRadioBtnHide.setDisable(false);
-        open.setSelected(true);
-        close.setSelected(false);
-        openFlag = true;
-        closeFlag = false;
-        close.setDisable(false);
-        open.setDisable(true);
-        timerLabel.setVisible(true);
-        textTimer.setVisible(true);
+        swapDisable();
         habitat.setTruckTime(Integer.parseInt(truckTextField.getText()));
         habitat.setPassengerTime(Integer.parseInt(passengerTextField.getText()));
             if(initializationTime == 0) {
@@ -344,56 +266,43 @@ public class HelloController implements Initializable {
             }
         }
     }
-
-
-//    private long calculateLifeTime(Integer id, CarContainer carContainer) {
-//        long birthTime = carContainer.getBirthTimeMap().get(id);
-//        long currentTime = System.currentTimeMillis();
-//        return currentTime - birthTime;
-//    }
-
-
     private void pauseIntialize() {
-        truckTextField.setDisable(false);
-        truckText.setDisable(false);
-        passengerTextField.setDisable(false);
-        passengerText.setDisable(false);
-        truckComboBox.setDisable(false);
-        passengerComboBox.setDisable(false);
-        stopButton.setDisable(true);
-        startButton.setDisable(false);
-
-        MenuStartBtn.setDisable(false);
-        MenuStopBtn.setDisable(true);
-
-        MenuRadioBtnHide.setDisable(false);
-        MenuRadioBtnHide.setSelected(false);
-        MenuRadioBtnShow.setDisable(true);
-        close.setSelected(false);
-        close.setDisable(false);
-        open.setDisable(true);
+        swapDisable();
         timer.cancel();
+    }
+    private  void swapDisable(){
+        startButton.setDisable(!(startButton.isDisabled()));
+        stopButton.setDisable(!(stopButton.isDisabled()));
+
+        MenuStartBtn.setDisable(startButton.isDisabled());
+        MenuStopBtn.setDisable(stopButton.isDisabled());
+
+        truckTextField.setDisable(!(truckTextField.isDisabled()));
+        truckText.setDisable(!(truckText.isDisabled()));
+        truckComboBox.setDisable(!(truckComboBox.isDisabled()));
+
+        passengerTextField.setDisable(!(passengerTextField.isDisabled()));
+        passengerText.setDisable(!(passengerText.isDisabled()));
+        passengerComboBox.setDisable(!(passengerComboBox.isDisabled()));
     }
     public void stopInitialize()
     {
-        stopButton.setDisable(false);
-        MenuStopBtn.setDisable(false);
-        startButton.setDisable(true);
-        MenuStartBtn.setDisable(true);
         if (timer != null) {
-            closeFlag = true;
-            openFlag = false;
-            close.setSelected(true);
-            open.setDisable(true);
             timer.cancel();
             pauseTime = 0;
             timer = null;
-            initializationTime =0;
-            Passenger.intPassenger =0;
+            initializationTime = 0;
+            Passenger.intPassenger = 0;
             Truck.intTruck = 0;
             CarContainer carContainer = habitat.getCarContainer();
             carContainer.getCarList().forEach((tmp) -> imgPane.getChildren().remove(tmp.getImageView()));
             carContainer.getCarList().clear();
         }
+    }
+    public void model(){
+        long start = System.currentTimeMillis();
+        Statistic statistic = new Statistic(this);
+        statistic.openModalWindow(start);
+        pauseTime += System.currentTimeMillis() - start;
     }
 }
