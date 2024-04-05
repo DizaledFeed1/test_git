@@ -1,0 +1,42 @@
+Index: src/main/java/com/example/git/HelloApplication.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.git;\r\n\r\nimport com.example.git.management.Habitat;\r\nimport javafx.application.Application;\r\nimport javafx.fxml.FXMLLoader;\r\nimport javafx.scene.Parent;\r\nimport javafx.scene.Scene;\r\nimport javafx.stage.Stage;\r\nimport java.io.IOException;\r\n\r\npublic class HelloApplication extends Application {\r\n\r\n    @Override\r\n    public void start(Stage stage) throws IOException {\r\n        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource(\"hello-view.fxml\"));\r\n        Parent root = fxmlLoader.load();\r\n        Scene scene = new Scene(root, Habitat.getWidth(), Habitat.getHeight());\r\n        stage.setScene(scene);\r\n        stage.setMaximized(false); // hahahahaa\r\n        stage.show();\r\n    }\r\n\r\n    public static void main(String[] args) {\r\n        launch();\r\n    }\r\n}\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/git/HelloApplication.java b/src/main/java/com/example/git/HelloApplication.java
+--- a/src/main/java/com/example/git/HelloApplication.java	(revision f90b101eb5f001c86e54a5c47905487993fa5399)
++++ b/src/main/java/com/example/git/HelloApplication.java	(date 1711980703027)
+@@ -16,13 +16,11 @@
+         Parent root = fxmlLoader.load();
+         Scene scene = new Scene(root, Habitat.getWidth(), Habitat.getHeight());
+         stage.setScene(scene);
+-        stage.setMaximized(false); // hahahahaa
++        stage.setMaximized(true);
+         stage.show();
+     }
+ 
+     public static void main(String[] args) {
+         launch();
+     }
+-}
+-
+-
++}
+\ No newline at end of file
+Index: .idea/encodings.xml
+===================================================================
+diff --git a/.idea/encodings.xml b/.idea/encodings.xml
+deleted file mode 100644
+--- a/.idea/encodings.xml	(revision f90b101eb5f001c86e54a5c47905487993fa5399)
++++ /dev/null	(revision f90b101eb5f001c86e54a5c47905487993fa5399)
+@@ -1,7 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="Encoding">
+-    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+-    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+-  </component>
+-</project>
+\ No newline at end of file

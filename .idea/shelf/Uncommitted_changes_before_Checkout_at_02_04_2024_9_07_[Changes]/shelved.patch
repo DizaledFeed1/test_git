@@ -1,0 +1,563 @@
+Index: src/main/java/com/example/git/HelloApplication.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.git;\r\n\r\nimport com.example.git.management.Habitat;\r\nimport javafx.application.Application;\r\nimport javafx.fxml.FXMLLoader;\r\nimport javafx.scene.Parent;\r\nimport javafx.scene.Scene;\r\nimport javafx.stage.Stage;\r\nimport java.io.IOException;\r\n\r\npublic class HelloApplication extends Application {\r\n\r\n    @Override\r\n    public void start(Stage stage) throws IOException {\r\n        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource(\"hello-view.fxml\"));\r\n        Parent root = fxmlLoader.load();\r\n        Scene scene = new Scene(root, Habitat.getWidth(), Habitat.getHeight());\r\n        stage.setScene(scene);\r\n        stage.setMaximized(true);\r\n        stage.show();\r\n    }\r\n\r\n    public static void main(String[] args) {\r\n        launch();\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/git/HelloApplication.java b/src/main/java/com/example/git/HelloApplication.java
+--- a/src/main/java/com/example/git/HelloApplication.java	(revision 33fccb0f299fc8046c68fe76bfdfae49150e8bd1)
++++ b/src/main/java/com/example/git/HelloApplication.java	(date 1711982229821)
+@@ -16,11 +16,13 @@
+         Parent root = fxmlLoader.load();
+         Scene scene = new Scene(root, Habitat.getWidth(), Habitat.getHeight());
+         stage.setScene(scene);
+-        stage.setMaximized(true);
++        stage.setMaximized(true); // test
+         stage.show();
+     }
+ 
+     public static void main(String[] args) {
+         launch();
+     }
+-}
+\ No newline at end of file
++}
++
++
+Index: src/main/java/com/example/git/management/CarContainer.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.git.management;\r\nimport com.example.git.transports.Transport;\r\n\r\nimport java.util.ArrayList;\r\n\r\npublic class CarContainer {\r\n    private static CarContainer instance;\r\n    private ArrayList<Transport> carList;\r\n\r\n    private CarContainer() {\r\n        carList = new ArrayList<>();\r\n    }\r\n\r\n    public static CarContainer getInstance() {\r\n        if (instance == null) {\r\n            instance = new CarContainer();\r\n        }\r\n        return instance;\r\n    }\r\n\r\n    public void addCar(Transport transport) {\r\n        carList.add(transport);\r\n    }\r\n\r\n    public ArrayList<Transport> getCarList() {\r\n        return carList;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/git/management/CarContainer.java b/src/main/java/com/example/git/management/CarContainer.java
+--- a/src/main/java/com/example/git/management/CarContainer.java	(revision 33fccb0f299fc8046c68fe76bfdfae49150e8bd1)
++++ b/src/main/java/com/example/git/management/CarContainer.java	(date 1711961699967)
+@@ -2,13 +2,18 @@
+ import com.example.git.transports.Transport;
+ 
+ import java.util.ArrayList;
+-
++import java.util.HashMap;
++import java.util.TreeSet;
+ public class CarContainer {
+     private static CarContainer instance;
+     private ArrayList<Transport> carList;
++    private TreeSet<Integer> idSet;
++    private HashMap<Integer, Long> birthTimeMap;
+ 
+     private CarContainer() {
+         carList = new ArrayList<>();
++        idSet = new TreeSet<>();
++        birthTimeMap = new HashMap<>();
+     }
+ 
+     public static CarContainer getInstance() {
+@@ -18,11 +23,20 @@
+         return instance;
+     }
+ 
+-    public void addCar(Transport transport) {
++    public void addCar(Transport transport,long birthTime) {
+         carList.add(transport);
++        int id = transport.getId();
++        idSet.add(id);
++        birthTimeMap.put(id,birthTime);
+     }
+ 
+     public ArrayList<Transport> getCarList() {
+         return carList;
+     }
++    public HashMap<Integer, Long> getBirthTimeMap(){
++        return  birthTimeMap;
++    }
++    public TreeSet<Integer> getIdSet(){
++        return  idSet;
++    }
+ }
+Index: src/main/java/com/example/git/management/HelloController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.git.management;\r\n\r\nimport com.example.git.transports.Passenger;\r\nimport com.example.git.transports.Truck;\r\nimport javafx.application.Platform;\r\nimport javafx.event.EventHandler;\r\nimport javafx.fxml.FXML;\r\nimport javafx.fxml.Initializable;\r\nimport javafx.scene.control.*;\r\nimport javafx.scene.input.KeyEvent;\r\nimport javafx.scene.input.MouseEvent;\r\nimport javafx.scene.layout.Pane;\r\n\r\nimport java.io.FileNotFoundException;\r\nimport java.net.URL;\r\nimport java.util.ResourceBundle;\r\nimport java.util.Timer;\r\nimport java.util.TimerTask;\r\n\r\npublic class HelloController implements Initializable {\r\n    Habitat habitat = new Habitat();\r\n    Timer timer;\r\n    @FXML\r\n    public Pane root;\r\n    @FXML\r\n    public Pane imgPane;\r\n    public long initializationTime;\r\n    @FXML\r\n    private Label timerLabel;\r\n    @FXML\r\n    private Label textTimer;\r\n    @FXML\r\n    private Button startButton;\r\n    @FXML\r\n    private Button stopButton;\r\n    @FXML\r\n    private RadioButton open;\r\n    @FXML\r\n    private RadioButton close;\r\n    @FXML\r\n    private CheckBox CheckBoxMain;\r\n    @FXML\r\n    private CheckMenuItem CheckBoxMenu;\r\n    @FXML\r\n    private MenuItem MenuStartBtn, MenuStopBtn;\r\n    @FXML\r\n    private RadioMenuItem MenuRadioBtnHide,MenuRadioBtnShow;\r\n    @FXML\r\n    private ComboBox<String> passengerComboBox,truckComboBox;\r\n    @FXML\r\n    private TextField truckTextField,passengerTextField;\r\n\r\n    boolean openFlag = true;\r\n    boolean closeFlag = false;\r\n    boolean startFlag = false;\r\n    boolean finishFlag = false;\r\n    long pauseTime = 0;\r\n    @FXML\r\n    public void model(){\r\n        long start = System.currentTimeMillis();\r\n        Statistic statistic = new Statistic(this);\r\n        statistic.openModalWindow(start);\r\n        pauseTime += System.currentTimeMillis() - start;\r\n    }\r\n    @FXML\r\n    public void menuBox () {\r\n        CheckBoxMain.setSelected(CheckBoxMenu.isSelected());\r\n    }\r\n    @FXML\r\n    public void mainBox() {\r\n        CheckBoxMenu.setSelected(CheckBoxMain.isSelected());\r\n    }\r\n    @FXML\r\n    public void check(){\r\n        String truckInput = truckTextField.getText();\r\n        String passengerInput = passengerTextField.getText();\r\n\r\n        try {\r\n            int truckValue = Integer.parseInt(truckInput);\r\n            int passengerValue = Integer.parseInt(passengerInput);\r\n\r\n            if (truckValue == 0 || truckValue > 100) {\r\n                truckTextField.setText(\"1\");\r\n                throw new IllegalArgumentException();\r\n            } else if (passengerValue == 0 || passengerValue > 100) {\r\n                passengerTextField.setText(\"1\");\r\n                throw new IllegalArgumentException();\r\n            }\r\n        } catch (IllegalArgumentException e) {\r\n            showAlert();\r\n        }\r\n    }\r\n    private void showAlert() {\r\n        Alert alert = new Alert(Alert.AlertType.ERROR);\r\n        alert.setTitle(\"Ошибка\");\r\n        alert.setHeaderText(\"Неверное значение\");\r\n        alert.setContentText(\"Значения должны быть цифрой, которая больше 0 и не превышать 100\");\r\n        alert.showAndWait();\r\n    }\r\n    @FXML\r\n    public void handleNumericInput(KeyEvent event) {\r\n        TextField textField = (TextField) event.getSource();\r\n        String text = textField.getText();\r\n        if (!text.matches(\"\\\\d*\")) {\r\n            textField.setText(text.replaceAll(\"[^\\\\d]\", \"\"));\r\n        }\r\n    }\r\n    @Override\r\n    public void initialize(URL url, ResourceBundle resourceBundle) {\r\n        open.setSelected(true);\r\n        ToggleGroup group = new ToggleGroup();\r\n        open.setToggleGroup(group);\r\n        close.setToggleGroup(group);\r\n\r\n        passengerComboBox.getItems().addAll(\"0\", \"10\", \"20\", \"30\", \"40\", \"50\", \"60\", \"70\", \"80\", \"90\", \"100\");\r\n        passengerComboBox.setValue(\"50\"); // Установка начального значения\r\n        truckComboBox.getItems().addAll(\"0\", \"10\", \"20\", \"30\", \"40\", \"50\", \"60\", \"70\", \"80\", \"90\", \"100\");\r\n        truckComboBox.setValue(\"50\"); // Установка начального значения\r\n\r\n\r\n        passengerComboBox.setOnAction(event -> {\r\n            String selectedValue = passengerComboBox.getValue();\r\n            habitat.setPassengerProbability(Float.parseFloat(selectedValue) / 100);\r\n        });\r\n        truckComboBox.setOnAction(event -> {\r\n            String selectedValue = truckComboBox.getValue();\r\n            habitat.setTruckProbability(Float.parseFloat(selectedValue) / 100);\r\n        });\r\n        close.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {\r\n            @Override\r\n            public void handle(MouseEvent mouseEvent) {\r\n                timerLabel.setVisible(!timerLabel.isVisible());\r\n                textTimer.setVisible(!textTimer.isVisible());\r\n                MenuRadioBtnHide.setSelected(true);\r\n                MenuRadioBtnShow.setDisable(false);\r\n                open.setDisable(false);\r\n                MenuRadioBtnHide.setDisable(true);\r\n                close.setDisable(true);\r\n            }\r\n        });\r\n        open.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {\r\n            @Override\r\n            public void handle(MouseEvent mouseEvent) {\r\n                    timerLabel.setVisible(!timerLabel.isVisible());\r\n                    textTimer.setVisible(!textTimer.isVisible());\r\n                    MenuRadioBtnShow.setSelected(true);\r\n                    open.setSelected(true);\r\n                    MenuRadioBtnShow.setDisable(true);\r\n                    open.setDisable(true);\r\n                    MenuRadioBtnHide.setDisable(false);\r\n                    close.setDisable(false);\r\n            }\r\n        });\r\n\r\n        MenuStartBtn.setOnAction(event -> {\r\n            stopInitialize();\r\n            start();\r\n\r\n        });\r\n\r\n        MenuStopBtn.setOnAction(event -> {\r\n            pauseIntialize();\r\n            if (CheckBoxMenu.isSelected()) {\r\n                  model();\r\n            }\r\n\r\n        });\r\n        MenuRadioBtnShow.setOnAction(event -> {\r\n                timerLabel.setVisible(!timerLabel.isVisible());\r\n                textTimer.setVisible(!textTimer.isVisible());\r\n                open.setSelected(true);\r\n                MenuRadioBtnShow.setDisable(true);\r\n                open.setDisable(true);\r\n                MenuRadioBtnHide.setDisable(false);\r\n                close.setDisable(false);\r\n        });\r\n        MenuRadioBtnHide.setOnAction(event -> {\r\n                timerLabel.setVisible(!timerLabel.isVisible());\r\n                textTimer.setVisible(!textTimer.isVisible());\r\n                close.setSelected(true);\r\n                MenuRadioBtnShow.setDisable(false);\r\n                open.setDisable(false);\r\n                MenuRadioBtnHide.setDisable(true);\r\n                close.setDisable(true);\r\n        });\r\n        startButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {\r\n            @Override\r\n            public void handle(MouseEvent mouseEvent) {\r\n                startFlag = true;\r\n                finishFlag =false;\r\n                stopInitialize();\r\n                start();\r\n            }\r\n        });\r\n        stopButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {\r\n            @Override\r\n            public void handle(MouseEvent mouseEvent) {\r\n                startFlag = false;\r\n                pauseIntialize();\r\n                if (CheckBoxMain.isSelected()) {\r\n                    model();\r\n                }\r\n            }\r\n\r\n        });\r\n    }\r\n    public HelloController() {\r\n        super();\r\n    }\r\n    public void onKey(){\r\n        imgPane.getScene().setOnKeyReleased((KeyEvent event) ->{\r\n            switch (event.getCode()){\r\n                case B -> {\r\n                    if (startFlag ==false) {\r\n                        startFlag = true;\r\n                        finishFlag =false;\r\n                        stopInitialize();\r\n                        start();\r\n                    }\r\n                }\r\n                case E -> {\r\n                    if (finishFlag == false) {\r\n                        startFlag = false;\r\n                        pauseIntialize();\r\n                        if (CheckBoxMain.isSelected()) {\r\n                            model();\r\n                        }\r\n                    }\r\n                }\r\n                case T -> {\r\n                    timerLabel.setVisible(!timerLabel.isVisible());\r\n                    textTimer.setVisible(!textTimer.isVisible());\r\n                    if (open.isSelected()){\r\n                        close.setSelected(!close.isSelected());\r\n                        MenuRadioBtnHide.setSelected(!MenuRadioBtnHide.isSelected());\r\n                    }\r\n                    else {\r\n                        open.setSelected(!open.isSelected());\r\n                        MenuRadioBtnShow.setSelected(!MenuRadioBtnShow.isSelected());\r\n                    }\r\n                    open.setDisable(!open.isDisabled());\r\n                    close.setDisable(!close.isDisabled());\r\n\r\n\r\n                    MenuRadioBtnShow.setDisable(!MenuRadioBtnShow.isDisable());\r\n\r\n\r\n                    MenuRadioBtnHide.setDisable(!MenuRadioBtnHide.isDisable());\r\n                }\r\n            }\r\n        });\r\n    }\r\n    private void startTimer(){\r\n        long time = System.currentTimeMillis() - initializationTime - pauseTime;\r\n        timerLabel.setText(String.valueOf(time / 1000));\r\n    }\r\n    public void start() {\r\n        truckTextField.setDisable(true);\r\n        passengerTextField.setDisable(true);\r\n        truckComboBox.setDisable(true);\r\n        passengerComboBox.setDisable(true);\r\n        startButton.setDisable(true);\r\n        stopButton.setDisable(false);\r\n        MenuRadioBtnShow.setDisable(true);\r\n        MenuRadioBtnShow.setSelected(true);\r\n        MenuRadioBtnHide.setDisable(false);\r\n        open.setSelected(true);\r\n        close.setSelected(false);\r\n        openFlag = true;\r\n        closeFlag = false;\r\n        close.setDisable(false);\r\n        open.setDisable(true);\r\n        timerLabel.setVisible(true);\r\n        textTimer.setVisible(true);\r\n        habitat.setTruckTime(Integer.parseInt(truckTextField.getText()));\r\n        habitat.setPassengerTime(Integer.parseInt(passengerTextField.getText()));\r\n            if(initializationTime == 0) {\r\n                initializationTime = System.currentTimeMillis();\r\n            }\r\n                timer = new Timer();\r\n            timer.scheduleAtFixedRate(new TimerTask() {\r\n                @Override\r\n                public void run() {\r\n                    Platform.runLater(()->{\r\n                        startTimer();\r\n                        try {\r\n                            int number = habitat.Update( System.currentTimeMillis() - initializationTime);\r\n                            CarContainer carContainer = habitat.getCarContainer();\r\n                            if (number == 1){\r\n                                imgPane.getChildren().add(carContainer.getCarList().get(carContainer.getCarList().size()-1).getImageView());\r\n                            }\r\n                            else if (number == 2) {\r\n                                imgPane.getChildren().add(carContainer.getCarList().get(carContainer.getCarList().size()-1).getImageView());\r\n                                imgPane.getChildren().add(carContainer.getCarList().get(carContainer.getCarList().size()-2).getImageView());\r\n                            }\r\n                        } catch (FileNotFoundException e) {\r\n                            throw new RuntimeException(e);\r\n                        }\r\n                    });\r\n                }\r\n            }, 0, 1000);\r\n        }\r\n    private void pauseIntialize() {\r\n        truckTextField.setDisable(false);\r\n        passengerTextField.setDisable(false);\r\n        truckComboBox.setDisable(false);\r\n        passengerComboBox.setDisable(false);\r\n        stopButton.setDisable(true); // Отключаем кнопку \"стоп\"\r\n        startButton.setDisable(false); // Включаем кнопку \"старт\"\r\n\r\n        MenuStartBtn.setDisable(false);\r\n        MenuStopBtn.setDisable(true);\r\n\r\n        MenuRadioBtnHide.setDisable(false);\r\n        MenuRadioBtnHide.setSelected(false);\r\n        MenuRadioBtnShow.setDisable(true);\r\n        close.setSelected(false);\r\n        close.setDisable(false);\r\n        open.setDisable(true);\r\n        timer.cancel();\r\n    }\r\n    public void stopInitialize()\r\n    {\r\n        stopButton.setDisable(false);\r\n        MenuStopBtn.setDisable(false);\r\n        startButton.setDisable(true);\r\n        MenuStartBtn.setDisable(true);\r\n        if (timer != null) {\r\n            closeFlag = true;\r\n            openFlag = false;\r\n            close.setSelected(true);\r\n            open.setDisable(true);\r\n            timer.cancel();\r\n            timer = null;\r\n            initializationTime =0;\r\n            Passenger.intPassenger =0;\r\n            Truck.intTruck = 0;\r\n            CarContainer carContainer = habitat.getCarContainer();\r\n            carContainer.getCarList().forEach((tmp) -> imgPane.getChildren().remove(tmp.getImageView()));\r\n            carContainer.getCarList().clear();\r\n        }\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/git/management/HelloController.java b/src/main/java/com/example/git/management/HelloController.java
+--- a/src/main/java/com/example/git/management/HelloController.java	(revision 33fccb0f299fc8046c68fe76bfdfae49150e8bd1)
++++ b/src/main/java/com/example/git/management/HelloController.java	(date 1711967447357)
+@@ -1,6 +1,7 @@
+ package com.example.git.management;
+ 
+ import com.example.git.transports.Passenger;
++import com.example.git.transports.Transport;
+ import com.example.git.transports.Truck;
+ import javafx.application.Platform;
+ import javafx.event.EventHandler;
+@@ -48,7 +49,7 @@
+     @FXML
+     private ComboBox<String> passengerComboBox,truckComboBox;
+     @FXML
+-    private TextField truckTextField,passengerTextField;
++    private TextField truckTextField,passengerTextField,passengerText,truckText;
+ 
+     boolean openFlag = true;
+     boolean closeFlag = false;
+@@ -75,16 +76,28 @@
+         String truckInput = truckTextField.getText();
+         String passengerInput = passengerTextField.getText();
+ 
++        String truckInputTime = truckText.getText();
++        String passengerInputTime = passengerText.getText();
++
+         try {
+             int truckValue = Integer.parseInt(truckInput);
+             int passengerValue = Integer.parseInt(passengerInput);
+ 
++            int truckTimeLive = Integer.parseInt(truckInputTime);
++            int passengerTimeLive = Integer.parseInt(passengerInputTime);
++
+             if (truckValue == 0 || truckValue > 100) {
+                 truckTextField.setText("1");
+                 throw new IllegalArgumentException();
+             } else if (passengerValue == 0 || passengerValue > 100) {
+                 passengerTextField.setText("1");
+                 throw new IllegalArgumentException();
++            } else if (truckTimeLive == 0 || truckTimeLive > 100) {
++                truckText.setText("1");
++                throw new IllegalArgumentException();
++            } else if (passengerTimeLive == 0 || passengerTimeLive > 100) {
++                passengerText.setText("1");
++                throw new IllegalArgumentException();
+             }
+         } catch (IllegalArgumentException e) {
+             showAlert();
+@@ -256,7 +269,9 @@
+     }
+     public void start() {
+         truckTextField.setDisable(true);
++        truckText.setDisable(true);
+         passengerTextField.setDisable(true);
++        passengerText.setDisable(true);
+         truckComboBox.setDisable(true);
+         passengerComboBox.setDisable(true);
+         startButton.setDisable(true);
+@@ -293,6 +308,7 @@
+                                 imgPane.getChildren().add(carContainer.getCarList().get(carContainer.getCarList().size()-1).getImageView());
+                                 imgPane.getChildren().add(carContainer.getCarList().get(carContainer.getCarList().size()-2).getImageView());
+                             }
++                            checkDeath(carContainer);
+                         } catch (FileNotFoundException e) {
+                             throw new RuntimeException(e);
+                         }
+@@ -300,13 +316,52 @@
+                 }
+             }, 0, 1000);
+         }
++    private void checkDeath(CarContainer carContainer) {
++        if (!(carContainer.getBirthTimeMap().isEmpty())) {
++            long currentTime = (System.currentTimeMillis() - initializationTime) / 1000;
++            for (Transport transport : carContainer.getCarList()) {
++                int id = transport.getId();
++                long birthTime = carContainer.getBirthTimeMap().get(id) / 1000;
++                long lifeTime = currentTime - birthTime;
++
++                if (transport instanceof Truck) {
++                    if (lifeTime >= habitat.lifeTimeN1) {
++                        imgPane.getChildren().remove(transport.getImageView());
++                        carContainer.getCarList().remove(transport);
++                        carContainer.getBirthTimeMap().remove(id);
++                        carContainer.getIdSet().remove(id);
++                        System.out.println("Удалили грузовик");
++                    }
++                } else if (transport instanceof Passenger) {
++                    if (lifeTime >= habitat.lifeTimeN2) {
++                        imgPane.getChildren().remove(transport.getImageView());
++                        carContainer.getCarList().remove(transport);
++                        carContainer.getBirthTimeMap().remove(id);
++                        carContainer.getIdSet().remove(id);
++                        System.out.println("Удалили легковушку");
++                    }
++                } else System.out.println("Ничего не удаляем");
++            }
++        }
++    }
++
++
++//    private long calculateLifeTime(Integer id, CarContainer carContainer) {
++//        long birthTime = carContainer.getBirthTimeMap().get(id);
++//        long currentTime = System.currentTimeMillis();
++//        return currentTime - birthTime;
++//    }
++
++
+     private void pauseIntialize() {
+         truckTextField.setDisable(false);
++        truckText.setDisable(false);
+         passengerTextField.setDisable(false);
++        passengerText.setDisable(false);
+         truckComboBox.setDisable(false);
+         passengerComboBox.setDisable(false);
+-        stopButton.setDisable(true); // Отключаем кнопку "стоп"
+-        startButton.setDisable(false); // Включаем кнопку "старт"
++        stopButton.setDisable(true);
++        startButton.setDisable(false);
+ 
+         MenuStartBtn.setDisable(false);
+         MenuStopBtn.setDisable(true);
+@@ -331,6 +386,7 @@
+             close.setSelected(true);
+             open.setDisable(true);
+             timer.cancel();
++            pauseTime = 0;
+             timer = null;
+             initializationTime =0;
+             Passenger.intPassenger =0;
+Index: src/main/resources/com/example/git/hello-view.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n\r\n<?import javafx.scene.control.Button?>\r\n<?import javafx.scene.control.CheckBox?>\r\n<?import javafx.scene.control.CheckMenuItem?>\r\n<?import javafx.scene.control.ComboBox?>\r\n<?import javafx.scene.control.Label?>\r\n<?import javafx.scene.control.Menu?>\r\n<?import javafx.scene.control.MenuBar?>\r\n<?import javafx.scene.control.MenuItem?>\r\n<?import javafx.scene.control.RadioButton?>\r\n<?import javafx.scene.control.RadioMenuItem?>\r\n<?import javafx.scene.control.SeparatorMenuItem?>\r\n<?import javafx.scene.control.TextField?>\r\n<?import javafx.scene.control.ToggleGroup?>\r\n<?import javafx.scene.layout.Pane?>\r\n<?import javafx.scene.text.Font?>\r\n<?import javafx.scene.text.Text?>\r\n<?import javafx.scene.layout.VBox?>\r\n\r\n<Pane fx:id=\"root\" onKeyReleased=\"#onKey\" prefHeight=\"590.0\" prefWidth=\"775.0\" xmlns=\"http://javafx.com/javafx/21\" xmlns:fx=\"http://javafx.com/fxml/1\" fx:controller=\"com.example.git.management.HelloController\">\r\n    <children>\r\n        <Pane fx:id=\"modalPane\"  VBox.vgrow=\"ALWAYS\" focusTraversable=\"true\" prefHeight=\"200.0\" prefWidth=\"1920.0\" style=\"-fx-background-color: #5CA4EA;\">\r\n            <children>\r\n                <RadioButton fx:id=\"close\" layoutX=\"554.0\" layoutY=\"44.0\" mnemonicParsing=\"false\" text=\"Скрыть таймер\"/>\r\n                <Button fx:id=\"startButton\" layoutX=\"665.0\" layoutY=\"35.0\" mnemonicParsing=\"false\" prefHeight=\"35.0\" prefWidth=\"96.0\" style=\"-fx-background-color: #ffffff; -fx-background-radius: 100;\" text=\"Start\" />\r\n                <Label fx:id=\"textTimer\" alignment=\"TOP_RIGHT\" contentDisplay=\"RIGHT\" layoutX=\"543.0\" layoutY=\"91.0\" prefHeight=\"18.0\" prefWidth=\"49.0\" text=\"Timer:\">\r\n                    <font>\r\n                        <Font name=\"Times New Roman\" size=\"16.0\" />\r\n                    </font></Label>\r\n                <Label fx:id=\"timerLabel\" alignment=\"TOP_LEFT\" contentDisplay=\"BOTTOM\" layoutX=\"592.0\" layoutY=\"87.0\" prefHeight=\"28.0\" prefWidth=\"66.0\" text=\" 0\">\r\n                    <font>\r\n                        <Font name=\"Dubai Regular\" size=\"16.0\" />\r\n                    </font></Label>\r\n                <Button fx:id=\"stopButton\" layoutX=\"665.0\" layoutY=\"98.0\" mnemonicParsing=\"false\" prefHeight=\"35.0\" prefWidth=\"96.0\" style=\"-fx-background-radius: 100px; -fx-background-color: #ffffff;\" text=\"Stop\" />\r\n                <RadioButton fx:id=\"open\" layoutX=\"433.0\" layoutY=\"44.0\" mnemonicParsing=\"false\" text=\"Показать таймер \" disable=\"true\" />\r\n                <MenuBar prefHeight=\"25.0\" prefWidth=\"1920.0\" style=\"-fx-background-color: #ffffff;\">\r\n                    <menus>\r\n                        <Menu mnemonicParsing=\"false\" text=\"Menu\">\r\n                            <items>\r\n                                <MenuItem fx:id=\"MenuStartBtn\" mnemonicParsing=\"false\" text=\"Start\" />\r\n                                <MenuItem fx:id=\"MenuStopBtn\" mnemonicParsing=\"false\" text=\"Stop\" />\r\n                                <SeparatorMenuItem mnemonicParsing=\"false\" />\r\n                                <RadioMenuItem fx:id=\"MenuRadioBtnShow\" mnemonicParsing=\"true\" selected=\"true\" text=\"Show Timer\" disable=\"true\">\r\n                                    <toggleGroup>\r\n                                        <ToggleGroup fx:id=\"tg1\" />\r\n                                    </toggleGroup>\r\n                                </RadioMenuItem>\r\n                                <RadioMenuItem fx:id=\"MenuRadioBtnHide\" mnemonicParsing=\"false\" text=\"Hide Timer\" toggleGroup=\"$tg1\" />\r\n                                <SeparatorMenuItem mnemonicParsing=\"false\" />\r\n                                <CheckMenuItem fx:id=\"CheckBoxMenu\" mnemonicParsing=\"false\" onAction=\"#menuBox\" text=\"info\" />\r\n                            </items>\r\n                        </Menu>\r\n                    </menus>\r\n                </MenuBar>\r\n                <CheckBox fx:id=\"CheckBoxMain\" layoutX=\"467.0\" layoutY=\"90.0\" mnemonicParsing=\"false\" onAction=\"#mainBox\" text=\"info\">\r\n                    <font>\r\n                        <Font size=\"14.0\" />\r\n                    </font></CheckBox>\r\n                <TextField fx:id=\"truckTextField\" layoutX=\"150.0\" layoutY=\"102.0\" onAction=\"#check\" onKeyTyped=\"#handleNumericInput\" prefHeight=\"9.0\" prefWidth=\"33.0\" text=\"3\" />\r\n                <TextField fx:id=\"passengerTextField\" layoutX=\"150.0\" layoutY=\"64.0\" onAction=\"#check\" onKeyTyped=\"#handleNumericInput\" prefHeight=\"25.0\" prefWidth=\"33.0\" text=\"2\" />\r\n                <Text layoutX=\"34.0\" layoutY=\"48.0\" strokeType=\"OUTSIDE\" strokeWidth=\"0.0\" text=\"Период появления (сек)\" />\r\n                <Text layoutX=\"244.0\" layoutY=\"49.0\" strokeType=\"OUTSIDE\" strokeWidth=\"0.0\" text=\"Вероятность рождения\" />\r\n\r\n\r\n                <Text layoutX=\"216.0\" layoutY=\"81.0\" strokeType=\"OUTSIDE\" strokeWidth=\"0.0\" text=\"Легковых автомобилей\" />\r\n                <Text layoutX=\"214.0\" layoutY=\"118.0\" strokeType=\"OUTSIDE\" strokeWidth=\"0.0\" text=\"Грузовых автомобилей \" />\r\n                <Text layoutX=\"14.0\" layoutY=\"81.0\" strokeType=\"OUTSIDE\" strokeWidth=\"0.0\" text=\"Легковых автомобилей\" />\r\n                <Text layoutX=\"14.0\" layoutY=\"119.0\" strokeType=\"OUTSIDE\" strokeWidth=\"0.0\" text=\"Грузовых автомобилей \" />\r\n                <ComboBox fx:id=\"passengerComboBox\" layoutX=\"352.0\" layoutY=\"64.0\" prefHeight=\"9.0\" prefWidth=\"55.0\">\r\n                    <items></items>\r\n                </ComboBox>\r\n                <ComboBox fx:id=\"truckComboBox\" layoutX=\"352.0\" layoutY=\"101.0\" prefHeight=\"9.0\" prefWidth=\"55.0\">\r\n                    <items></items>\r\n                </ComboBox>\r\n            </children>\r\n        </Pane>\r\n        <Pane fx:id=\"imgPane\" VBox.vgrow=\"ALWAYS\" layoutY=\"200.0\" prefHeight=\"818.0\" prefWidth=\"1920.0\" style=\"-fx-background-color: #E3DED3;\" />\r\n    </children>\r\n</Pane>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/com/example/git/hello-view.fxml b/src/main/resources/com/example/git/hello-view.fxml
+--- a/src/main/resources/com/example/git/hello-view.fxml	(revision 33fccb0f299fc8046c68fe76bfdfae49150e8bd1)
++++ b/src/main/resources/com/example/git/hello-view.fxml	(date 1711957662799)
+@@ -3,7 +3,6 @@
+ <?import javafx.scene.control.Button?>
+ <?import javafx.scene.control.CheckBox?>
+ <?import javafx.scene.control.CheckMenuItem?>
+-<?import javafx.scene.control.ComboBox?>
+ <?import javafx.scene.control.Label?>
+ <?import javafx.scene.control.Menu?>
+ <?import javafx.scene.control.MenuBar?>
+@@ -14,26 +13,27 @@
+ <?import javafx.scene.control.TextField?>
+ <?import javafx.scene.control.ToggleGroup?>
+ <?import javafx.scene.layout.Pane?>
++<?import javafx.scene.layout.VBox?>
+ <?import javafx.scene.text.Font?>
+ <?import javafx.scene.text.Text?>
+-<?import javafx.scene.layout.VBox?>
+ 
++<?import javafx.scene.control.ComboBox?>
+ <Pane fx:id="root" onKeyReleased="#onKey" prefHeight="590.0" prefWidth="775.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.git.management.HelloController">
+     <children>
+-        <Pane fx:id="modalPane"  VBox.vgrow="ALWAYS" focusTraversable="true" prefHeight="200.0" prefWidth="1920.0" style="-fx-background-color: #5CA4EA;">
++        <Pane fx:id="modalPane" focusTraversable="true" prefHeight="200.0" prefWidth="1920.0" style="-fx-background-color: #5CA4EA;" VBox.vgrow="ALWAYS">
+             <children>
+-                <RadioButton fx:id="close" layoutX="554.0" layoutY="44.0" mnemonicParsing="false" text="Скрыть таймер"/>
+-                <Button fx:id="startButton" layoutX="665.0" layoutY="35.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="96.0" style="-fx-background-color: #ffffff; -fx-background-radius: 100;" text="Start" />
+-                <Label fx:id="textTimer" alignment="TOP_RIGHT" contentDisplay="RIGHT" layoutX="543.0" layoutY="91.0" prefHeight="18.0" prefWidth="49.0" text="Timer:">
++                <RadioButton fx:id="close" layoutX="916.0" layoutY="48.0" mnemonicParsing="false" text="Скрыть таймер" />
++                <Button fx:id="startButton" layoutX="1028.0" layoutY="40.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="96.0" style="-fx-background-color: #ffffff; -fx-background-radius: 100;" text="Start" />
++                <Label fx:id="textTimer" alignment="TOP_RIGHT" contentDisplay="RIGHT" layoutX="906.0" layoutY="96.0" prefHeight="18.0" prefWidth="49.0" text="Timer:">
+                     <font>
+                         <Font name="Times New Roman" size="16.0" />
+                     </font></Label>
+-                <Label fx:id="timerLabel" alignment="TOP_LEFT" contentDisplay="BOTTOM" layoutX="592.0" layoutY="87.0" prefHeight="28.0" prefWidth="66.0" text=" 0">
++                <Label fx:id="timerLabel" alignment="TOP_LEFT" contentDisplay="BOTTOM" layoutX="955.0" layoutY="92.0" prefHeight="28.0" prefWidth="66.0" text=" 0">
+                     <font>
+                         <Font name="Dubai Regular" size="16.0" />
+                     </font></Label>
+-                <Button fx:id="stopButton" layoutX="665.0" layoutY="98.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="96.0" style="-fx-background-radius: 100px; -fx-background-color: #ffffff;" text="Stop" />
+-                <RadioButton fx:id="open" layoutX="433.0" layoutY="44.0" mnemonicParsing="false" text="Показать таймер " disable="true" />
++                <Button fx:id="stopButton" layoutX="1028.0" layoutY="103.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="96.0" style="-fx-background-radius: 100px; -fx-background-color: #ffffff;" text="Stop" />
++                <RadioButton fx:id="open" disable="true" layoutX="796.0" layoutY="49.0" mnemonicParsing="false" text="Показать таймер " />
+                 <MenuBar prefHeight="25.0" prefWidth="1920.0" style="-fx-background-color: #ffffff;">
+                     <menus>
+                         <Menu mnemonicParsing="false" text="Menu">
+@@ -41,7 +41,7 @@
+                                 <MenuItem fx:id="MenuStartBtn" mnemonicParsing="false" text="Start" />
+                                 <MenuItem fx:id="MenuStopBtn" mnemonicParsing="false" text="Stop" />
+                                 <SeparatorMenuItem mnemonicParsing="false" />
+-                                <RadioMenuItem fx:id="MenuRadioBtnShow" mnemonicParsing="true" selected="true" text="Show Timer" disable="true">
++                                <RadioMenuItem fx:id="MenuRadioBtnShow" disable="true" mnemonicParsing="true" selected="true" text="Show Timer">
+                                     <toggleGroup>
+                                         <ToggleGroup fx:id="tg1" />
+                                     </toggleGroup>
+@@ -53,7 +53,7 @@
+                         </Menu>
+                     </menus>
+                 </MenuBar>
+-                <CheckBox fx:id="CheckBoxMain" layoutX="467.0" layoutY="90.0" mnemonicParsing="false" onAction="#mainBox" text="info">
++                <CheckBox fx:id="CheckBoxMain" layoutX="830.0" layoutY="95.0" mnemonicParsing="false" onAction="#mainBox" text="info">
+                     <font>
+                         <Font size="14.0" />
+                     </font></CheckBox>
+@@ -73,8 +73,13 @@
+                 <ComboBox fx:id="truckComboBox" layoutX="352.0" layoutY="101.0" prefHeight="9.0" prefWidth="55.0">
+                     <items></items>
+                 </ComboBox>
++            <Text layoutX="541.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Время жизни (сек)" />
++            <Text layoutX="493.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Легковых автомобилей" />
++            <Text  layoutX="493.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Грузовых автомобилей" />
++            <TextField fx:id="passengerText" layoutX="631.0" layoutY="65.0" onAction="#check" onKeyTyped="#handleNumericInput" prefHeight="25.0" prefWidth="33.0" text="5" />
++            <TextField fx:id="truckText" layoutX="631.0" layoutY="103.0" onAction="#check" onKeyTyped="#handleNumericInput" prefHeight="25.0" prefWidth="33.0" text="7" />
+             </children>
+         </Pane>
+-        <Pane fx:id="imgPane" VBox.vgrow="ALWAYS" layoutY="200.0" prefHeight="818.0" prefWidth="1920.0" style="-fx-background-color: #E3DED3;" />
++        <Pane fx:id="imgPane" layoutY="200.0" prefHeight="818.0" prefWidth="1920.0" style="-fx-background-color: #E3DED3;" VBox.vgrow="ALWAYS" />
+     </children>
+ </Pane>
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"f32cf832-ed7d-4a95-8d2b-1e70564c6b12\" name=\"Changes\" comment=\"готовая 2-я лаба по проге\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/example/git/management/HelloController.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/com/example/git/management/HelloController.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/example/git/management/Statistic.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/com/example/git/management/Statistic.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/resources/com/example/git/hello-view.fxml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/resources/com/example/git/hello-view.fxml\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"c3f411f03347b8d6102c908ef5b89fe9a5d8782e\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n    <option name=\"RESET_MODE\" value=\"MIXED\" />\r\n  </component>\r\n  <component name=\"MavenImportPreferences\">\r\n    <option name=\"generalSettings\">\r\n      <MavenGeneralSettings>\r\n        <option name=\"mavenHome\" value=\"Use Maven wrapper\" />\r\n      </MavenGeneralSettings>\r\n    </option>\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 8\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2eSXktIzgeoFWehDZxshAooexYq\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,\r\n    &quot;Application.Statistic.executor&quot;: &quot;Run&quot;,\r\n    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,\r\n    &quot;git-widget-placeholder&quot;: &quot;main&quot;,\r\n    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,\r\n    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,\r\n    &quot;last_opened_file_path&quot;: &quot;C:/Users/Dizaled/IdeaProjects/git/src/main/resources/com/example/git&quot;,\r\n    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,\r\n    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,\r\n    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,\r\n    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;\r\n  }\r\n}</component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"CopyFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\Dizaled\\IdeaProjects\\git\\src\\main\\resources\\com\\example\\git\" />\r\n      <recent name=\"C:\\Users\\Dizaled\\IdeaProjects\\git\\src\\main\\resources\" />\r\n      <recent name=\"C:\\Users\\Dizaled\\IdeaProjects\\git\\src\\main\\java\\com\\example\\git\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"jdk-19.0.2-corretto-19.0.2-4caba194b151-48ba4555\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"f32cf832-ed7d-4a95-8d2b-1e70564c6b12\" name=\"Changes\" comment=\"\" />\r\n      <created>1711899099160</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1711899099160</updated>\r\n      <workItem from=\"1711899100225\" duration=\"430000\" />\r\n      <workItem from=\"1711899628581\" duration=\"1558000\" />\r\n      <workItem from=\"1711945173504\" duration=\"5903000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"start\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1711899160603</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1711899160603</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"2\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1711899289892</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1711899289892</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"2\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1711899366709</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1711899366709</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"готовая 2-я лаба по проге\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1711901084990</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1711901084990</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"5\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"start\" />\r\n    <MESSAGE value=\"2\" />\r\n    <MESSAGE value=\"готовая 2-я лаба по проге\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"готовая 2-я лаба по проге\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 33fccb0f299fc8046c68fe76bfdfae49150e8bd1)
++++ b/.idea/workspace.xml	(date 1712023626373)
+@@ -4,10 +4,15 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="f32cf832-ed7d-4a95-8d2b-1e70564c6b12" name="Changes" comment="готовая 2-я лаба по проге">
++    <list default="true" id="f32cf832-ed7d-4a95-8d2b-1e70564c6b12" name="Changes" comment="тест">
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/HelloApplication.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/management/CarContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/CarContainer.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/management/Habitat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/Habitat.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/management/HelloController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/HelloController.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/management/Statistic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/Statistic.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/transports/Passenger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/transports/Passenger.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/transports/Transport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/transports/Transport.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/transports/Truck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/transports/Truck.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/git/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/git/hello-view.fxml" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+@@ -18,7 +23,7 @@
+   <component name="Git.Settings">
+     <option name="RECENT_BRANCH_BY_REPOSITORY">
+       <map>
+-        <entry key="$PROJECT_DIR$" value="c3f411f03347b8d6102c908ef5b89fe9a5d8782e" />
++        <entry key="$PROJECT_DIR$" value="6db23be666f8bed4b0519d24e5e1451295048516" />
+       </map>
+     </option>
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+@@ -83,7 +88,10 @@
+       <updated>1711899099160</updated>
+       <workItem from="1711899100225" duration="430000" />
+       <workItem from="1711899628581" duration="1558000" />
+-      <workItem from="1711945173504" duration="5903000" />
++      <workItem from="1711945173504" duration="6080000" />
++      <workItem from="1711951386943" duration="16332000" />
++      <workItem from="1711982756405" duration="120000" />
++      <workItem from="1712023300266" duration="326000" />
+     </task>
+     <task id="LOCAL-00001" summary="start">
+       <option name="closed" value="true" />
+@@ -117,7 +125,39 @@
+       <option name="project" value="LOCAL" />
+       <updated>1711901084990</updated>
+     </task>
+-    <option name="localTasksCounter" value="5" />
++    <task id="LOCAL-00005" summary="Готовая 2-я лаба с исправленными багульками">
++      <option name="closed" value="true" />
++      <created>1711951210081</created>
++      <option name="number" value="00005" />
++      <option name="presentableId" value="LOCAL-00005" />
++      <option name="project" value="LOCAL" />
++      <updated>1711951210081</updated>
++    </task>
++    <task id="LOCAL-00006" summary="3-я лаба добавил идендификаторы(id),время жизни,время рождения, поля для ввода пользовательских значений.">
++      <option name="closed" value="true" />
++      <created>1711954861577</created>
++      <option name="number" value="00006" />
++      <option name="presentableId" value="LOCAL-00006" />
++      <option name="project" value="LOCAL" />
++      <updated>1711954861577</updated>
++    </task>
++    <task id="LOCAL-00007" summary="3-я лаба реализация метода checkDeath">
++      <option name="closed" value="true" />
++      <created>1711962215823</created>
++      <option name="number" value="00007" />
++      <option name="presentableId" value="LOCAL-00007" />
++      <option name="project" value="LOCAL" />
++      <updated>1711962215823</updated>
++    </task>
++    <task id="LOCAL-00008" summary="тест">
++      <option name="closed" value="true" />
++      <created>1711982237351</created>
++      <option name="number" value="00008" />
++      <option name="presentableId" value="LOCAL-00008" />
++      <option name="project" value="LOCAL" />
++      <updated>1711982237351</updated>
++    </task>
++    <option name="localTasksCounter" value="9" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+@@ -128,7 +168,19 @@
+       <map>
+         <entry key="MAIN">
+           <value>
+-            <State />
++            <State>
++              <option name="FILTERS">
++                <map>
++                  <entry key="branch">
++                    <value>
++                      <list>
++                        <option value="origin/main" />
++                      </list>
++                    </value>
++                  </entry>
++                </map>
++              </option>
++            </State>
+           </value>
+         </entry>
+       </map>
+@@ -138,6 +190,22 @@
+     <MESSAGE value="start" />
+     <MESSAGE value="2" />
+     <MESSAGE value="готовая 2-я лаба по проге" />
+-    <option name="LAST_COMMIT_MESSAGE" value="готовая 2-я лаба по проге" />
++    <MESSAGE value="Готовая 2-я лаба с исправленными багульками" />
++    <MESSAGE value="3-я лаба добавил идендификаторы(id),время жизни,время рождения, поля для ввода пользовательских значений." />
++    <MESSAGE value="3-я лаба реализация метода checkDeath" />
++    <MESSAGE value="3-я лаба: добавлен новый файл для отображения диалогового окна" />
++    <MESSAGE value="тест" />
++    <option name="LAST_COMMIT_MESSAGE" value="тест" />
++  </component>
++  <component name="XDebuggerManager">
++    <breakpoint-manager>
++      <breakpoints>
++        <line-breakpoint enabled="true" type="java-line">
++          <url>file://$PROJECT_DIR$/src/main/java/com/example/git/management/HelloController.java</url>
++          <line>327</line>
++          <option name="timeStamp" value="8" />
++        </line-breakpoint>
++      </breakpoints>
++    </breakpoint-manager>
+   </component>
+ </project>
+\ No newline at end of file
+Index: src/main/java/com/example/git/management/Habitat.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.git.management;\r\n\r\nimport com.example.git.transports.Passenger;\r\nimport com.example.git.transports.Truck;\r\nimport javafx.fxml.FXML;\r\nimport javafx.scene.control.ChoiceBox;\r\nimport javafx.scene.control.TextField;\r\n\r\nimport java.io.FileNotFoundException;\r\nimport java.util.Random;\r\n\r\npublic class Habitat {\r\n    @FXML\r\n    private ChoiceBox<String> passengerChoiceBox,truckChoiceBox;\r\n    @FXML\r\n    private TextField truckTextField,passengerTextField;\r\n\r\n    private static final int width = 1920;\r\n    private static final int height = 1018;\r\n    private CarContainer carContainer = CarContainer.getInstance();\r\n    private float p1 = 0.5f; //вероятность грузовых авто\r\n    private float p2 = 0.5f; //вероятность пассажирских авто\r\n    private int n1 = 2;\r\n    private int n2 = 3;\r\n\r\n    public void setTruckProbability(float probability) {\r\n        this.p1 = probability;\r\n    }\r\n    public void setTruckTime(int time) {\r\n        this.n1 = time;\r\n    }\r\n\r\n    public void setPassengerProbability(float probability) {\r\n        this.p2 = probability;\r\n    }\r\n    public void setPassengerTime(int time) {\r\n        this.n2 = time;\r\n    }\r\n    public static int getWidth() {\r\n        return width;\r\n    }\r\n\r\n    public static int getHeight() {\r\n        return height;\r\n    }\r\n    public int Update(long time) throws FileNotFoundException {\r\n        long newTime = time/1000;\r\n        int number = 0;\r\n        Random rand = new Random();\r\n        float p = rand.nextFloat();\r\n        try {\r\n            if ((newTime % n1 == 0) && (p1 >= p)) {\r\n                number++;\r\n                Truck truck = new Truck(rand.nextInt(0, width - 80)  , rand.nextInt(0, height - 180)  );\r\n                carContainer.addCar(truck);\r\n            }\r\n            if ((newTime % n2 == 0) && (p2 >= p)) {\r\n                number++;\r\n                Passenger passenger = new Passenger(rand.nextInt(0, width - 80) , rand.nextInt(0, height - 180) );\r\n                carContainer.addCar(passenger);\r\n            }\r\n        }\r\n        catch(FileNotFoundException ex){\r\n            ex.printStackTrace();\r\n        }\r\n        return number;\r\n    }\r\n    public CarContainer getCarContainer() {\r\n        return carContainer;\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/git/management/Habitat.java b/src/main/java/com/example/git/management/Habitat.java
+--- a/src/main/java/com/example/git/management/Habitat.java	(revision 33fccb0f299fc8046c68fe76bfdfae49150e8bd1)
++++ b/src/main/java/com/example/git/management/Habitat.java	(date 1711964100483)
+@@ -10,11 +10,6 @@
+ import java.util.Random;
+ 
+ public class Habitat {
+-    @FXML
+-    private ChoiceBox<String> passengerChoiceBox,truckChoiceBox;
+-    @FXML
+-    private TextField truckTextField,passengerTextField;
+-
+     private static final int width = 1920;
+     private static final int height = 1018;
+     private CarContainer carContainer = CarContainer.getInstance();
+@@ -22,6 +17,8 @@
+     private float p2 = 0.5f; //вероятность пассажирских авто
+     private int n1 = 2;
+     private int n2 = 3;
++    public int lifeTimeN1 = 5;
++    public int lifeTimeN2 = 7;
+ 
+     public void setTruckProbability(float probability) {
+         this.p1 = probability;
+@@ -51,13 +48,13 @@
+         try {
+             if ((newTime % n1 == 0) && (p1 >= p)) {
+                 number++;
+-                Truck truck = new Truck(rand.nextInt(0, width - 80)  , rand.nextInt(0, height - 180)  );
+-                carContainer.addCar(truck);
++                Truck truck = new Truck(rand.nextInt(0, width - 80), rand.nextInt(0, height - 180), rand.nextInt(Integer.MAX_VALUE), lifeTimeN1);
++                carContainer.addCar(truck,time);
+             }
+             if ((newTime % n2 == 0) && (p2 >= p)) {
+                 number++;
+-                Passenger passenger = new Passenger(rand.nextInt(0, width - 80) , rand.nextInt(0, height - 180) );
+-                carContainer.addCar(passenger);
++                Passenger passenger = new Passenger(rand.nextInt(0, width - 80) , rand.nextInt(0, height - 180), rand.nextInt(Integer.MAX_VALUE), lifeTimeN2);
++                carContainer.addCar(passenger,time);
+             }
+         }
+         catch(FileNotFoundException ex){
+Index: src/main/java/com/example/git/transports/Transport.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>    package com.example.git.transports;\r\n\r\n    import javafx.scene.image.Image;\r\n    import javafx.scene.image.ImageView;\r\n\r\n\r\n    public abstract class Transport\r\n    {\r\n        final ImageView imgView;\r\n        public Transport(int x,int y, Image img){\r\n            imgView = new ImageView(img);\r\n            imgView.setLayoutX(x);\r\n            imgView.setLayoutY(y);\r\n            imgView.setFitWidth(80);\r\n            imgView.setFitHeight(90);\r\n        }\r\n        public ImageView getImageView() {return imgView;}\r\n    }\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/git/transports/Transport.java b/src/main/java/com/example/git/transports/Transport.java
+--- a/src/main/java/com/example/git/transports/Transport.java	(revision 33fccb0f299fc8046c68fe76bfdfae49150e8bd1)
++++ b/src/main/java/com/example/git/transports/Transport.java	(date 1711956612752)
+@@ -6,8 +6,12 @@
+ 
+     public abstract class Transport
+     {
++        private int id;
++        private final long lifetime;
+         final ImageView imgView;
+-        public Transport(int x,int y, Image img){
++        public Transport(int x, int y, Image img, int id, long lifetime){
++            this.id = id;
++            this.lifetime = lifetime;
+             imgView = new ImageView(img);
+             imgView.setLayoutX(x);
+             imgView.setLayoutY(y);
+@@ -15,4 +19,5 @@
+             imgView.setFitHeight(90);
+         }
+         public ImageView getImageView() {return imgView;}
++        public int getId(){return id;}
+     }
+Index: src/main/java/com/example/git/transports/Truck.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.git.transports;\r\n\r\nimport com.example.git.management.IBehaviour;\r\nimport javafx.scene.image.Image;\r\n\r\nimport java.io.FileNotFoundException;\r\n\r\npublic class Truck extends Transport implements IBehaviour {\r\n    public static int intTruck = 0;\r\n    private static Image img = new Image(\"police.png\");\r\n    public Truck(int x,int y) throws FileNotFoundException {\r\n        super(x,y, img) ;\r\n        intTruck++;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/git/transports/Truck.java b/src/main/java/com/example/git/transports/Truck.java
+--- a/src/main/java/com/example/git/transports/Truck.java	(revision 33fccb0f299fc8046c68fe76bfdfae49150e8bd1)
++++ b/src/main/java/com/example/git/transports/Truck.java	(date 1711956612747)
+@@ -6,10 +6,11 @@
+ import java.io.FileNotFoundException;
+ 
+ public class Truck extends Transport implements IBehaviour {
++
+     public static int intTruck = 0;
+     private static Image img = new Image("police.png");
+-    public Truck(int x,int y) throws FileNotFoundException {
+-        super(x,y, img) ;
++    public Truck(int x,int y,int id, long lifetime) throws FileNotFoundException {
++        super(x,y, img, id, lifetime);
+         intTruck++;
+     }
+ }
+Index: src/main/java/com/example/git/transports/Passenger.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\r\npackage com.example.git.transports;\r\n\r\nimport com.example.git.management.IBehaviour;\r\nimport javafx.scene.image.Image;\r\n\r\nimport java.io.FileNotFoundException;\r\n\r\n\r\n\r\npublic class Passenger extends Transport implements IBehaviour {\r\n\r\n    public static int intPassenger = 0;\r\n    private static Image img = new Image(\"Car.png\");\r\n\r\n    public Passenger(int x,int y) throws FileNotFoundException {\r\n        super(x,y,img) ;\r\n        intPassenger++;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/git/transports/Passenger.java b/src/main/java/com/example/git/transports/Passenger.java
+--- a/src/main/java/com/example/git/transports/Passenger.java	(revision 33fccb0f299fc8046c68fe76bfdfae49150e8bd1)
++++ b/src/main/java/com/example/git/transports/Passenger.java	(date 1711956612741)
+@@ -13,8 +13,8 @@
+     public static int intPassenger = 0;
+     private static Image img = new Image("Car.png");
+ 
+-    public Passenger(int x,int y) throws FileNotFoundException {
+-        super(x,y,img) ;
++    public Passenger(int x,int y,int id, long lifetime) throws FileNotFoundException {
++        super(x,y, img, id, lifetime);
+         intPassenger++;
+     }
+ }
