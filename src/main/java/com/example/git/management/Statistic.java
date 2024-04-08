@@ -3,19 +3,26 @@ package com.example.git.management;
 import com.example.git.transports.Passenger;
 import com.example.git.transports.Truck;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class Statistic extends Application {
 
+    private long pauseStartTime = 0;
     private HelloController helloController;
     public Statistic(HelloController helloController) {
         this.helloController = helloController;
@@ -38,8 +45,6 @@ public class Statistic extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-
-    // Метод для открытия модального окна
     public void openModalWindow(long startTime) {
         Stage modalStage = new Stage();
         modalStage.initModality(Modality.APPLICATION_MODAL);
@@ -77,7 +82,26 @@ public class Statistic extends Application {
         modalStage.setScene(modalScene);
         modalStage.showAndWait(); // Ждем, пока окно будет закрыто
     }
+    public void openModalWindowLife(HashMap<Integer, Long> birthTimeMap) {
+        Stage modalStage = new Stage();
+        modalStage.initModality(Modality.APPLICATION_MODAL);
+        modalStage.setTitle("Модальное окно со статистикой на данный момент");
 
+        ObservableList<String> items = FXCollections.observableArrayList();
+        long currentTime = System.currentTimeMillis(); // Учитываем время начала паузы
+        for (Map.Entry<Integer, Long> entry : birthTimeMap.entrySet()) {
+            // Учитываем время начала паузы при расчете времени жизни объектов
+            long birthTime = entry.getValue();
+            items.add("ID: " + entry.getKey() + ", Время рождения: " + birthTime);
+        }
+
+        ListView<String> listView = new ListView<>(items);
+        VBox root = new VBox(listView);
+        Scene scene = new Scene(root, 300, 250);
+
+        modalStage.setScene(scene);
+        modalStage.showAndWait();
+    }
     public static void main(String[] args) {
         launch(args);
     }

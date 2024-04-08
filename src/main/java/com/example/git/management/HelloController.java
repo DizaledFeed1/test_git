@@ -19,14 +19,14 @@ public class HelloController implements Initializable {
     Habitat habitat = new Habitat();
     Timer timer;
     @FXML
-    public Pane root,imgPane,modalPane;
+    public Pane root, imgPane, modalPane;
     public long initializationTime;
     @FXML
-    private Label timerLabel,textTimer;
+    private Label timerLabel, textTimer;
     @FXML
-    private Button startButton,stopButton;
+    private Button startButton, stopButton;
     @FXML
-    private RadioButton open,close;
+    private RadioButton open, close;
     @FXML
     private CheckBox CheckBoxMain;
     @FXML
@@ -34,23 +34,33 @@ public class HelloController implements Initializable {
     @FXML
     private MenuItem MenuStartBtn, MenuStopBtn;
     @FXML
-    private RadioMenuItem MenuRadioBtnHide,MenuRadioBtnShow;
+    private RadioMenuItem MenuRadioBtnHide, MenuRadioBtnShow;
     @FXML
-    private ComboBox<String> passengerComboBox,truckComboBox;
+    private ComboBox<String> passengerComboBox, truckComboBox;
     @FXML
-    private TextField truckTextField,passengerTextField,lifeTimeTruck,lifeTimePassenger;
+    private TextField truckTextField, passengerTextField, lifeTimeTruck, lifeTimePassenger;
     long pauseTime = 0;
 
     @FXML
-    public void menuBox () {
+    public void menuBox() {
         CheckBoxMain.setSelected(CheckBoxMenu.isSelected());
     }
+
     @FXML
     public void mainBox() {
         CheckBoxMenu.setSelected(CheckBoxMain.isSelected());
     }
     @FXML
-    public void check(){
+    public void currentObject() {
+        long start = System.currentTimeMillis();
+        pauseIntialize();
+        Statistic statistic = new Statistic(this);
+        statistic.openModalWindowLife(habitat.getCarContainer().getBirthTimeMap());
+        pauseTime += System.currentTimeMillis() - start;
+        start();
+    }
+    @FXML
+    public void check() {
         String truckInput = truckTextField.getText();
         String passengerInput = passengerTextField.getText();
 
@@ -81,6 +91,7 @@ public class HelloController implements Initializable {
             showAlert();
         }
     }
+
     @FXML
     public void handleNumericInput(KeyEvent event) {
         TextField textField = (TextField) event.getSource();
@@ -89,6 +100,7 @@ public class HelloController implements Initializable {
             textField.setText(text.replaceAll("[^\\d]", ""));
         }
     }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ToggleGroup group = new ToggleGroup();
@@ -129,7 +141,7 @@ public class HelloController implements Initializable {
         MenuStopBtn.setOnAction(event -> {
             pauseIntialize();
             if (CheckBoxMenu.isSelected()) {
-                  model();
+                model();
             }
         });
         open.setOnAction(event -> {
@@ -142,34 +154,35 @@ public class HelloController implements Initializable {
         });
         MenuRadioBtnShow.setOnAction(event -> {
             swapTimer();
-                open.setSelected(true);
+            open.setSelected(true);
         });
         MenuRadioBtnHide.setOnAction(event -> {
             swapTimer();
-                close.setSelected(true);
+            close.setSelected(true);
         });
-        startButton.setOnAction(event ->{
+        startButton.setOnAction(event -> {
             stopInitialize();
             start();
         });
-        stopButton.setOnAction(event ->{
+        stopButton.setOnAction(event -> {
             pauseIntialize();
             if (CheckBoxMain.isSelected()) {
                 model();
             }
         });
     }
-    public void onKey(){
-        imgPane.getScene().setOnKeyReleased((KeyEvent event) ->{
-            switch (event.getCode()){
+
+    public void onKey() {
+        imgPane.getScene().setOnKeyReleased((KeyEvent event) -> {
+            switch (event.getCode()) {
                 case B -> {
-                    if (startButton.isDisabled() == false) {
+                    if (!startButton.isDisabled()) {
                         stopInitialize();
                         start();
                     }
                 }
                 case E -> {
-                    if (stopButton.isDisabled() == false) {
+                    if (!stopButton.isDisabled()) {
                         pauseIntialize();
                         if (CheckBoxMain.isSelected()) {
                             model();
@@ -179,11 +192,10 @@ public class HelloController implements Initializable {
                 case T -> {
                     timerLabel.setVisible(!timerLabel.isVisible());
                     textTimer.setVisible(!textTimer.isVisible());
-                    if (open.isSelected()){
+                    if (open.isSelected()) {
                         close.setSelected(!close.isSelected());
                         MenuRadioBtnHide.setSelected(!MenuRadioBtnHide.isSelected());
-                    }
-                    else {
+                    } else {
                         open.setSelected(!open.isSelected());
                         MenuRadioBtnShow.setSelected(!MenuRadioBtnShow.isSelected());
                     }
@@ -196,7 +208,8 @@ public class HelloController implements Initializable {
             }
         });
     }
-    private void swapTimer(){
+
+    private void swapTimer() {
         timerLabel.setVisible(!timerLabel.isVisible());
         textTimer.setVisible(!textTimer.isVisible());
 
@@ -206,6 +219,7 @@ public class HelloController implements Initializable {
         open.setDisable(!(open.isDisabled()));
         close.setDisable(!(close.isDisabled()));
     }
+
     private void showAlert() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Ошибка");
@@ -213,82 +227,82 @@ public class HelloController implements Initializable {
         alert.setContentText("Значения должны быть цифрой, которая больше 0 и не превышать 100");
         alert.showAndWait();
     }
-    private void startTimer(){
+
+    private void startTimer() {
         long time = System.currentTimeMillis() - initializationTime - pauseTime;
         timerLabel.setText(String.valueOf(time / 1000));
     }
+
     public void start() {
         swapDisable();
         habitat.setTruckTime(Integer.parseInt(truckTextField.getText()));
         habitat.setPassengerTime(Integer.parseInt(passengerTextField.getText()));
-        habitat.setLifeTimeN1(Integer.parseInt(lifeTimeTruck.getText()));
-        habitat.setLifeTimeN2(Integer.parseInt(lifeTimePassenger.getText()));
-            if(initializationTime == 0) {
-                initializationTime = System.currentTimeMillis();
-            }
-                timer = new Timer();
-            timer.scheduleAtFixedRate(new TimerTask() {
-                @Override
-                public void run() {
-                    Platform.runLater(()->{
-                        startTimer();
-                        try {
-                            int number = habitat.Update( System.currentTimeMillis() - initializationTime);
-                            CarContainer carContainer = habitat.getCarContainer();
-                            if (number == 1){
-                                imgPane.getChildren().add(carContainer.getCarList().get(carContainer.getCarList().size()-1).getImageView());
-                            }
-                            else if (number == 2) {
-                                imgPane.getChildren().add(carContainer.getCarList().get(carContainer.getCarList().size()-1).getImageView());
-                                imgPane.getChildren().add(carContainer.getCarList().get(carContainer.getCarList().size()-2).getImageView());
-                            }
-                            checkDeath(carContainer);
-                        } catch (FileNotFoundException e) {
-                            throw new RuntimeException(e);
-                        }
-                    });
-                }
-            }, 0, 1000);
+        if (initializationTime == 0) {
+            initializationTime = System.currentTimeMillis();
         }
-    private void checkDeath(CarContainer carContainer) {
-        if (!carContainer.getBirthTimeMap().isEmpty()) {
-            long currentTime = (System.currentTimeMillis() - initializationTime) / 1000;
-            Iterator<Map.Entry<Long, Integer>> iterator = carContainer.getBirthTimeMap().entrySet().iterator(); //обходим HasMap получаем все ключи и значения
-            while (iterator.hasNext()) {
-                Map.Entry<Long, Integer> entry = iterator.next();
-                long birthTimee = entry.getKey();
-                int id = entry.getValue();
-                long lifeTime = currentTime - birthTimee;
 
-                Transport transport = carContainer.getCarList().stream()  // Теперь ищем в carContainer объект с нашим(id)
-                        .filter(t -> t.getId() == id) //проверяет id
-                        .findFirst() //возвращает 1-ый объект с подходящим id
-                        .orElse(null); // возвращает объект|null
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(() -> {
+                    startTimer();
+                    try {
+                        int number = habitat.Update(System.currentTimeMillis() - initializationTime - pauseTime);
+                        CarContainer carContainer = habitat.getCarContainer();
+                        if (number == 1) {
+                            imgPane.getChildren().add(carContainer.getCarList().get(carContainer.getCarList().size() - 1).getImageView());
+                        } else if (number == 2) {
+                            imgPane.getChildren().add(carContainer.getCarList().get(carContainer.getCarList().size() - 1).getImageView());
+                            imgPane.getChildren().add(carContainer.getCarList().get(carContainer.getCarList().size() - 2).getImageView());
+                        }
 
-                if (transport != null) {
-                    if (transport instanceof Truck && lifeTime >= habitat.lifeTimeN1) {
-                        imgPane.getChildren().remove(transport.getImageView());
-                        iterator.remove();
-                        carContainer.getCarList().remove(transport);
-                        System.out.println("Удалили грузовик");
-                    } else if (transport instanceof Passenger && lifeTime >= habitat.lifeTimeN2) {
-                        imgPane.getChildren().remove(transport.getImageView());
-                        iterator.remove();
-                        carContainer.getCarList().remove(transport);
-                        System.out.println("Удалили легковушку");
-                    } else {
-                        System.out.println("Ничего не удаляем");
+                        // Проверяем состояние объектов и удаляем устаревшие
+                        checkDeath(carContainer);
+                    } catch (FileNotFoundException e) {
+                        throw new RuntimeException(e);
                     }
+                });
+            }
+        }, 0, 1000);
+    }
+
+    private void checkDeath(CarContainer carContainer) {
+        if (!(carContainer.getBirthTimeMap().isEmpty())) {
+            long currentTime = System.currentTimeMillis(); // Текущее время
+            Iterator<Transport> iterator = carContainer.getCarList().iterator();
+            while (iterator.hasNext()) {
+                Transport transport = iterator.next();
+                if (transport instanceof Truck) {
+                    Truck truck = (Truck) transport; // Приведение к типу Truck
+                    if (truck.isLifeTimeExpired(currentTime, habitat.lifeTimeN1,pauseTime)) {
+                        imgPane.getChildren().remove(truck.getImageView());
+                        iterator.remove(); // Удаление из списка
+                        carContainer.getBirthTimeMap().remove(truck.getId());
+                        carContainer.getIdSet().remove(truck.getId());
+                        System.out.println("Удалили грузовик");
+                    }
+                } else if (transport instanceof Passenger) {
+                    Passenger passenger = (Passenger) transport;
+                    if (passenger.isLifeTimeExpired(currentTime, habitat.lifeTimeN2,pauseTime)) {
+                        imgPane.getChildren().remove(passenger.getImageView());
+                        iterator.remove(); // Удаление из списка
+                        carContainer.getBirthTimeMap().remove(passenger.getId());
+                        carContainer.getIdSet().remove(passenger.getId());
+                        System.out.println("Удалили легковушку время жизни: " + passenger.getCreationTime());
+                    }
+                } else {
+                    System.out.println("Ничего не удаляем");
                 }
             }
         }
     }
-
     private void pauseIntialize() {
         swapDisable();
         timer.cancel();
     }
-    private  void swapDisable(){
+
+    private void swapDisable() {
         startButton.setDisable(!(startButton.isDisabled()));
         stopButton.setDisable(!(stopButton.isDisabled()));
 
@@ -303,8 +317,8 @@ public class HelloController implements Initializable {
         lifeTimePassenger.setDisable(!(lifeTimePassenger.isDisabled()));
         passengerComboBox.setDisable(!(passengerComboBox.isDisabled()));
     }
-    public void stopInitialize()
-    {
+
+    public void stopInitialize() {
         if (timer != null) {
             timer.cancel();
             pauseTime = 0;
@@ -317,7 +331,8 @@ public class HelloController implements Initializable {
             carContainer.getCarList().clear();
         }
     }
-    public void model(){
+
+    public void model() {
         long start = System.currentTimeMillis();
         Statistic statistic = new Statistic(this);
         statistic.openModalWindow(start);
