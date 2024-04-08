@@ -4,14 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f32cf832-ed7d-4a95-8d2b-1e70564c6b12" name="Changes" comment="Лаба 3: готовы поля для ввода времени жизни, добавлена кнопка показа текущих объектов. Багулька с грузовиками, сделать модальное окно">
+    <list default="true" id="f32cf832-ed7d-4a95-8d2b-1e70564c6b12" name="Changes" comment="Лаба 3: готовая (возможны багульки)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/management/CarContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/CarContainer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/management/HelloController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/HelloController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/management/Statistic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/Statistic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/transports/Passenger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/transports/Passenger.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/transports/Truck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/transports/Truck.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/git/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/git/hello-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +92,8 @@
       <workItem from="1712320346417" duration="3000" />
       <workItem from="1712555496418" duration="907000" />
       <workItem from="1712556467058" duration="7438000" />
-      <workItem from="1712571237304" duration="654000" />
+      <workItem from="1712571237304" duration="739000" />
+      <workItem from="1712572334553" duration="1570000" />
     </task>
     <task id="LOCAL-00001" summary="start">
       <option name="closed" value="true" />
@@ -186,7 +183,15 @@
       <option name="project" value="LOCAL" />
       <updated>1712309582892</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Лаба 3: готовая (возможны багульки)">
+      <option name="closed" value="true" />
+      <created>1712571950840</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1712571950840</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -225,6 +230,7 @@
     <MESSAGE value="оптимизированный код" />
     <MESSAGE value="Лаба 3: добавлена зависимость размеров Pane от экрана" />
     <MESSAGE value="Лаба 3: готовы поля для ввода времени жизни, добавлена кнопка показа текущих объектов. Багулька с грузовиками, сделать модальное окно" />
-    <option name="LAST_COMMIT_MESSAGE" value="Лаба 3: готовы поля для ввода времени жизни, добавлена кнопка показа текущих объектов. Багулька с грузовиками, сделать модальное окно" />
+    <MESSAGE value="Лаба 3: готовая (возможны багульки)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Лаба 3: готовая (возможны багульки)" />
   </component>
 </project>

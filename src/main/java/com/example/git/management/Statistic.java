@@ -88,7 +88,8 @@ public class Statistic extends Application {
         modalStage.setTitle("Модальное окно со статистикой на данный момент");
 
         ObservableList<String> items = FXCollections.observableArrayList();
-        long currentTime = System.currentTimeMillis(); // Учитываем время начала паузы
+        items.clear();
+        long currentTime = System.currentTimeMillis();
         for (Map.Entry<Integer, Long> entry : birthTimeMap.entrySet()) {
             // Учитываем время начала паузы при расчете времени жизни объектов
             long birthTime = entry.getValue();

@@ -78,7 +78,7 @@
                 <Text layoutX="493.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Грузовых автомобилей" />
                 <TextField fx:id="lifeTimeTruck" layoutX="633.0" layoutY="103.0" onAction="#check" onKeyTyped="#handleNumericInput" prefHeight="25.0" prefWidth="33.0" text="5" />
                 <TextField fx:id="lifeTimePassenger" layoutX="633.0" layoutY="65.0" onAction="#check" onKeyTyped="#handleNumericInput" prefHeight="25.0" prefWidth="33.0" text="7" />
-                <Button layoutX="999.0" layoutY="61.0" mnemonicParsing="false" prefHeight="49.0" onAction="#currentObject" prefWidth="144.0" style="-fx-background-color: #ffffff; -fx-background-radius: 100;" text="Текущие объекты" />
+                <Button fx:id="lookButton" layoutX="999.0" layoutY="61.0" mnemonicParsing="false" prefHeight="49.0" disable="true" onAction="#currentObject" prefWidth="144.0" style="-fx-background-color: #ffffff; -fx-background-radius: 100;" text="Текущие объекты" />
             </children>
         </Pane>
         <Pane fx:id="imgPane" layoutY="200.0" prefHeight="611.0" prefWidth="1345.0" style="-fx-background-color: #E3DED3;" VBox.vgrow="ALWAYS" />

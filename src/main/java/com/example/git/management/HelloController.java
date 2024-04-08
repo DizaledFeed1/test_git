@@ -24,7 +24,7 @@ public class HelloController implements Initializable {
     @FXML
     private Label timerLabel, textTimer;
     @FXML
-    private Button startButton, stopButton;
+    private Button startButton, stopButton,lookButton;
     @FXML
     private RadioButton open, close;
     @FXML
@@ -53,7 +53,7 @@ public class HelloController implements Initializable {
     @FXML
     public void currentObject() {
         long start = System.currentTimeMillis();
-        pauseIntialize();
+        timer.cancel();
         Statistic statistic = new Statistic(this);
         statistic.openModalWindowLife(habitat.getCarContainer().getBirthTimeMap());
         pauseTime += System.currentTimeMillis() - start;
@@ -74,16 +74,16 @@ public class HelloController implements Initializable {
             int truckTimeLive = Integer.parseInt(truckInputTime);
             int passengerTimeLive = Integer.parseInt(passengerInputTime);
 
-            if (truckValue == 0 || truckValue > 100) {
+            if (truckValue == 0 || truckValue >= 100) {
                 truckTextField.setText("1");
                 throw new IllegalArgumentException();
-            } else if (passengerValue == 0 || passengerValue > 100) {
+            } else if (passengerValue == 0 || passengerValue >= 100) {
                 passengerTextField.setText("1");
                 throw new IllegalArgumentException();
-            } else if (truckTimeLive == 0 || truckTimeLive > 100) {
+            } else if (truckTimeLive == 0 || truckTimeLive >= 100) {
                 lifeTimeTruck.setText("1");
                 throw new IllegalArgumentException();
-            } else if (passengerTimeLive == 0 || passengerTimeLive > 100) {
+            } else if (passengerTimeLive == 0 || passengerTimeLive >= 100) {
                 lifeTimePassenger.setText("1");
                 throw new IllegalArgumentException();
             }
@@ -234,9 +234,14 @@ public class HelloController implements Initializable {
     }
 
     public void start() {
-        swapDisable();
+        if (!startButton.isDisabled()) {
+            swapDisable();
+        }
+        lookButton.setDisable(false);
         habitat.setTruckTime(Integer.parseInt(truckTextField.getText()));
         habitat.setPassengerTime(Integer.parseInt(passengerTextField.getText()));
+        habitat.setLifeTimeN1(Integer.parseInt(lifeTimeTruck.getText()));
+        habitat.setLifeTimeN2(Integer.parseInt(lifeTimePassenger.getText()));
         if (initializationTime == 0) {
             initializationTime = System.currentTimeMillis();
         }
@@ -328,6 +333,9 @@ public class HelloController implements Initializable {
             Truck.intTruck = 0;
             CarContainer carContainer = habitat.getCarContainer();
             carContainer.getCarList().forEach((tmp) -> imgPane.getChildren().remove(tmp.getImageView()));
+            habitat.getCarContainer().getCarList().clear();
+            habitat.getCarContainer().getIdSet().clear();
+            habitat.getCarContainer().getBirthTimeMap().clear();
             carContainer.getCarList().clear();
         }
     }
