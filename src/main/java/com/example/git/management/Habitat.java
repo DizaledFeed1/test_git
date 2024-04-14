@@ -58,7 +58,7 @@ public class Habitat {
                 number++;
                 int finalX = rand.nextInt(width / 2 - 200); // Случайная точка X в левой половине области
                 int finalY = rand.nextInt((height-200) / 2 - 200);
-                Truck truck = new Truck(rand.nextInt(0, width - 220), rand.nextInt(0, 610 - 200),105,finalY, rand.nextInt(Integer.MAX_VALUE), lifeTimeN1);
+                Truck truck = new Truck(rand.nextInt(0, width - 220), rand.nextInt(0, 610 - 200),finalX,finalY, rand.nextInt(Integer.MAX_VALUE), lifeTimeN1);
                 carContainer.addCar(truck,newTime);
 
             }
@@ -66,7 +66,7 @@ public class Habitat {
                 number++;
                 int finalX = rand.nextInt(width / 2, width-220); //
                 int finalY = rand.nextInt(305, 410);
-                Passenger passenger = new Passenger(rand.nextInt(0, width - 220) , rand.nextInt(0, 610 - 200),finalX,finalY, rand.nextInt(Integer.MAX_VALUE), lifeTimeN2);
+                Passenger passenger = new Passenger(rand.nextInt(0, width - 220) , rand.nextInt(0, 810 - 200),finalX,finalY, rand.nextInt(Integer.MAX_VALUE), lifeTimeN2);
                 carContainer.addCar(passenger,newTime);
             }
         }

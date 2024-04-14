@@ -15,6 +15,7 @@ public class Truck extends Transport implements IBehaviour {
     public Truck(int x, int y,int finalyX,int finalyY, int id, long lifetime) throws FileNotFoundException {
         super(x, y,finalyX,finalyY, img, id, lifetime);
         creationTime = System.currentTimeMillis(); // Запоминаем время создания
+        System.out.println("x:" + x + " y: " + y);
         intTruck ++;
     }
 

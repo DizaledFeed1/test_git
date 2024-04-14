@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f32cf832-ed7d-4a95-8d2b-1e70564c6b12" name="Changes" comment="Лаба 4: реализовано движение объектов. Движение работает некоректно, объекты едут не в те места, нет проверки места появления объекта">
+    <list default="true" id="f32cf832-ed7d-4a95-8d2b-1e70564c6b12" name="Changes" comment="Лаба 4: реализовано движение объектов. Нет проверки места появления объекта">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/management/Habitat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/Habitat.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/management/HelloController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/HelloController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/transports/Truck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/transports/Truck.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,7 +109,7 @@
       <workItem from="1712816311243" duration="1437000" />
       <workItem from="1712817873052" duration="7968000" />
       <workItem from="1713070817760" duration="17511000" />
-      <workItem from="1713088497574" duration="6722000" />
+      <workItem from="1713088497574" duration="8928000" />
     </task>
     <task id="LOCAL-00001" summary="start">
       <option name="closed" value="true" />
@@ -222,7 +223,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713084199408</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Лаба 4: реализовано движение объектов. Нет проверки места появления объекта">
+      <option name="closed" value="true" />
+      <created>1713095374122</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1713095374122</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -264,6 +273,7 @@
     <MESSAGE value="Лаба 3: готовая (возможны багульки)" />
     <MESSAGE value="Лаба 3: исправлен баг кнопки текущие объекты, добавлена возможность вводить с клавиатуры времене жизни" />
     <MESSAGE value="Лаба 4: реализовано движение объектов. Движение работает некоректно, объекты едут не в те места, нет проверки места появления объекта" />
-    <option name="LAST_COMMIT_MESSAGE" value="Лаба 4: реализовано движение объектов. Движение работает некоректно, объекты едут не в те места, нет проверки места появления объекта" />
+    <MESSAGE value="Лаба 4: реализовано движение объектов. Нет проверки места появления объекта" />
+    <option name="LAST_COMMIT_MESSAGE" value="Лаба 4: реализовано движение объектов. Нет проверки места появления объекта" />
   </component>
 </project>

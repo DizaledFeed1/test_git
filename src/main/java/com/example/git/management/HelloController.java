@@ -271,7 +271,14 @@ public class HelloController implements Initializable {
                             // Сохраняем начальные координаты объекта
                             imageView.setLayoutX(imageView.getLayoutX());
                             imageView.setLayoutY(imageView.getLayoutY());
-                            moveTransport(transport);
+                            if (transport instanceof Truck) {
+                                if (transport.getImageView().getLayoutX() > 410 || transport.getImageView().getLayoutY() > 205) {
+                                    moveTransport(transport);
+                                }
+                            } else if (transport instanceof Passenger){
+                                if (transport.getImageView().getLayoutX() < 630 || transport.getImageView().getLayoutY() < 305)
+                                moveTransport(transport);
+                            }
                         }
 
                         // Проверяем состояние объектов и удаляем устаревшие
@@ -285,7 +292,6 @@ public class HelloController implements Initializable {
     }
 
     private void moveTransport(Transport transport) {
-        if (transport instanceof Truck && transport.getImageView().getLayoutX() > 430 && transport.getImageView().getLayoutY() > 105) {
             // Создаем анимацию перемещения
             TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(5), transport.getImageView());
 
@@ -298,7 +304,6 @@ public class HelloController implements Initializable {
 
             // Запускаем анимацию
             translateTransition.play();
-        }
     }
 
 
