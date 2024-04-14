@@ -4,34 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f32cf832-ed7d-4a95-8d2b-1e70564c6b12" name="Changes" comment="Лаба 3: исправлен баг кнопки текущие объекты, добавлена возможность вводить с клавиатуры времене жизни">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/TransportAnimation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_01_04_2024_21_09_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_01_04_2024_21_09__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_01_04_2024_21_11_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_01_04_2024_21_11__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_01_04_2024_21_30_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_01_04_2024_21_30__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_01_04_2024_21_31_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_01_04_2024_21_31__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_02_04_2024_9_07_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_02_04_2024_9_07__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_02_04_2024_9_08_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_02_04_2024_9_08__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_04_04_2024_19_27_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_04_04_2024_19_27__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_01_04_2024_21_32_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_01_04_2024_21_32__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_04_04_2024_19_30_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_04_04_2024_19_30__Changes_.xml" beforeDir="false" />
+    <list default="true" id="f32cf832-ed7d-4a95-8d2b-1e70564c6b12" name="Changes" comment="Лаба 4: реализовано движение объектов. Движение работает некоректно, объекты едут не в те места, нет проверки места появления объекта">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/management/Habitat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/Habitat.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/management/HelloController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/HelloController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/transports/Passenger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/transports/Passenger.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/transports/Transport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/transports/Transport.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/transports/Truck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/transports/Truck.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/git/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/git/hello-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +38,7 @@
     </option>
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
+    <option name="selectedTabId" value="ProjectErrors" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
@@ -75,7 +51,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.HelloApplication.executor": "Debug",
+    "Application.HelloApplication.executor": "Run",
     "Application.Statistic.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -131,7 +107,8 @@
       <workItem from="1712647308360" duration="245000" />
       <workItem from="1712816311243" duration="1437000" />
       <workItem from="1712817873052" duration="7968000" />
-      <workItem from="1713070817760" duration="13015000" />
+      <workItem from="1713070817760" duration="17511000" />
+      <workItem from="1713088497574" duration="6722000" />
     </task>
     <task id="LOCAL-00001" summary="start">
       <option name="closed" value="true" />
@@ -237,7 +214,15 @@
       <option name="project" value="LOCAL" />
       <updated>1712574177142</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Лаба 4: реализовано движение объектов. Движение работает некоректно, объекты едут не в те места, нет проверки места появления объекта">
+      <option name="closed" value="true" />
+      <created>1713084199408</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1713084199408</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -278,6 +263,7 @@
     <MESSAGE value="Лаба 3: готовы поля для ввода времени жизни, добавлена кнопка показа текущих объектов. Багулька с грузовиками, сделать модальное окно" />
     <MESSAGE value="Лаба 3: готовая (возможны багульки)" />
     <MESSAGE value="Лаба 3: исправлен баг кнопки текущие объекты, добавлена возможность вводить с клавиатуры времене жизни" />
-    <option name="LAST_COMMIT_MESSAGE" value="Лаба 3: исправлен баг кнопки текущие объекты, добавлена возможность вводить с клавиатуры времене жизни" />
+    <MESSAGE value="Лаба 4: реализовано движение объектов. Движение работает некоректно, объекты едут не в те места, нет проверки места появления объекта" />
+    <option name="LAST_COMMIT_MESSAGE" value="Лаба 4: реализовано движение объектов. Движение работает некоректно, объекты едут не в те места, нет проверки места появления объекта" />
   </component>
 </project>

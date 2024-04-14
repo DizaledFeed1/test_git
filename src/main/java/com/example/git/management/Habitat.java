@@ -1,21 +1,17 @@
 package com.example.git.management;
 
 import com.example.git.transports.Passenger;
-import com.example.git.transports.Transport;
 import com.example.git.transports.Truck;
-import javafx.animation.PathTransition;
 import javafx.fxml.FXML;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextField;
-import javafx.scene.shape.LineTo;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
-import javafx.util.Duration;
+import javafx.scene.layout.Pane;
+
 
 import java.io.FileNotFoundException;
 import java.util.Random;
 
 public class Habitat {
+    @FXML
+    private Pane imgPane;
     private static final int width = 1260;
     private static final int height = 810;
     private CarContainer carContainer = CarContainer.getInstance();
@@ -60,42 +56,24 @@ public class Habitat {
         try {
             if ((newTime % n1 == 0) && (p1 >= p)) {
                 number++;
-                 x = rand.nextInt(0,630);
-                 y = rand.nextInt(0,305);
-                Truck truck = new Truck(rand.nextInt(0, width - 220), rand.nextInt(0, 610 - 200),x,y, rand.nextInt(Integer.MAX_VALUE), lifeTimeN1);
+                int finalX = rand.nextInt(width / 2 - 200); // Случайная точка X в левой половине области
+                int finalY = rand.nextInt((height-200) / 2 - 200);
+                Truck truck = new Truck(rand.nextInt(0, width - 220), rand.nextInt(0, 610 - 200),105,finalY, rand.nextInt(Integer.MAX_VALUE), lifeTimeN1);
                 carContainer.addCar(truck,newTime);
-                moveTransport(truck);
+
             }
             if ((newTime % n2 == 0) && (p2 >= p)) {
                 number++;
-                x = rand.nextInt(630,1260);
-                y = rand.nextInt(305,610);
-                Passenger passenger = new Passenger(rand.nextInt(0, width - 220) , rand.nextInt(0, 610 - 200),x,y, rand.nextInt(Integer.MAX_VALUE), lifeTimeN2);
+                int finalX = rand.nextInt(width / 2, width-220); //
+                int finalY = rand.nextInt(305, 410);
+                Passenger passenger = new Passenger(rand.nextInt(0, width - 220) , rand.nextInt(0, 610 - 200),finalX,finalY, rand.nextInt(Integer.MAX_VALUE), lifeTimeN2);
                 carContainer.addCar(passenger,newTime);
-                moveTransport(passenger);
             }
         }
         catch(FileNotFoundException ex){
             ex.printStackTrace();
         }
         return number;
-    }
-    private void moveTransport(Transport transport) {
-        double startX = transport.getImageView().getLayoutX();
-        double startY = transport.getImageView().getLayoutY();
-        int finalX = transport.getFinalX();
-        int finalY = transport.getFinalY();
-
-        Path path = new Path();
-        path.getElements().add(new MoveTo(startX, startY));
-        path.getElements().add(new LineTo(finalX, finalY));
-
-        PathTransition pathTransition = new PathTransition();
-        pathTransition.setDuration(Duration.seconds(5)); // Настройте длительность анимации по вашему усмотрению
-        pathTransition.setPath(path);
-        pathTransition.setNode(transport.getImageView());
-
-        pathTransition.play();
     }
     public CarContainer getCarContainer() {
         return carContainer;

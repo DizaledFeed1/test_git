@@ -5,6 +5,7 @@ import com.example.git.transports.Transport;
 import com.example.git.transports.Truck;
 import javafx.animation.Interpolator;
 import javafx.animation.PathTransition;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -263,11 +264,14 @@ public class HelloController implements Initializable {
                     try {
                         int number = habitat.Update(System.currentTimeMillis() - initializationTime - pauseTime);
                         CarContainer carContainer = habitat.getCarContainer();
-                        if (number == 1) {
-                            imgPane.getChildren().add(carContainer.getCarList().get(carContainer.getCarList().size() - 1).getImageView());
-                        } else if (number == 2) {
-                            imgPane.getChildren().add(carContainer.getCarList().get(carContainer.getCarList().size() - 1).getImageView());
-                            imgPane.getChildren().add(carContainer.getCarList().get(carContainer.getCarList().size() - 2).getImageView());
+                        for (int i = 0; i < number; i++) {
+                            Transport transport = carContainer.getCarList().get(carContainer.getCarList().size() - i - 1);
+                            ImageView imageView = transport.getImageView();
+                            imgPane.getChildren().add(imageView);
+                            // Сохраняем начальные координаты объекта
+                            imageView.setLayoutX(imageView.getLayoutX());
+                            imageView.setLayoutY(imageView.getLayoutY());
+                            moveTransport(transport);
                         }
 
                         // Проверяем состояние объектов и удаляем устаревшие
@@ -279,6 +283,27 @@ public class HelloController implements Initializable {
             }
         }, 0, 1000);
     }
+
+    private void moveTransport(Transport transport) {
+        if (transport instanceof Truck && transport.getImageView().getLayoutX() > 430 && transport.getImageView().getLayoutY() > 105) {
+            // Создаем анимацию перемещения
+            TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(5), transport.getImageView());
+
+            double deltaX = transport.getFinalX() - transport.getImageView().getLayoutX();
+            double deltaY = transport.getFinalY() - transport.getImageView().getLayoutY();
+
+            // Устанавливаем конечные координаты
+            translateTransition.setByX(deltaX);
+            translateTransition.setByY(deltaY);
+
+            // Запускаем анимацию
+            translateTransition.play();
+        }
+    }
+
+
+
+
     private void checkDeath(CarContainer carContainer) {
         if (!(carContainer.getBirthTimeMap().isEmpty())) {
             long currentTime = System.currentTimeMillis(); // Текущее время
