@@ -273,14 +273,16 @@ public class HelloController implements Initializable {
                             imageView.setLayoutY(imageView.getLayoutY());
                             if (transport instanceof Truck) {
                                 if (transport.getImageView().getLayoutX() > 410 || transport.getImageView().getLayoutY() > 205) {
-                                    moveTransport(transport);
+                                    BaseAI truckAI = new TruckAI(transport, 7000);
+                                    truckAI.start();
                                 }
-                            } else if (transport instanceof Passenger){
-                                if (transport.getImageView().getLayoutX() < 630 || transport.getImageView().getLayoutY() < 305)
-                                moveTransport(transport);
+                            } else if (transport instanceof Passenger) {
+                                if (transport.getImageView().getLayoutX() < 630 || transport.getImageView().getLayoutY() < 305) {
+                                    BaseAI passengerAI = new TruckAI(transport, 7000);
+                                    passengerAI.start();
+                                }
                             }
                         }
-
                         // Проверяем состояние объектов и удаляем устаревшие
                         checkDeath(carContainer);
                     } catch (FileNotFoundException e) {
@@ -305,10 +307,6 @@ public class HelloController implements Initializable {
             // Запускаем анимацию
             translateTransition.play();
     }
-
-
-
-
     private void checkDeath(CarContainer carContainer) {
         if (!(carContainer.getBirthTimeMap().isEmpty())) {
             long currentTime = System.currentTimeMillis(); // Текущее время
