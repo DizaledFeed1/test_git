@@ -3,13 +3,21 @@ package com.example.git.management;
 import com.example.git.transports.Passenger;
 import com.example.git.transports.Transport;
 import com.example.git.transports.Truck;
+import javafx.animation.Interpolator;
+import javafx.animation.PathTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Point2D;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.LineTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
 import javafx.stage.Screen;
+import javafx.util.Duration;
 
 import java.io.FileNotFoundException;
 import java.net.URL;
@@ -271,7 +279,6 @@ public class HelloController implements Initializable {
             }
         }, 0, 1000);
     }
-
     private void checkDeath(CarContainer carContainer) {
         if (!(carContainer.getBirthTimeMap().isEmpty())) {
             long currentTime = System.currentTimeMillis(); // Текущее время
@@ -294,7 +301,6 @@ public class HelloController implements Initializable {
                         iterator.remove(); // Удаление из списка
                         carContainer.getBirthTimeMap().remove(passenger.getId());
                         carContainer.getIdSet().remove(passenger.getId());
-                        System.out.println("Удалили легковушку время жизни: " + passenger.getCreationTime());
                     }
                 } else {
                     System.out.println("Ничего не удаляем");

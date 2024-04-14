@@ -7,10 +7,13 @@
     public abstract class Transport
     {
         private int id;
+        private int finalX,finalY;
         private final long lifetime;
         final ImageView imgView;
-        public Transport(int x, int y, Image img, int id, long lifetime){
+        public Transport(int x, int y,int finalX,int finalY, Image img, int id, long lifetime){
             this.id = id;
+            this.finalX = finalX;
+            this.finalY = finalY;
             this.lifetime = lifetime;
             imgView = new ImageView(img);
             imgView.setLayoutX(x);
@@ -20,4 +23,6 @@
         }
         public ImageView getImageView() {return imgView;}
         public int getId(){return id;}
+        public  int getFinalX(){return finalX;}
+        public  int getFinalY(){return finalY;}
     }
