@@ -4,13 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f32cf832-ed7d-4a95-8d2b-1e70564c6b12" name="Changes" comment="Лаба 4: Возможны багульки">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/BaseAI.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/PassengerAI.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/TruckAI.java" afterDir="false" />
+    <list default="true" id="f32cf832-ed7d-4a95-8d2b-1e70564c6b12" name="Changes" comment="Лаба 4: остались 4 и 5 пункт">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/management/BaseAI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/BaseAI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/management/Habitat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/Habitat.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/management/HelloController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/HelloController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/management/TransportAnimation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/management/PassengerAI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/PassengerAI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/management/TruckAI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/TruckAI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/git/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/git/hello-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,7 +42,7 @@
     </option>
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
@@ -52,26 +53,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Statistic.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Dizaled/IdeaProjects/git/src/main/resources/com/example/git&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.HelloApplication.executor": "Run",
+    "Application.Statistic.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Dizaled/IdeaProjects/git/src/main/resources/com/example/git",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Dizaled\IdeaProjects\git\src\main\resources\com\example\git" />
@@ -112,7 +113,18 @@
       <workItem from="1712817873052" duration="7968000" />
       <workItem from="1713070817760" duration="17511000" />
       <workItem from="1713088497574" duration="9371000" />
-      <workItem from="1713101320853" duration="3753000" />
+      <workItem from="1713101320853" duration="4055000" />
+      <workItem from="1713163907698" duration="17839000" />
+      <workItem from="1713189371021" duration="3613000" />
+      <workItem from="1713194963047" duration="487000" />
+      <workItem from="1713195951894" duration="1504000" />
+      <workItem from="1713249108136" duration="7555000" />
+      <workItem from="1713262035249" duration="2777000" />
+      <workItem from="1713271840592" duration="1708000" />
+      <workItem from="1713332971016" duration="3000" />
+      <workItem from="1713434089130" duration="8623000" />
+      <workItem from="1713443016711" duration="909000" />
+      <workItem from="1713456837226" duration="3110000" />
     </task>
     <task id="LOCAL-00001" summary="start">
       <option name="closed" value="true" />
@@ -242,7 +254,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713097559615</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Лаба 4: остались 4 и 5 пункт">
+      <option name="closed" value="true" />
+      <created>1713105344721</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1713105344721</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -286,6 +306,7 @@
     <MESSAGE value="Лаба 4: реализовано движение объектов. Движение работает некоректно, объекты едут не в те места, нет проверки места появления объекта" />
     <MESSAGE value="Лаба 4: реализовано движение объектов. Нет проверки места появления объекта" />
     <MESSAGE value="Лаба 4: Возможны багульки" />
-    <option name="LAST_COMMIT_MESSAGE" value="Лаба 4: Возможны багульки" />
+    <MESSAGE value="Лаба 4: остались 4 и 5 пункт" />
+    <option name="LAST_COMMIT_MESSAGE" value="Лаба 4: остались 4 и 5 пункт" />
   </component>
 </project>

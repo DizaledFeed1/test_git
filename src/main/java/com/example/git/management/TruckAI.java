@@ -1,38 +1,60 @@
 package com.example.git.management;
 
 import com.example.git.transports.Transport;
-import javafx.animation.TranslateTransition;
-import javafx.application.Platform;
-import javafx.util.Duration;
+import com.example.git.transports.Truck;
+
+import java.util.ArrayList;
 
 public class TruckAI extends BaseAI {
-    private final Transport transport;
 
-    public TruckAI(Transport transport, int interval) {
-        super(interval);
-        this.transport = transport;
+    private boolean flag = true;
+
+    public void pause(){
+        flag = false;
     }
 
+    public TruckAI(ArrayList arrayList) {
+        super(100);
+        transportList = arrayList;
+        super.start();
+    }
     @Override
-    protected void moveTransport() {
-        Platform.runLater(() -> {
-            // Создаем анимацию перемещения
-            TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(5), transport.getImageView());
+    protected synchronized void moveTransport(ArrayList<Transport> list) {
+        synchronized (this){
+                if (flag == false){
+                    try {
+                        System.out.println("Stop");
+                        running = false;
+                        this.wait();
+                        System.out.println("Start");
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            synchronized (list) {
+                for (Transport transport : list) {
+                    if (transport instanceof Truck) {
+                        double startX = transport.getImageView().getLayoutX();
+                        double startY = transport.getImageView().getLayoutY();
+                        double finalX = transport.getFinalX();
+                        double finalY = transport.getFinalY();
 
-            double deltaX = transport.getFinalX() - transport.getImageView().getLayoutX();
-            double deltaY = transport.getFinalY() - transport.getImageView().getLayoutY();
+                        if (startX > 630 || startY > 305 || (startX != finalX && startY != finalY)) {
+                            double deltaX = (finalX - startX) / getInterval();
+                            double deltaY = (finalY - startY) / getInterval();
 
-            // Устанавливаем конечные координаты
-            translateTransition.setByX(deltaX);
-            translateTransition.setByY(deltaY);
-
-            translateTransition.setOnFinished(event -> {
-                // Действия после завершения анимации, например, завершение потока AI
-                stop();
-            });
-
-            // Запускаем анимацию
-            translateTransition.play();
-        });
+                            transport.getImageView().setLayoutX(startX + deltaX);
+                            transport.getImageView().setLayoutY(startY + deltaY);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    public synchronized void resumeAI() {
+        flag = true;
+        running = true;
+        super.notify();
     }
 }
+

@@ -3,37 +3,30 @@ package com.example.git.management;
 import com.example.git.transports.Passenger;
 import com.example.git.transports.Transport;
 import com.example.git.transports.Truck;
-import javafx.animation.Interpolator;
-import javafx.animation.PathTransition;
-import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Point2D;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.LineTo;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
 import javafx.stage.Screen;
-import javafx.util.Duration;
-
 import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.*;
 
 public class HelloController implements Initializable {
     Habitat habitat = new Habitat();
-    Timer timer;
+    private TruckAI truckAI;
+    private PassengerAI passengerAI;
+    Timer timer, timerPrint;
     @FXML
     public Pane root, imgPane, modalPane;
     public long initializationTime;
     @FXML
     private Label timerLabel, textTimer;
     @FXML
-    private Button startButton, stopButton,lookButton;
+    private Button startButton, stopButton,lookButton,truckOnButton,truckOffButton,passengerOnButton,passengerOffButton;
     @FXML
     private RadioButton open, close;
     @FXML
@@ -54,7 +47,6 @@ public class HelloController implements Initializable {
     public void menuBox() {
         CheckBoxMain.setSelected(CheckBoxMenu.isSelected());
     }
-
     @FXML
     public void mainBox() {
         CheckBoxMenu.setSelected(CheckBoxMain.isSelected());
@@ -100,7 +92,6 @@ public class HelloController implements Initializable {
             showAlert();
         }
     }
-
     @FXML
     public void handleNumericInput(KeyEvent event) {
         TextField textField = (TextField) event.getSource();
@@ -112,6 +103,8 @@ public class HelloController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        truckAI = new TruckAI(habitat.getCarContainer().getCarList());
+        passengerAI = new PassengerAI(habitat.getCarContainer().getCarList());
         ToggleGroup group = new ToggleGroup();
         open.setToggleGroup(group);
         close.setToggleGroup(group);
@@ -146,7 +139,6 @@ public class HelloController implements Initializable {
             stopInitialize();
             start();
         });
-
         MenuStopBtn.setOnAction(event -> {
             pauseIntialize();
             if (CheckBoxMenu.isSelected()) {
@@ -179,8 +171,37 @@ public class HelloController implements Initializable {
                 model();
             }
         });
+        truckOnButton.setOnAction(event ->{
+            swapAIButton(1);
+            truckAI.resumeAI();
+        });
+        truckOffButton.setOnAction(event -> {
+            swapAIButton(1);
+            truckAI.pause();
+        });
+        passengerOnButton.setOnAction(event ->{
+            swapAIButton(2);
+            passengerAI.resumeAI();
+        });
+        passengerOffButton.setOnAction(event ->{
+            swapAIButton(2);
+            passengerAI.pause();
+        });
     }
-
+    private void swapAIButton(int number){
+        switch (number){
+            case 1:{
+                truckOnButton.setDisable(!(truckOnButton.isDisable()));
+                truckOffButton.setDisable(!(truckOffButton.isDisable()));
+                break;
+            }
+            case 2:{
+                passengerOnButton.setDisable(!(passengerOnButton.isDisabled()));
+                passengerOffButton.setDisable(!(passengerOffButton.isDisabled()));
+                break;
+            }
+        }
+    }
     public void onKey() {
         imgPane.getScene().setOnKeyReleased((KeyEvent event) -> {
             switch (event.getCode()) {
@@ -237,14 +258,26 @@ public class HelloController implements Initializable {
         alert.showAndWait();
     }
 
+    private void print(CarContainer carContainer){
+        for (Transport transport : carContainer.getCarList()){
+        }
+    }
+
+
     private void startTimer() {
         long time = System.currentTimeMillis() - initializationTime - pauseTime;
         timerLabel.setText(String.valueOf(time / 1000));
     }
-
     public void start() {
+//        passengerAI = new PassengerAI();
         if (!startButton.isDisabled()) {
             swapDisable();
+        }
+//        if (truckOnButton.isDisabled()) {
+//            truckAI.resume();
+//        }
+        if (passengerOnButton.isDisabled()) {
+//            passengerAI.resume();
         }
         lookButton.setDisable(false);
         habitat.setTruckTime(Integer.parseInt(truckTextField.getText()));
@@ -259,31 +292,18 @@ public class HelloController implements Initializable {
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                Platform.runLater(() -> {
+                Platform.runLater(()->{
                     startTimer();
                     try {
-                        int number = habitat.Update(System.currentTimeMillis() - initializationTime - pauseTime);
+                        int number = habitat.Update( System.currentTimeMillis() - initializationTime);
                         CarContainer carContainer = habitat.getCarContainer();
-                        for (int i = 0; i < number; i++) {
-                            Transport transport = carContainer.getCarList().get(carContainer.getCarList().size() - i - 1);
-                            ImageView imageView = transport.getImageView();
-                            imgPane.getChildren().add(imageView);
-                            // Сохраняем начальные координаты объекта
-                            imageView.setLayoutX(imageView.getLayoutX());
-                            imageView.setLayoutY(imageView.getLayoutY());
-                            if (transport instanceof Truck) {
-                                if (transport.getImageView().getLayoutX() > 410 || transport.getImageView().getLayoutY() > 205) {
-                                    BaseAI truckAI = new TruckAI(transport, 7000);
-                                    truckAI.start();
-                                }
-                            } else if (transport instanceof Passenger) {
-                                if (transport.getImageView().getLayoutX() < 630 || transport.getImageView().getLayoutY() < 305) {
-                                    BaseAI passengerAI = new TruckAI(transport, 7000);
-                                    passengerAI.start();
-                                }
-                            }
+                        if (number == 1){
+                            imgPane.getChildren().add(carContainer.getCarList().get(carContainer.getCarList().size()-1).getImageView());
                         }
-                        // Проверяем состояние объектов и удаляем устаревшие
+                        else if (number == 2) {
+                            imgPane.getChildren().add(carContainer.getCarList().get(carContainer.getCarList().size()-1).getImageView());
+                            imgPane.getChildren().add(carContainer.getCarList().get(carContainer.getCarList().size()-2).getImageView());
+                        }
                         checkDeath(carContainer);
                     } catch (FileNotFoundException e) {
                         throw new RuntimeException(e);
@@ -291,21 +311,6 @@ public class HelloController implements Initializable {
                 });
             }
         }, 0, 1000);
-    }
-
-    private void moveTransport(Transport transport) {
-            // Создаем анимацию перемещения
-            TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(5), transport.getImageView());
-
-            double deltaX = transport.getFinalX() - transport.getImageView().getLayoutX();
-            double deltaY = transport.getFinalY() - transport.getImageView().getLayoutY();
-
-            // Устанавливаем конечные координаты
-            translateTransition.setByX(deltaX);
-            translateTransition.setByY(deltaY);
-
-            // Запускаем анимацию
-            translateTransition.play();
     }
     private void checkDeath(CarContainer carContainer) {
         if (!(carContainer.getBirthTimeMap().isEmpty())) {

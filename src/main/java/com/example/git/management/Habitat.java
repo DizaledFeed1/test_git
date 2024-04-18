@@ -21,6 +21,7 @@ public class Habitat {
     private int n2 = 3;
     public int lifeTimeN1 = 5;
     public int lifeTimeN2 = 7;
+    int finalX,finalY,startX,startY;
 
     public void setTruckProbability(float probability) {
         this.p1 = probability;
@@ -56,17 +57,30 @@ public class Habitat {
         try {
             if ((newTime % n1 == 0) && (p1 >= p)) {
                 number++;
-                int finalX = rand.nextInt(width / 2 - 200); // Случайная точка X в левой половине области
-                int finalY = rand.nextInt((height-200) / 2 - 200);
-                Truck truck = new Truck(rand.nextInt(0, width - 220), rand.nextInt(0, 610 - 200),finalX,finalY, rand.nextInt(Integer.MAX_VALUE), lifeTimeN1);
+                startX = rand.nextInt(0, width - 220);
+                startY = rand.nextInt(0, 610 - 200);
+                if(startX > 430 || startY > 105) {
+                    finalX = rand.nextInt(width / 2 - 200);
+                    finalY = rand.nextInt((height - 200) / 2 - 200);
+                }else{
+                    finalX = startX;
+                    finalY = startY;
+                }
+                Truck truck = new Truck(startX,startY ,finalX,finalY, rand.nextInt(Integer.MAX_VALUE), lifeTimeN1);
                 carContainer.addCar(truck,newTime);
-
             }
             if ((newTime % n2 == 0) && (p2 >= p)) {
                 number++;
-                int finalX = rand.nextInt(width / 2, width-220); //
-                int finalY = rand.nextInt(305, 410);
-                Passenger passenger = new Passenger(rand.nextInt(0, width - 220) , rand.nextInt(0, 810 - 200),finalX,finalY, rand.nextInt(Integer.MAX_VALUE), lifeTimeN2);
+                startX = rand.nextInt(0, width - 220);
+                startY =  rand.nextInt(0, 610 - 200);
+                if(startX < 630 || startY < 305) {
+                    finalX = rand.nextInt(width / 2, width-220);
+                    finalY = rand.nextInt(305, 410);
+                }else{
+                    finalX = startX;
+                    finalY = startY;
+                }
+                Passenger passenger = new Passenger(startX , startY,finalX,finalY, rand.nextInt(Integer.MAX_VALUE), lifeTimeN2);
                 carContainer.addCar(passenger,newTime);
             }
         }
