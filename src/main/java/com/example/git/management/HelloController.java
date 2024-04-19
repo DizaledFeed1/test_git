@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import java.io.FileNotFoundException;
 import java.net.URL;
@@ -203,6 +204,7 @@ public class HelloController implements Initializable {
             passengerAI.pause();
         });
     }
+
     private void swapAIButton(int number){
         switch (number){
             case 1:{

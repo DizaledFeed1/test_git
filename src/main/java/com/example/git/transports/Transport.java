@@ -18,8 +18,8 @@
             imgView = new ImageView(img);
             imgView.setLayoutX(x);
             imgView.setLayoutY(y);
-            imgView.setFitWidth(220);
-            imgView.setFitHeight(200);
+            imgView.setFitWidth(200);
+            imgView.setFitHeight(150);
         }
         public ImageView getImageView() {return imgView;}
         public int getId(){return id;}
