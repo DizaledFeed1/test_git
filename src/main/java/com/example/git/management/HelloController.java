@@ -7,7 +7,6 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
@@ -19,7 +18,7 @@ public class HelloController implements Initializable {
     Habitat habitat = new Habitat();
     private TruckAI truckAI;
     private PassengerAI passengerAI;
-    Timer timer, timerPrint;
+    Timer timer;
     @FXML
     public Pane root, imgPane, modalPane;
     public long initializationTime;
@@ -38,7 +37,7 @@ public class HelloController implements Initializable {
     @FXML
     private RadioMenuItem MenuRadioBtnHide, MenuRadioBtnShow;
     @FXML
-    private ComboBox<String> passengerComboBox, truckComboBox;
+    private ComboBox<String> passengerComboBox, truckComboBox,truckAiThread,passengerAiThread,mainAiThread;
     @FXML
     private TextField truckTextField, passengerTextField, lifeTimeTruck, lifeTimePassenger;
     long pauseTime = 0;
@@ -56,9 +55,16 @@ public class HelloController implements Initializable {
         long start = System.currentTimeMillis();
         timer.cancel();
         Statistic statistic = new Statistic(this);
+        truckAI.pause();
+        passengerAI.pause();
         statistic.openModalWindowLife(habitat.getCarContainer().getBirthTimeMap());
         pauseTime += System.currentTimeMillis() - start;
         start();
+        isButtonAI();
+    }
+    @FXML
+    public void checkComboBoxAi(){
+
     }
     @FXML
     public void check() {
@@ -114,6 +120,13 @@ public class HelloController implements Initializable {
         truckComboBox.getItems().addAll("0", "10", "20", "30", "40", "50", "60", "70", "80", "90", "100");
         truckComboBox.setValue("50"); // Установка начального значения
 
+        passengerAiThread.getItems().addAll("1","2","3","4","5","6","7","8","9","10");
+        passengerAiThread.setValue("5");
+        truckAiThread.getItems().addAll("1","2","3","4","5","6","7","8","9","10");
+        truckAiThread.setValue("5");
+        mainAiThread.getItems().addAll("1","2","3","4","5","6","7","8","9","10");
+        mainAiThread.setValue("5");
+
         double screenWidth = Screen.getPrimary().getBounds().getWidth();
         double screenHeight = Screen.getPrimary().getBounds().getHeight();
 
@@ -134,6 +147,18 @@ public class HelloController implements Initializable {
         truckComboBox.setOnAction(event -> {
             String selectedValue = truckComboBox.getValue();
             habitat.setTruckProbability(Float.parseFloat(selectedValue) / 100);
+        });
+        truckAiThread.setOnAction(event ->{
+            int selectedValue = Integer.parseInt(truckAiThread.getValue());
+            truckAI.setPriority(selectedValue);
+        });
+        passengerAiThread.setOnAction(event ->{
+            int selectedValue = Integer.parseInt(passengerAiThread.getValue());
+            passengerAI.setPriority(selectedValue);
+        });
+        mainAiThread.setOnAction(event ->{
+            int selectedValue = Integer.parseInt(mainAiThread.getValue());
+            Thread.currentThread().setPriority(selectedValue);
         });
         MenuStartBtn.setOnAction(event -> {
             stopInitialize();
@@ -173,14 +198,17 @@ public class HelloController implements Initializable {
         });
         truckOnButton.setOnAction(event ->{
             swapAIButton(1);
-            truckAI.resumeAI();
+                truckAI.resumeAI();
+
         });
         truckOffButton.setOnAction(event -> {
             swapAIButton(1);
+
             truckAI.pause();
         });
         passengerOnButton.setOnAction(event ->{
             swapAIButton(2);
+
             passengerAI.resumeAI();
         });
         passengerOffButton.setOnAction(event ->{
@@ -257,28 +285,23 @@ public class HelloController implements Initializable {
         alert.setContentText("Значения должны быть цифрой, которая больше 0 и не превышать 100");
         alert.showAndWait();
     }
-
-    private void print(CarContainer carContainer){
-        for (Transport transport : carContainer.getCarList()){
+    private void isButtonAI(){
+        if (passengerOnButton.isDisabled()){
+            passengerAI.resumeAI();
+        }
+        if (truckOnButton.isDisabled()){
+            truckAI.resumeAI();
         }
     }
-
-
     private void startTimer() {
         long time = System.currentTimeMillis() - initializationTime - pauseTime;
         timerLabel.setText(String.valueOf(time / 1000));
     }
     public void start() {
-//        passengerAI = new PassengerAI();
         if (!startButton.isDisabled()) {
             swapDisable();
         }
-//        if (truckOnButton.isDisabled()) {
-//            truckAI.resume();
-//        }
-        if (passengerOnButton.isDisabled()) {
-//            passengerAI.resume();
-        }
+        isButtonAI();
         lookButton.setDisable(false);
         habitat.setTruckTime(Integer.parseInt(truckTextField.getText()));
         habitat.setPassengerTime(Integer.parseInt(passengerTextField.getText()));
@@ -344,6 +367,8 @@ public class HelloController implements Initializable {
     private void pauseIntialize() {
         swapDisable();
         timer.cancel();
+        truckAI.pause();
+        passengerAI.pause();
     }
 
     private void swapDisable() {

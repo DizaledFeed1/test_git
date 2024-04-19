@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f32cf832-ed7d-4a95-8d2b-1e70564c6b12" name="Changes" comment="Лаба 4: остались 4 и 5 пункт">
+    <list default="true" id="f32cf832-ed7d-4a95-8d2b-1e70564c6b12" name="Changes" comment="Лаба 4: остался 5 пункт и мелочовка">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/management/BaseAI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/BaseAI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/management/Habitat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/Habitat.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/management/HelloController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/HelloController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/management/PassengerAI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/PassengerAI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/management/TruckAI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/TruckAI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/git/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/git/hello-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -124,7 +120,9 @@
       <workItem from="1713332971016" duration="3000" />
       <workItem from="1713434089130" duration="8623000" />
       <workItem from="1713443016711" duration="909000" />
-      <workItem from="1713456837226" duration="3110000" />
+      <workItem from="1713456837226" duration="3240000" />
+      <workItem from="1713461867067" duration="1283000" />
+      <workItem from="1713522417116" duration="2656000" />
     </task>
     <task id="LOCAL-00001" summary="start">
       <option name="closed" value="true" />
@@ -262,7 +260,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713105344721</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Лаба 4: остался 5 пункт и мелочовка">
+      <option name="closed" value="true" />
+      <created>1713460050523</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1713460050523</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -307,6 +313,7 @@
     <MESSAGE value="Лаба 4: реализовано движение объектов. Нет проверки места появления объекта" />
     <MESSAGE value="Лаба 4: Возможны багульки" />
     <MESSAGE value="Лаба 4: остались 4 и 5 пункт" />
-    <option name="LAST_COMMIT_MESSAGE" value="Лаба 4: остались 4 и 5 пункт" />
+    <MESSAGE value="Лаба 4: остался 5 пункт и мелочовка" />
+    <option name="LAST_COMMIT_MESSAGE" value="Лаба 4: остался 5 пункт и мелочовка" />
   </component>
 </project>
