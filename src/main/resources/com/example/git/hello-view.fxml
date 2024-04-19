@@ -15,12 +15,17 @@
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <Pane fx:id="root" onKeyReleased="#onKey" prefHeight="810.0" prefWidth="1260.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.git.management.HelloController">
+    <style>
+        -fx-background-image: url('backgraund.jpg');
+        -fx-background-size: cover;
+    </style>
     <children>
-        <Pane fx:id="modalPane" focusTraversable="true" prefHeight="200.0" prefWidth="1260.0" style="-fx-background-color: #5CA4EA;" VBox.vgrow="ALWAYS">
+        <Pane fx:id="modalPane" focusTraversable="true" prefHeight="200.0" prefWidth="1260.0" VBox.vgrow="ALWAYS">
             <children>
                 <RadioButton fx:id="close" layoutX="855.0" layoutY="41.0" mnemonicParsing="false" text="Скрыть таймер" />
                 <Button fx:id="startButton" disable="false" layoutX="1136.0" layoutY="41.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="96.0" style="-fx-background-color: #ffffff; -fx-background-radius: 100;" text="Start" />
@@ -34,7 +39,7 @@
                     </font></Label>
                 <Button fx:id="stopButton" disable="true" layoutX="1136.0" layoutY="110.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="96.0" style="-fx-background-radius: 100px; -fx-background-color: #ffffff;" text="Stop" />
                 <RadioButton fx:id="open" disable="true" layoutX="735.0" layoutY="42.0" mnemonicParsing="false" selected="true" text="Показать таймер " />
-                <MenuBar prefHeight="25.0" prefWidth="1260.0" style="-fx-background-color: #ffffff;">
+                <MenuBar prefHeight="25.0" prefWidth="1260.0" style="-fx-background-color: transparent;">
                     <menus>
                         <Menu mnemonicParsing="false" text="Menu">
                             <items>
@@ -67,12 +72,8 @@
                 <Text layoutX="214.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Грузовых автомобилей " />
                 <Text layoutX="14.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Легковых автомобилей" />
                 <Text layoutX="14.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Грузовых автомобилей " />
-                <ComboBox fx:id="passengerComboBox" layoutX="352.0" layoutY="64.0" prefHeight="9.0" prefWidth="55.0">
-                    <items />
-                </ComboBox>
-                <ComboBox fx:id="truckComboBox" layoutX="352.0" layoutY="101.0" prefHeight="9.0" prefWidth="55.0">
-                    <items />
-                </ComboBox>
+                <ComboBox fx:id="passengerComboBox" layoutX="352.0" layoutY="64.0" prefHeight="9.0" prefWidth="55.0" />
+                <ComboBox fx:id="truckComboBox" layoutX="352.0" layoutY="101.0" prefHeight="9.0" prefWidth="55.0" />
                 <Text layoutX="541.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Время жизни (сек)" />
                 <Text layoutX="493.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Легковых автомобилей" />
                 <Text layoutX="493.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Грузовых автомобилей" />
@@ -89,14 +90,17 @@
             <Text layoutX="15.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Грузовой" />
             <Text layoutX="145.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Легковой " />
             <Text layoutX="275.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Основной" />
-            <ComboBox fx:id="truckAiThread"  layoutX="70.0" layoutY="159.0"  prefHeight="25.0" prefWidth="56.0" />
+            <ComboBox fx:id="truckAiThread" layoutX="70.0" layoutY="159.0" prefHeight="25.0" prefWidth="56.0" />
             <ComboBox fx:id="passengerAiThread" layoutX="200.0" layoutY="159.0" prefHeight="25.0" prefWidth="56.0" />
             <ComboBox fx:id="mainAiThread" layoutX="335.0" layoutY="159.0" prefHeight="25.0" prefWidth="56.0" />
             </children>
         </Pane>
-        <Pane fx:id="imgPane" layoutY="200.0" prefHeight="610.0" prefWidth="1260.0" style="-fx-background-color: #E3DED3;" VBox.vgrow="ALWAYS">
-            <Pane fx:id="upPane" prefHeight="305.0" prefWidth="630.0" style="-fx-background-color: #5A8CFF;" />
-            <Pane layoutX="630.0" layoutY="305.0" prefHeight="305.0" prefWidth="630.0" style="-fx-background-color: #5A8CFF;" />
+        <Pane fx:id="imgPane" layoutY="200.0" prefHeight="610.0" prefWidth="1260.0" VBox.vgrow="ALWAYS">
+            <Pane fx:id="upPane" prefHeight="305.0" prefWidth="630.0" style="-fx-border-color: #412A42; -fx-border-width: 2;">
+            <children>
+               <Line endX="1159.0" layoutX="101.0" startX="-100.0" stroke="#412a42" strokeWidth="2.0" />
+            </children></Pane>
+            <Pane fx:id="downPane" layoutX="630.0" layoutY="305.0" prefHeight="305.0" prefWidth="630.0" style="-fx-border-color: #412A42; -fx-border-width: 2;" />
          <children>
          </children></Pane>
     </children>

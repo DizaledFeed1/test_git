@@ -20,7 +20,7 @@ public class HelloController implements Initializable {
     private PassengerAI passengerAI;
     Timer timer;
     @FXML
-    public Pane root, imgPane, modalPane;
+    public Pane root, imgPane, modalPane,upPane,downPane;
     public long initializationTime;
     @FXML
     private Label timerLabel, textTimer;
@@ -126,19 +126,6 @@ public class HelloController implements Initializable {
         truckAiThread.setValue("5");
         mainAiThread.getItems().addAll("1","2","3","4","5","6","7","8","9","10");
         mainAiThread.setValue("5");
-
-        double screenWidth = Screen.getPrimary().getBounds().getWidth();
-        double screenHeight = Screen.getPrimary().getBounds().getHeight();
-
-        // Устанавливаем размеры Pane равными размерам экрана
-        root.setPrefWidth(screenWidth);
-        root.setPrefHeight(screenHeight);
-
-        modalPane.setPrefWidth(screenWidth);
-        modalPane.setPrefHeight(screenHeight);
-
-        imgPane.setPrefWidth(screenWidth);
-        imgPane.setPrefHeight(screenHeight);
 
         passengerComboBox.setOnAction(event -> {
             String selectedValue = passengerComboBox.getValue();

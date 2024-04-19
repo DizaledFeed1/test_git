@@ -17,6 +17,7 @@ public class HelloApplication extends Application {
         Scene scene = new Scene(root, Habitat.getWidth(), Habitat.getHeight());
         stage.setScene(scene);
 //        stage.setMaximized(true);
+        stage.setResizable(false);
         stage.show();
     }
 
