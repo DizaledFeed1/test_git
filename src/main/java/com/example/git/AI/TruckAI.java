@@ -1,4 +1,4 @@
-package com.example.git.management;
+package com.example.git.AI;
 
 import com.example.git.transports.Transport;
 import com.example.git.transports.Truck;
@@ -14,7 +14,7 @@ public class TruckAI extends BaseAI {
     }
 
     public TruckAI(ArrayList arrayList) {
-        super(100);
+        super(5);
         transportList = arrayList;
         super.start();
     }
@@ -36,16 +36,25 @@ public class TruckAI extends BaseAI {
                     if (transport instanceof Truck) {
                         double startX = transport.getImageView().getLayoutX();
                         double startY = transport.getImageView().getLayoutY();
+
                         double finalX = transport.getFinalX();
                         double finalY = transport.getFinalY();
 
-                        if (startX > 630 || startY > 305 || (startX != finalX && startY != finalY)) {
-                            double deltaX = (finalX - startX) / getInterval();
-                            double deltaY = (finalY - startY) / getInterval();
+                        double deltaX,deltaY;
 
-                            transport.getImageView().setLayoutX(startX + deltaX);
-                            transport.getImageView().setLayoutY(startY + deltaY);
+                        if ((finalX - startX) * -1 > getSpeed()) {
+                            deltaX = startX - getSpeed();
+                            transport.getImageView().setLayoutX(deltaX);
+                        } else {
+                            transport.getImageView().setLayoutX(finalX);
                         }
+                        if ((finalY - startY) * -1 > getSpeed()) {
+                            deltaY = startY - getSpeed();
+                            transport.getImageView().setLayoutY(deltaY);
+                        }else {
+                            transport.getImageView().setLayoutY(finalY);
+                        }
+
                     }
                 }
             }

@@ -9,4 +9,6 @@ module com.example.git {
     opens com.example.git.transports to javafx.fxml;
     exports com.example.git.management;
     opens com.example.git.management to javafx.fxml;
+    exports com.example.git.AI;
+    opens com.example.git.AI to javafx.fxml;
 }

@@ -11,8 +11,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -22,7 +22,6 @@ import java.util.Map;
 
 public class Statistic extends Application {
 
-    private long pauseStartTime = 0;
     private HelloController helloController;
     public Statistic(HelloController helloController) {
         this.helloController = helloController;
@@ -53,13 +52,18 @@ public class Statistic extends Application {
         // Здесь можно добавить содержимое модального окна, например:
         String text = "Легковых автомобилей:" + Passenger.intPassenger + "\nГрузовыx автомобилей:" + Truck.intTruck + "\nВремя: "+ ((startTime - helloController.initializationTime - helloController.pauseTime)/1000);
         TextArea textArea = new TextArea(text);
+        textArea.setStyle("-fx-control-inner-background: rgba(154,7,167);-fx-text-fill:black");
         textArea.setEditable(false);
         Button okButton = new Button("OK");
         Button cancelButton = new Button("Отмена");
 
         // Установка размеров кнопок
         okButton.setPrefSize(70, 30);
+        okButton.setBackground(new Background(new BackgroundFill(Color.rgb(0,0,0,0.2),CornerRadii.EMPTY, Insets.EMPTY)));
+        okButton.setTextFill(Color.BLACK);
         cancelButton.setPrefSize(70, 30);
+        cancelButton.setBackground(new Background(new BackgroundFill(Color.rgb(0,0,0,0.2),CornerRadii.EMPTY, Insets.EMPTY)));
+        cancelButton.setTextFill(Color.BLACK);
 
         okButton.setOnAction(e -> {
             modalStage.close();
@@ -74,6 +78,7 @@ public class Statistic extends Application {
         buttonBox.setAlignment(Pos.CENTER); // Выравниваем кнопки по центру
 
         VBox mainLayout = new VBox(10);
+        mainLayout.setBackground(new Background(new BackgroundFill(Color.rgb(154,7,167),CornerRadii.EMPTY, Insets.EMPTY)));
         mainLayout.setAlignment(Pos.TOP_CENTER); // Выравниваем содержимое по верхнему краю
         mainLayout.setPadding(new Insets(50));
         mainLayout.getChildren().addAll(textArea, buttonBox);

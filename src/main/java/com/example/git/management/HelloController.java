@@ -1,17 +1,23 @@
 package com.example.git.management;
 
+import com.example.git.AI.PassengerAI;
+import com.example.git.AI.TruckAI;
+import com.example.git.HelloApplication;
 import com.example.git.transports.Passenger;
 import com.example.git.transports.Transport;
 import com.example.git.transports.Truck;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.stage.Screen;
+import javafx.stage.Stage;
+
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
@@ -19,6 +25,7 @@ public class HelloController implements Initializable {
     Habitat habitat = new Habitat();
     private TruckAI truckAI;
     private PassengerAI passengerAI;
+    private Console console;
     Timer timer;
     @FXML
     public Pane root, imgPane, modalPane,upPane,downPane;
@@ -34,7 +41,7 @@ public class HelloController implements Initializable {
     @FXML
     private CheckMenuItem CheckBoxMenu;
     @FXML
-    private MenuItem MenuStartBtn, MenuStopBtn;
+    private MenuItem MenuStartBtn, MenuStopBtn,consoleButtonMenu;
     @FXML
     private RadioMenuItem MenuRadioBtnHide, MenuRadioBtnShow;
     @FXML
@@ -62,10 +69,6 @@ public class HelloController implements Initializable {
         pauseTime += System.currentTimeMillis() - start;
         start();
         isButtonAI();
-    }
-    @FXML
-    public void checkComboBoxAi(){
-
     }
     @FXML
     public void check() {
@@ -158,6 +161,13 @@ public class HelloController implements Initializable {
                 model();
             }
         });
+        consoleButtonMenu.setOnAction(event ->{
+            try {
+                getConsole();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
         open.setOnAction(event -> {
             swapTimer();
             MenuRadioBtnShow.setSelected(true);
@@ -191,18 +201,34 @@ public class HelloController implements Initializable {
         });
         truckOffButton.setOnAction(event -> {
             swapAIButton(1);
-
             truckAI.pause();
         });
         passengerOnButton.setOnAction(event ->{
             swapAIButton(2);
-
             passengerAI.resumeAI();
         });
         passengerOffButton.setOnAction(event ->{
             swapAIButton(2);
             passengerAI.pause();
         });
+    }
+
+    private void getConsole() throws IOException
+    {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("console.fxml"));
+
+        Stage consoleStage = new Stage();
+        Scene consoleScene = new Scene(fxmlLoader.load());
+
+        console = fxmlLoader.getController();
+        console.setHelloController(this);
+
+        consoleStage.setTitle("Консоль");
+        consoleStage.setMinWidth(300);
+        consoleStage.setMinHeight(300);
+
+        consoleStage.setScene(consoleScene);
+        consoleStage.show();
     }
 
     private void swapAIButton(int number){
@@ -390,6 +416,28 @@ public class HelloController implements Initializable {
             habitat.getCarContainer().getIdSet().clear();
             habitat.getCarContainer().getBirthTimeMap().clear();
             carContainer.getCarList().clear();
+        }
+    }
+
+    public TruckAI getTruckAI(){
+        return truckAI;
+    }
+    public PassengerAI getPassengerAI(){
+        return passengerAI;
+    }
+    public void swapAI(int number){
+        if (number == 1) {
+            passengerOnButton.setDisable(false);
+            passengerOffButton.setDisable(true);
+
+            truckOnButton.setDisable(false);
+            truckOffButton.setDisable(true);
+        }else {
+            passengerOnButton.setDisable(true);
+            passengerOffButton.setDisable(false);
+
+            truckOnButton.setDisable(true);
+            truckOffButton.setDisable(false);
         }
     }
 

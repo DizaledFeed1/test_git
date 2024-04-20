@@ -1,4 +1,4 @@
-package com.example.git.management;
+package com.example.git.AI;
 
 import com.example.git.transports.Transport;
 
@@ -8,16 +8,17 @@ public abstract class BaseAI extends Thread {
     protected volatile boolean running;
     protected ArrayList<Transport> transportList;
     protected int interval;
+    protected int speed;
 
-    public BaseAI(int interval) {
-        this.interval = interval;
+    public BaseAI(int speed) {
+        this.speed = speed;
     }
     public void start() {
         running = true;
         new Thread(this).start();
     }
-    public int getInterval() {
-        return interval;
+    public int getSpeed() {
+        return speed;
     }
     @Override
     public void run() {

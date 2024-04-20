@@ -53,6 +53,7 @@
                                     </toggleGroup>
                                 </RadioMenuItem>
                                 <RadioMenuItem fx:id="MenuRadioBtnHide" mnemonicParsing="false" text="Hide Timer" toggleGroup="$tg1" />
+                        <MenuItem fx:id="consoleButtonMenu" mnemonicParsing="false" text="Console" />
                                 <SeparatorMenuItem mnemonicParsing="false" />
                                 <CheckMenuItem fx:id="CheckBoxMenu" mnemonicParsing="false" onAction="#menuBox" text="info" />
                             </items>
