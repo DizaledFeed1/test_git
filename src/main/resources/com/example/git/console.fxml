@@ -5,6 +5,6 @@
 
 <Pane prefHeight="700.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.git.management.Console">
    <children>
-      <TextArea fx:id="textArea" prefHeight="700.0" prefWidth="500.0" onKeyPressed="#enterConsole" style="-fx-control-inner-background: rgba(88,88,88);" />
+      <TextArea fx:id="textArea" prefHeight="700.0" prefWidth="500.0" onKeyPressed="#enterConsole" style="-fx-control-inner-background: rgba(88,88,88); -fx-text-fill:yellow;" />
    </children>
 </Pane>

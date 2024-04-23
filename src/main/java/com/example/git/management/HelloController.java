@@ -14,9 +14,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
@@ -110,7 +113,6 @@ public class HelloController implements Initializable {
             textField.setText(text.replaceAll("[^\\d]", ""));
         }
     }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         truckAI = new TruckAI(habitat.getCarContainer().getCarList());
@@ -122,14 +124,12 @@ public class HelloController implements Initializable {
         passengerComboBox.getItems().addAll("0", "10", "20", "30", "40", "50", "60", "70", "80", "90", "100");
         passengerComboBox.setValue("50"); // Установка начального значения
         truckComboBox.getItems().addAll("0", "10", "20", "30", "40", "50", "60", "70", "80", "90", "100");
-        truckComboBox.setValue("50"); // Установка начального значения
+
 
         passengerAiThread.getItems().addAll("1","2","3","4","5","6","7","8","9","10");
-        passengerAiThread.setValue("5");
         truckAiThread.getItems().addAll("1","2","3","4","5","6","7","8","9","10");
-        truckAiThread.setValue("5");
         mainAiThread.getItems().addAll("1","2","3","4","5","6","7","8","9","10");
-        mainAiThread.setValue("5");
+        downloadConfig();
 
         passengerComboBox.setOnAction(event -> {
             String selectedValue = passengerComboBox.getValue();
@@ -156,6 +156,7 @@ public class HelloController implements Initializable {
             start();
         });
         MenuStopBtn.setOnAction(event -> {
+            saveConfig();
             pauseIntialize();
             if (CheckBoxMenu.isSelected()) {
                 model();
@@ -189,6 +190,7 @@ public class HelloController implements Initializable {
             start();
         });
         stopButton.setOnAction(event -> {
+            saveConfig();
             pauseIntialize();
             if (CheckBoxMain.isSelected()) {
                 model();
@@ -212,7 +214,61 @@ public class HelloController implements Initializable {
             passengerAI.pause();
         });
     }
+    private void saveConfig(){
+        Properties saveProps = new Properties();
+        saveProps.setProperty("probabilityTruck", String.valueOf(habitat.getTruckProbability()));
+        saveProps.setProperty("probabilityPassenger", String.valueOf(habitat.getPassengerProbability())); // Записываем вероятность рождения
 
+        saveProps.setProperty("truckTextField",String.valueOf(habitat.getN1()));
+        saveProps.setProperty("passengerTextField",String.valueOf(habitat.getN2())); //Записываем переиод рождения
+
+        saveProps.setProperty("lifeTimeTruck",String.valueOf(habitat.getLifeTimeN1()));
+        saveProps.setProperty("lifeTimePassenger",String.valueOf(habitat.getLifeTimeN2())); //Записывем время жизни
+
+        saveProps.setProperty("truckAiThread", truckAiThread.getValue());
+        saveProps.setProperty("passengerAiThread", passengerAiThread.getValue());
+        saveProps.setProperty("mainAiThread", mainAiThread.getValue());
+        try {
+            saveProps.storeToXML(new FileOutputStream("config.xml"), "");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private void downloadConfig() {
+        Properties loadProps = new Properties();
+        try {
+            loadProps.loadFromXML(new FileInputStream("config.xml"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        //Вероятность рождения
+        habitat.setTruckProbability(Float.parseFloat(loadProps.getProperty("probabilityTruck")));
+        truckComboBox.setValue(String.valueOf((int) (habitat.getTruckProbability()*100)));
+        habitat.setPassengerProbability(Float.parseFloat(loadProps.getProperty("probabilityPassenger")));
+        passengerComboBox.setValue(String.valueOf((int) (habitat.getPassengerProbability()*100)));
+
+
+        //Приоритеты потоков
+        truckAI.setPriority(Integer.parseInt(loadProps.getProperty("truckAiThread")));
+        truckAiThread.setValue(loadProps.getProperty("truckAiThread"));
+        passengerAI.setPriority(Integer.parseInt(loadProps.getProperty("passengerAiThread")));
+        passengerAiThread.setValue(loadProps.getProperty("passengerAiThread"));
+        Thread.currentThread().setPriority(Integer.parseInt(loadProps.getProperty("mainAiThread")));
+        mainAiThread.setValue(loadProps.getProperty("mainAiThread"));
+
+        //Период рождения
+        habitat.setTruckTime(Integer.parseInt(loadProps.getProperty("truckTextField")));
+        truckTextField.setText(String.valueOf(loadProps.getProperty("truckTextField")));
+        habitat.setPassengerTime(Integer.parseInt(loadProps.getProperty("passengerTextField")));
+        passengerTextField.setText(String.valueOf(loadProps.getProperty("passengerTextField")));
+
+        //Время жизни
+        habitat.setLifeTimeN1(Integer.parseInt(loadProps.getProperty("lifeTimeTruck")));
+        lifeTimeTruck.setText(loadProps.getProperty("lifeTimeTruck"));
+        habitat.setLifeTimeN2(Integer.parseInt(loadProps.getProperty("lifeTimePassenger")));
+        lifeTimePassenger.setText(loadProps.getProperty("lifeTimePassenger"));
+
+    }
     private void getConsole() throws IOException
     {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("console.fxml"));
@@ -230,7 +286,6 @@ public class HelloController implements Initializable {
         consoleStage.setScene(consoleScene);
         consoleStage.show();
     }
-
     private void swapAIButton(int number){
         switch (number){
             case 1:{
@@ -281,7 +336,6 @@ public class HelloController implements Initializable {
             }
         });
     }
-
     private void swapTimer() {
         timerLabel.setVisible(!timerLabel.isVisible());
         textTimer.setVisible(!textTimer.isVisible());
@@ -292,7 +346,6 @@ public class HelloController implements Initializable {
         open.setDisable(!(open.isDisabled()));
         close.setDisable(!(close.isDisabled()));
     }
-
     private void showAlert() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Ошибка");
@@ -325,7 +378,6 @@ public class HelloController implements Initializable {
         if (initializationTime == 0) {
             initializationTime = System.currentTimeMillis();
         }
-
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -385,7 +437,6 @@ public class HelloController implements Initializable {
         truckAI.pause();
         passengerAI.pause();
     }
-
     private void swapDisable() {
         startButton.setDisable(!(startButton.isDisabled()));
         stopButton.setDisable(!(stopButton.isDisabled()));
@@ -401,7 +452,6 @@ public class HelloController implements Initializable {
         lifeTimePassenger.setDisable(!(lifeTimePassenger.isDisabled()));
         passengerComboBox.setDisable(!(passengerComboBox.isDisabled()));
     }
-
     public void stopInitialize() {
         if (timer != null) {
             timer.cancel();
@@ -418,7 +468,6 @@ public class HelloController implements Initializable {
             carContainer.getCarList().clear();
         }
     }
-
     public TruckAI getTruckAI(){
         return truckAI;
     }
@@ -440,7 +489,6 @@ public class HelloController implements Initializable {
             truckOffButton.setDisable(false);
         }
     }
-
     public void model() {
         long start = System.currentTimeMillis();
         Statistic statistic = new Statistic(this);

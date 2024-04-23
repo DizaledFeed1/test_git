@@ -26,21 +26,24 @@ public class Console {
         });
     }
     private void handleCommand(String command){
+        textArea.setStyle("-fx-text-fill:yellow;-fx-control-inner-background: rgba(88,88,88);");
         String[] parts = command.split("\\s+");
         String commandName = parts[0].toLowerCase(Locale.ROOT);
         switch (commandName){
             case "help" -> {
-                printConsole("\"stopAI\" - остановить расчёт движения объектов \n" +
+                printConsole("\n\"stopAI\" - остановить расчёт движения объектов \n" +
                         "\"resumAI\" - продолжить расчёт движения объектов");
             }
             case "stopai" ->{
                 stopAI();
+                 textArea.clear();
             }
             case"resumai" ->{
                 resumAI();
+                textArea.clear();
             }
             default -> {
-                printConsole("введите \"help\" - для отображения всех доступных команд");
+                printConsole("\nвведите \"help\" - для отображения всех доступных команд");
             }
         }
         System.out.println("Введено: " + commandName);
@@ -57,6 +60,7 @@ public class Console {
     }
     private void printConsole(String text){
         textArea.setText(text + "\n");
+        textArea.setStyle("-fx-text-fill:red;-fx-control-inner-background: rgba(88,88,88);");
     }
 
 }

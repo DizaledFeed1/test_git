@@ -10,8 +10,6 @@ import java.io.FileNotFoundException;
 import java.util.Random;
 
 public class Habitat {
-    @FXML
-    private Pane imgPane;
     private static final int width = 1260;
     private static final int height = 810;
     private CarContainer carContainer = CarContainer.getInstance();
@@ -91,5 +89,23 @@ public class Habitat {
     }
     public CarContainer getCarContainer() {
         return carContainer;
+    }
+    public float getTruckProbability() {
+        return p1;
+    }
+    public float getPassengerProbability(){
+        return p2;
+    }
+    public int getN1(){
+        return n1;
+    }
+    public int getN2(){
+        return n2;
+    }
+    public int getLifeTimeN1(){
+        return lifeTimeN1;
+    }
+    public int getLifeTimeN2(){
+        return lifeTimeN2;
     }
 }

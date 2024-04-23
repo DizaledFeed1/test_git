@@ -67,7 +67,7 @@
                     <font>
                         <Font size="14.0" />
                     </font></CheckBox>
-                <TextField fx:id="truckTextField" layoutX="150.0" layoutY="102.0" onAction="#check" onKeyTyped="#handleNumericInput" prefHeight="9.0" prefWidth="33.0" style="-fx-background-color: rgba(0, 0, 0, 0.5); -fx-text-fill: #c6c6c6;" text="3" />
+                <TextField fx:id="truckTextField" layoutX="150.0" layoutY="102.0" onAction="#check" onKeyTyped="#handleNumericInput" prefHeight="9.0" prefWidth="33.0" style="-fx-background-color: rgba(0, 0, 0, 0.5); -fx-text-fill: #c6c6c6;"/>
                 <TextField fx:id="passengerTextField" layoutX="150.0" layoutY="64.0" onAction="#check" onKeyTyped="#handleNumericInput" prefHeight="25.0" prefWidth="33.0" style="-fx-background-color: rgba(0, 0, 0, 0.5); -fx-text-fill: #c6c6c6;" text="2" />
                 <Text fill="#c6c6c6" layoutX="34.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Период появления (сек)" />
                 <Text fill="#c6c6c6" layoutX="244.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Вероятность рождения" />
@@ -99,6 +99,8 @@
             <ComboBox fx:id="passengerAiThread" layoutX="200.0" layoutY="159.0" prefHeight="25.0" prefWidth="56.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);" />
             <ComboBox fx:id="mainAiThread" layoutX="335.0" layoutY="159.0" prefHeight="25.0" prefWidth="56.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);" />
             <Line endX="1169.0" layoutX="91.0" layoutY="25.0" startX="-91.0" stroke="#412a42" strokeWidth="2.0" />
+            <Button layoutX="65.0"  mnemonicParsing="false"  style="-fx-background-color: rgba(0, 0, 0, 0.5);" text="Загрузить" textFill="#c6c6c6"  />
+            <Button layoutX="132.0" mnemonicParsing="false" style="-fx-background-color: rgba(0, 0, 0, 0.5);" text="Сохранить" textFill="#c6c6c6" />
             </children>
         </Pane>
         <Pane fx:id="imgPane" layoutY="200.0" prefHeight="610.0" prefWidth="1260.0" VBox.vgrow="ALWAYS">
