@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<entry key="lifeTimePassenger">10</entry>
+<entry key="passengerTextField">10</entry>
+<entry key="truckAiThread">10</entry>
+<entry key="lifeTimeTruck">10</entry>
+<entry key="probabilityPassenger">0.5</entry>
+<entry key="mainAiThread">10</entry>
+<entry key="passengerAiThread">10</entry>
+<entry key="probabilityTruck">0.5</entry>
+<entry key="truckTextField">10</entry>
+</properties>
