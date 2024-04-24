@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-<entry key="passengerTextField">1</entry>
+<entry key="passengerTextField">10</entry>
 <entry key="truckOnButton">true</entry>
 <entry key="truckOffButton">false</entry>
-<entry key="probabilityPassenger">0.5</entry>
+<entry key="probabilityPassenger">1.0</entry>
 <entry key="passengerAiThread">10</entry>
 <entry key="checkBoxMenu">false</entry>
-<entry key="truckTextField">1</entry>
-<entry key="openDisabled">false</entry>
+<entry key="truckTextField">10</entry>
+<entry key="openDisabled">true</entry>
 <entry key="lifeTimePassenger">10</entry>
 <entry key="passengerOffButton">false</entry>
-<entry key="closeDisabled">true</entry>
+<entry key="closeDisabled">false</entry>
 <entry key="truckAiThread">10</entry>
 <entry key="lifeTimeTruck">10</entry>
 <entry key="mainAiThread">10</entry>
-<entry key="probabilityTruck">0.5</entry>
+<entry key="probabilityTruck">1.0</entry>
 <entry key="passengerOnButton">true</entry>
-<entry key="close">true</entry>
-<entry key="open">false</entry>
+<entry key="close">false</entry>
+<entry key="open">true</entry>
 </properties>

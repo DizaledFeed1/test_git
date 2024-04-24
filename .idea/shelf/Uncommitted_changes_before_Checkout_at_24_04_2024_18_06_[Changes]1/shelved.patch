@@ -1,0 +1,35 @@
+Index: config.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<!DOCTYPE properties SYSTEM \"http://java.sun.com/dtd/properties.dtd\">\r\n<properties>\r\n<entry key=\"lifeTimePassenger\">10</entry>\r\n<entry key=\"passengerTextField\">10</entry>\r\n<entry key=\"truckAiThread\">10</entry>\r\n<entry key=\"lifeTimeTruck\">10</entry>\r\n<entry key=\"probabilityPassenger\">0.5</entry>\r\n<entry key=\"mainAiThread\">10</entry>\r\n<entry key=\"passengerAiThread\">10</entry>\r\n<entry key=\"probabilityTruck\">0.5</entry>\r\n<entry key=\"truckTextField\">10</entry>\r\n</properties>\r\n
+===================================================================
+diff --git a/config.xml b/config.xml
+--- a/config.xml	
++++ b/config.xml	
+@@ -1,13 +1,22 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+ <properties>
++<entry key="passengerTextField">1</entry>
++<entry key="truckOnButton">true</entry>
++<entry key="truckOffButton">false</entry>
++<entry key="probabilityPassenger">0.5</entry>
++<entry key="passengerAiThread">10</entry>
++<entry key="checkBoxMenu">false</entry>
++<entry key="truckTextField">1</entry>
++<entry key="openDisabled">false</entry>
+ <entry key="lifeTimePassenger">10</entry>
+-<entry key="passengerTextField">10</entry>
++<entry key="passengerOffButton">false</entry>
++<entry key="closeDisabled">true</entry>
+ <entry key="truckAiThread">10</entry>
+ <entry key="lifeTimeTruck">10</entry>
+-<entry key="probabilityPassenger">0.5</entry>
+ <entry key="mainAiThread">10</entry>
+-<entry key="passengerAiThread">10</entry>
+ <entry key="probabilityTruck">0.5</entry>
+-<entry key="truckTextField">10</entry>
++<entry key="passengerOnButton">true</entry>
++<entry key="close">true</entry>
++<entry key="open">false</entry>
+ </properties>

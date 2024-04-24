@@ -17,10 +17,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.util.*;
 
@@ -309,6 +306,57 @@ public class HelloController implements Initializable {
         MenuRadioBtnHide.setDisable(Boolean.parseBoolean(loadProps.getProperty("closeDisabled")));
 
     }
+    public void saveCarData(){
+        try {
+            FileOutputStream fileOut = new FileOutputStream("carContainer.ser");
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(habitat.getCarContainer());
+            out.close();
+            fileOut.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void dowloadCarData(){
+        try {
+            FileInputStream fileIn = new FileInputStream("carContainer.ser");
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            CarContainer loadedContainer = (CarContainer) in.readObject();
+            in.close();
+            fileIn.close();
+
+            ArrayList<Transport> carList = loadedContainer.getCarList();
+            for (Transport transport :carList ) {
+                if (transport instanceof Truck) {
+                    Truck truck = new Truck(transport.getX(),transport.getY(),transport.getFinalX(),transport.getFinalY(),transport.getId(),transport.getLifetime());
+                    long currentTime = System.currentTimeMillis() - pauseTime;
+                    if (initializationTime == 0){
+                        currentTime = 0;
+                    }
+                    truck.setCreationTime(currentTime);
+                    currentTime = currentTime - initializationTime;
+                    habitat.getCarContainer().addCar(truck,currentTime/1000);
+                    imgPane.getChildren().add(habitat.getCarContainer().getCarList().get(habitat.getCarContainer().getCarList().size()-1).getImageView());
+                }
+                else if (transport instanceof Passenger) {
+                    Passenger passenger = new Passenger(transport.getX(),transport.getY(),transport.getFinalX(),transport.getFinalY(),transport.getId(),transport.getLifetime());
+                    long currentTime = System.currentTimeMillis() - pauseTime;
+                    if (initializationTime == 0){
+                        currentTime = 0;
+                    }
+                    passenger.setCreationTime(currentTime);
+                    currentTime = currentTime - initializationTime;
+                    habitat.getCarContainer().addCar(passenger,currentTime/1000);
+                    imgPane.getChildren().add(habitat.getCarContainer().getCarList().get(habitat.getCarContainer().getCarList().size()-1).getImageView());
+                }
+            }
+            System.out.println("контейнер заменён");
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        currentObject();
+    }
+
     private void getConsole() throws IOException
     {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("console.fxml"));

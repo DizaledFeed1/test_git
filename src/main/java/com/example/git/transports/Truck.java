@@ -10,7 +10,7 @@ public class Truck extends Transport implements IBehaviour {
     private long creationTime;
     public static int intTruck =0;
     public static Random rand = new Random();
-    private static Image img = new Image("police.png");
+    private final static Image img = new Image("police.png");
 
     public Truck(int x, int y,int finalyX,int finalyY, int id, long lifetime) throws FileNotFoundException {
         super(x, y,finalyX,finalyY, img, id, lifetime);
@@ -18,7 +18,9 @@ public class Truck extends Transport implements IBehaviour {
         System.out.println("x:" + x + " y: " + y);
         intTruck ++;
     }
-
+    public void setCreationTime(long creationTime){
+        this.creationTime = creationTime;
+    }
     // Метод для проверки истечения времени жизни
     public boolean isLifeTimeExpired(long currentTime, long lifeTime,long pauseTime) {
         long elapsedTime = currentTime - creationTime - pauseTime;

@@ -1,0 +1,510 @@
+Index: src/main/resources/com/example/git/hello-view.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n\r\n<?import javafx.scene.Cursor?>\r\n<?import javafx.scene.control.Button?>\r\n<?import javafx.scene.control.CheckBox?>\r\n<?import javafx.scene.control.CheckMenuItem?>\r\n<?import javafx.scene.control.ComboBox?>\r\n<?import javafx.scene.control.Label?>\r\n<?import javafx.scene.control.Menu?>\r\n<?import javafx.scene.control.MenuBar?>\r\n<?import javafx.scene.control.MenuItem?>\r\n<?import javafx.scene.control.RadioButton?>\r\n<?import javafx.scene.control.RadioMenuItem?>\r\n<?import javafx.scene.control.SeparatorMenuItem?>\r\n<?import javafx.scene.control.TextField?>\r\n<?import javafx.scene.control.ToggleGroup?>\r\n<?import javafx.scene.layout.Pane?>\r\n<?import javafx.scene.layout.VBox?>\r\n<?import javafx.scene.shape.Line?>\r\n<?import javafx.scene.text.Font?>\r\n<?import javafx.scene.text.Text?>\r\n\r\n<Pane fx:id=\"root\" onKeyReleased=\"#onKey\" prefHeight=\"810.0\" prefWidth=\"1260.0\" xmlns=\"http://javafx.com/javafx/21\" xmlns:fx=\"http://javafx.com/fxml/1\" fx:controller=\"com.example.git.management.HelloController\">\r\n    <style>\r\n        -fx-background-image: url('backgraund.jpg');\r\n        -fx-background-size: cover;\r\n    </style>\r\n    <children>\r\n        <Pane fx:id=\"modalPane\" focusTraversable=\"true\" prefHeight=\"200.0\" prefWidth=\"1260.0\" VBox.vgrow=\"ALWAYS\">\r\n            <children>\r\n                <RadioButton fx:id=\"close\" layoutX=\"855.0\" layoutY=\"41.0\" mnemonicParsing=\"false\" text=\"Скрыть таймер\" textFill=\"#c6c6c6\" />\r\n                <Button fx:id=\"startButton\" disable=\"false\" layoutX=\"1136.0\" layoutY=\"41.0\" mnemonicParsing=\"false\" prefHeight=\"35.0\" prefWidth=\"96.0\" style=\"-fx-background-color: rgba(0, 0, 0, 0.5); -fx-background-radius: 100;\" text=\"Start\" textFill=\"#c6c6c6\" />\r\n                <Label fx:id=\"textTimer\" alignment=\"TOP_RIGHT\" contentDisplay=\"RIGHT\" layoutX=\"845.0\" layoutY=\"89.0\" prefHeight=\"18.0\" prefWidth=\"49.0\" text=\"Timer:\" textFill=\"#c6c6c6\">\r\n                    <font>\r\n                        <Font name=\"Times New Roman\" size=\"16.0\" />\r\n                    </font></Label>\r\n                <Label fx:id=\"timerLabel\" alignment=\"TOP_LEFT\" contentDisplay=\"BOTTOM\" layoutX=\"894.0\" layoutY=\"85.0\" prefHeight=\"28.0\" prefWidth=\"66.0\" text=\" 0\" textFill=\"#c6c6c6\">\r\n                    <font>\r\n                        <Font name=\"Dubai Regular\" size=\"16.0\" />\r\n                    </font></Label>\r\n                <Button fx:id=\"stopButton\" disable=\"true\" layoutX=\"1136.0\" layoutY=\"110.0\" mnemonicParsing=\"false\" prefHeight=\"35.0\" prefWidth=\"96.0\" style=\"-fx-background-radius: 100px; -fx-background-color: rgba(0, 0, 0, 0.5);\" text=\"Stop\" textFill=\"#c6c6c6\" />\r\n                <RadioButton fx:id=\"open\" disable=\"true\" layoutX=\"735.0\" layoutY=\"42.0\" mnemonicParsing=\"false\" selected=\"true\" text=\"Показать таймер \" textFill=\"#c6c6c6\" />\r\n                <MenuBar prefHeight=\"25.0\" prefWidth=\"66.0\" style=\"-fx-background-color: rgba(0, 0, 0, 0.5);\">\r\n                    <menus>\r\n                        <Menu mnemonicParsing=\"false\" style=\"-fx-text-fill: red\" text=\"Menu\">\r\n                            <items>\r\n                                <MenuItem fx:id=\"MenuStartBtn\" disable=\"false\" mnemonicParsing=\"false\" text=\"Start\" />\r\n                                <MenuItem fx:id=\"MenuStopBtn\" disable=\"true\" mnemonicParsing=\"false\" text=\"Stop\" />\r\n                                <SeparatorMenuItem mnemonicParsing=\"false\" />\r\n                                <RadioMenuItem fx:id=\"MenuRadioBtnShow\" disable=\"true\" mnemonicParsing=\"true\" selected=\"true\" text=\"Show Timer\">\r\n                                    <toggleGroup>\r\n                                        <ToggleGroup fx:id=\"tg1\" />\r\n                                    </toggleGroup>\r\n                                </RadioMenuItem>\r\n                                <RadioMenuItem fx:id=\"MenuRadioBtnHide\" mnemonicParsing=\"false\" text=\"Hide Timer\" toggleGroup=\"$tg1\" />\r\n                        <MenuItem fx:id=\"consoleButtonMenu\" mnemonicParsing=\"false\" text=\"Console\" />\r\n                                <SeparatorMenuItem mnemonicParsing=\"false\" />\r\n                                <CheckMenuItem fx:id=\"CheckBoxMenu\" mnemonicParsing=\"false\" onAction=\"#menuBox\" text=\"info\" />\r\n                            </items>\r\n                        </Menu>\r\n                    </menus>\r\n               <cursor>\r\n                  <Cursor fx:constant=\"OPEN_HAND\" />\r\n               </cursor>\r\n                </MenuBar>\r\n                <CheckBox fx:id=\"CheckBoxMain\" layoutX=\"769.0\" layoutY=\"88.0\" mnemonicParsing=\"false\" onAction=\"#mainBox\" text=\"info\" textFill=\"#c6c6c6\">\r\n                    <font>\r\n                        <Font size=\"14.0\" />\r\n                    </font></CheckBox>\r\n                <TextField fx:id=\"truckTextField\" layoutX=\"150.0\" layoutY=\"102.0\" onAction=\"#check\" onKeyTyped=\"#handleNumericInput\" prefHeight=\"9.0\" prefWidth=\"33.0\" style=\"-fx-background-color: rgba(0, 0, 0, 0.5); -fx-text-fill: #c6c6c6;\" text=\"3\" />\r\n                <TextField fx:id=\"passengerTextField\" layoutX=\"150.0\" layoutY=\"64.0\" onAction=\"#check\" onKeyTyped=\"#handleNumericInput\" prefHeight=\"25.0\" prefWidth=\"33.0\" style=\"-fx-background-color: rgba(0, 0, 0, 0.5); -fx-text-fill: #c6c6c6;\" text=\"2\" />\r\n                <Text fill=\"#c6c6c6\" layoutX=\"34.0\" layoutY=\"48.0\" strokeType=\"OUTSIDE\" strokeWidth=\"0.0\" text=\"Период появления (сек)\" />\r\n                <Text fill=\"#c6c6c6\" layoutX=\"244.0\" layoutY=\"49.0\" strokeType=\"OUTSIDE\" strokeWidth=\"0.0\" text=\"Вероятность рождения\" />\r\n\r\n\r\n                <Text fill=\"#c6c6c6\" layoutX=\"216.0\" layoutY=\"81.0\" strokeType=\"OUTSIDE\" strokeWidth=\"0.0\" text=\"Легковых автомобилей\" />\r\n                <Text fill=\"#c6c6c6\" layoutX=\"214.0\" layoutY=\"118.0\" strokeType=\"OUTSIDE\" strokeWidth=\"0.0\" text=\"Грузовых автомобилей \" />\r\n                <Text fill=\"#c6c6c6\" layoutX=\"14.0\" layoutY=\"81.0\" strokeType=\"OUTSIDE\" strokeWidth=\"0.0\" text=\"Легковых автомобилей\" />\r\n                <Text fill=\"#c6c6c6\" layoutX=\"14.0\" layoutY=\"119.0\" strokeType=\"OUTSIDE\" strokeWidth=\"0.0\" text=\"Грузовых автомобилей \" />\r\n                <ComboBox fx:id=\"passengerComboBox\" layoutX=\"352.0\" layoutY=\"64.0\" prefHeight=\"9.0\" prefWidth=\"55.0\" style=\"-fx-background-color: rgba(0, 0, 0, 0.5); -fx-text-fill: #c6c6c6;\" />\r\n                <ComboBox fx:id=\"truckComboBox\" layoutX=\"352.0\" layoutY=\"101.0\" prefHeight=\"9.0\" prefWidth=\"55.0\" style=\"-fx-background-color: rgba(0, 0, 0, 0.5);\" />\r\n                <Text fill=\"#c6c6c6\" layoutX=\"541.0\" layoutY=\"49.0\" strokeType=\"OUTSIDE\" strokeWidth=\"0.0\" text=\"Время жизни (сек)\" />\r\n                <Text fill=\"#c6c6c6\" layoutX=\"493.0\" layoutY=\"82.0\" strokeType=\"OUTSIDE\" strokeWidth=\"0.0\" text=\"Легковых автомобилей\" />\r\n                <Text fill=\"#c6c6c6\" layoutX=\"493.0\" layoutY=\"119.0\" strokeType=\"OUTSIDE\" strokeWidth=\"0.0\" text=\"Грузовых автомобилей\" />\r\n                <TextField fx:id=\"lifeTimeTruck\" layoutX=\"633.0\" layoutY=\"103.0\" onAction=\"#check\" onKeyTyped=\"#handleNumericInput\" prefHeight=\"25.0\" prefWidth=\"33.0\" style=\"-fx-background-color: rgba(0, 0, 0, 0.5); -fx-text-fill: #c6c6c6;\" text=\"5\" />\r\n                <TextField fx:id=\"lifeTimePassenger\" layoutX=\"633.0\" layoutY=\"65.0\" onAction=\"#check\" onKeyTyped=\"#handleNumericInput\" prefHeight=\"25.0\" prefWidth=\"33.0\" style=\"-fx-background-color: rgba(0, 0, 0, 0.5); -fx-text-fill: #c6c6c6;\" text=\"7\" />\r\n                <Button fx:id=\"lookButton\" disable=\"true\" layoutX=\"960.0\" layoutY=\"66.0\" mnemonicParsing=\"false\" onAction=\"#currentObject\" prefHeight=\"49.0\" prefWidth=\"144.0\" style=\"-fx-background-color: rgba(0, 0, 0, 0.5); -fx-background-radius: 100;\" text=\"Текущие объекты\" textFill=\"#c6c6c6\" />\r\n            <Text fill=\"#c6c6c6\" layoutX=\"701.0\" layoutY=\"140.0\" strokeType=\"OUTSIDE\" strokeWidth=\"0.0\" text=\"Движение грузовиков\" />\r\n            <Text fill=\"#c6c6c6\" layoutX=\"852.0\" layoutY=\"140.0\" strokeType=\"OUTSIDE\" strokeWidth=\"0.0\" text=\"Движение легковушек\" />\r\n            <Button fx:id=\"truckOnButton\" disable=\"true\" layoutX=\"688.0\" layoutY=\"157.0\" mnemonicParsing=\"false\" prefHeight=\"29.0\" prefWidth=\"58.0\" style=\"-fx-background-color: rgba(0, 0, 0, 0.5); -fx-background-radius: 100;\" text=\"Вкл\" textFill=\"#c6c6c6\" />\r\n            <Button fx:id=\"truckOffButton\" disable=\"false\" layoutX=\"765.0\" layoutY=\"157.0\" mnemonicParsing=\"false\" prefHeight=\"29.0\" prefWidth=\"58.0\" style=\"-fx-background-color: rgba(0, 0, 0, 0.5); -fx-background-radius: 100;\" text=\"Выкл\" textFill=\"#c6c6c6\" />\r\n            <Button fx:id=\"passengerOnButton\" disable=\"true\" layoutX=\"845.0\" layoutY=\"157.0\" mnemonicParsing=\"false\" prefHeight=\"29.0\" prefWidth=\"58.0\" style=\"-fx-background-color: rgba(0, 0, 0, 0.5); -fx-background-radius: 100;\" text=\"Вкл\" textFill=\"#c6c6c6\" />\r\n            <Button fx:id=\"passengerOffButton\" disable=\"false\" layoutX=\"919.0\" layoutY=\"157.0\" mnemonicParsing=\"false\" prefHeight=\"29.0\" prefWidth=\"58.0\" style=\"-fx-background-color: rgba(0, 0, 0, 0.5); -fx-background-radius: 100;\" text=\"Выкл\" textFill=\"#c6c6c6\" />\r\n            <Text fill=\"#c6c6c6\" layoutX=\"143.0\" layoutY=\"148.0\" strokeType=\"OUTSIDE\" strokeWidth=\"0.0\" text=\"Приоритеты потоков\" />\r\n            <Text fill=\"#c6c6c6\" layoutX=\"15.0\" layoutY=\"176.0\" strokeType=\"OUTSIDE\" strokeWidth=\"0.0\" text=\"Грузовой\" />\r\n            <Text fill=\"#c6c6c6\" layoutX=\"145.0\" layoutY=\"176.0\" strokeType=\"OUTSIDE\" strokeWidth=\"0.0\" text=\"Легковой \" />\r\n            <Text fill=\"#c6c6c6\" layoutX=\"275.0\" layoutY=\"176.0\" strokeType=\"OUTSIDE\" strokeWidth=\"0.0\" text=\"Основной\" />\r\n            <ComboBox fx:id=\"truckAiThread\" layoutX=\"70.0\" layoutY=\"159.0\" prefHeight=\"25.0\" prefWidth=\"56.0\" style=\"-fx-background-color: rgba(0, 0, 0, 0.5);\" />\r\n            <ComboBox fx:id=\"passengerAiThread\" layoutX=\"200.0\" layoutY=\"159.0\" prefHeight=\"25.0\" prefWidth=\"56.0\" style=\"-fx-background-color: rgba(0, 0, 0, 0.5);\" />\r\n            <ComboBox fx:id=\"mainAiThread\" layoutX=\"335.0\" layoutY=\"159.0\" prefHeight=\"25.0\" prefWidth=\"56.0\" style=\"-fx-background-color: rgba(0, 0, 0, 0.5);\" />\r\n            <Line endX=\"1169.0\" layoutX=\"91.0\" layoutY=\"25.0\" startX=\"-91.0\" stroke=\"#412a42\" strokeWidth=\"2.0\" />\r\n            </children>\r\n        </Pane>\r\n        <Pane fx:id=\"imgPane\" layoutY=\"200.0\" prefHeight=\"610.0\" prefWidth=\"1260.0\" VBox.vgrow=\"ALWAYS\">\r\n            <Pane fx:id=\"upPane\" prefHeight=\"305.0\" prefWidth=\"630.0\" style=\"-fx-border-color: #412A42; -fx-border-width: 2;\" />\r\n               <Line endX=\"1159.0\" layoutX=\"101.0\" startX=\"-100.0\" stroke=\"#412a42\" strokeWidth=\"2.0\" />\r\n            <Pane fx:id=\"downPane\" layoutX=\"630.0\" layoutY=\"305.0\" prefHeight=\"305.0\" prefWidth=\"630.0\" style=\"-fx-border-color: #412A42; -fx-border-width: 2;\" />\r\n         <children>\r\n         </children></Pane>\r\n    </children>\r\n</Pane>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/com/example/git/hello-view.fxml b/src/main/resources/com/example/git/hello-view.fxml
+--- a/src/main/resources/com/example/git/hello-view.fxml	(revision 28f3e77ef9323af960336f5a4c17ca1f80d8f46b)
++++ b/src/main/resources/com/example/git/hello-view.fxml	(date 1713956845889)
+@@ -67,7 +67,7 @@
+                     <font>
+                         <Font size="14.0" />
+                     </font></CheckBox>
+-                <TextField fx:id="truckTextField" layoutX="150.0" layoutY="102.0" onAction="#check" onKeyTyped="#handleNumericInput" prefHeight="9.0" prefWidth="33.0" style="-fx-background-color: rgba(0, 0, 0, 0.5); -fx-text-fill: #c6c6c6;" text="3" />
++                <TextField fx:id="truckTextField" layoutX="150.0" layoutY="102.0" onAction="#check" onKeyTyped="#handleNumericInput" prefHeight="9.0" prefWidth="33.0" style="-fx-background-color: rgba(0, 0, 0, 0.5); -fx-text-fill: #c6c6c6;"/>
+                 <TextField fx:id="passengerTextField" layoutX="150.0" layoutY="64.0" onAction="#check" onKeyTyped="#handleNumericInput" prefHeight="25.0" prefWidth="33.0" style="-fx-background-color: rgba(0, 0, 0, 0.5); -fx-text-fill: #c6c6c6;" text="2" />
+                 <Text fill="#c6c6c6" layoutX="34.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Период появления (сек)" />
+                 <Text fill="#c6c6c6" layoutX="244.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Вероятность рождения" />
+@@ -99,6 +99,8 @@
+             <ComboBox fx:id="passengerAiThread" layoutX="200.0" layoutY="159.0" prefHeight="25.0" prefWidth="56.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);" />
+             <ComboBox fx:id="mainAiThread" layoutX="335.0" layoutY="159.0" prefHeight="25.0" prefWidth="56.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);" />
+             <Line endX="1169.0" layoutX="91.0" layoutY="25.0" startX="-91.0" stroke="#412a42" strokeWidth="2.0" />
++            <Button layoutX="65.0"  mnemonicParsing="false"  style="-fx-background-color: rgba(0, 0, 0, 0.5);" text="Загрузить" textFill="#c6c6c6"  />
++            <Button layoutX="132.0" mnemonicParsing="false" style="-fx-background-color: rgba(0, 0, 0, 0.5);" text="Сохранить" textFill="#c6c6c6" />
+             </children>
+         </Pane>
+         <Pane fx:id="imgPane" layoutY="200.0" prefHeight="610.0" prefWidth="1260.0" VBox.vgrow="ALWAYS">
+Index: src/main/java/com/example/git/management/Habitat.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.git.management;\r\n\r\nimport com.example.git.transports.Passenger;\r\nimport com.example.git.transports.Truck;\r\nimport javafx.fxml.FXML;\r\nimport javafx.scene.layout.Pane;\r\n\r\n\r\nimport java.io.FileNotFoundException;\r\nimport java.util.Random;\r\n\r\npublic class Habitat {\r\n    @FXML\r\n    private Pane imgPane;\r\n    private static final int width = 1260;\r\n    private static final int height = 810;\r\n    private CarContainer carContainer = CarContainer.getInstance();\r\n    private float p1 = 0.5f; //вероятность грузовых авто\r\n    private float p2 = 0.5f; //вероятность пассажирских авто\r\n    private int n1 = 2;\r\n    private int n2 = 3;\r\n    public int lifeTimeN1 = 5;\r\n    public int lifeTimeN2 = 7;\r\n    int finalX,finalY,startX,startY;\r\n\r\n    public void setTruckProbability(float probability) {\r\n        this.p1 = probability;\r\n    }\r\n    public void setTruckTime(int time) {\r\n        this.n1 = time;\r\n    }\r\n    public void setLifeTimeN1(int lifeTimeN1){\r\n        this.lifeTimeN1 = lifeTimeN1;\r\n    }\r\n    public void setPassengerProbability(float probability) {\r\n        this.p2 = probability;\r\n    }\r\n    public void setPassengerTime(int time) {\r\n        this.n2 = time;\r\n    }\r\n    public void setLifeTimeN2(int lifeTimeN2){\r\n        this.lifeTimeN2 = lifeTimeN2;\r\n    }\r\n    public static int getWidth() {\r\n        return width;\r\n    }\r\n\r\n    public static int getHeight() {\r\n        return height;\r\n    }\r\n    public int Update(long time) throws FileNotFoundException {\r\n        long newTime = time/1000;\r\n        int number = 0;\r\n        int x,y;\r\n        Random rand = new Random();\r\n        float p = rand.nextFloat();\r\n        try {\r\n            if ((newTime % n1 == 0) && (p1 >= p)) {\r\n                number++;\r\n                startX = rand.nextInt(0, width - 220);\r\n                startY = rand.nextInt(0, 610 - 200);\r\n                if(startX > 430 || startY > 105) {\r\n                    finalX = rand.nextInt(width / 2 - 200);\r\n                    finalY = rand.nextInt((height - 200) / 2 - 200);\r\n                }else{\r\n                    finalX = startX;\r\n                    finalY = startY;\r\n                }\r\n                Truck truck = new Truck(startX,startY ,finalX,finalY, rand.nextInt(Integer.MAX_VALUE), lifeTimeN1);\r\n                carContainer.addCar(truck,newTime);\r\n            }\r\n            if ((newTime % n2 == 0) && (p2 >= p)) {\r\n                number++;\r\n                startX = rand.nextInt(0, width - 220);\r\n                startY =  rand.nextInt(0, 610 - 200);\r\n                if(startX < 630 || startY < 305) {\r\n                    finalX = rand.nextInt(width / 2, width-220);\r\n                    finalY = rand.nextInt(305, 410);\r\n                }else{\r\n                    finalX = startX;\r\n                    finalY = startY;\r\n                }\r\n                Passenger passenger = new Passenger(startX , startY,finalX,finalY, rand.nextInt(Integer.MAX_VALUE), lifeTimeN2);\r\n                carContainer.addCar(passenger,newTime);\r\n            }\r\n        }\r\n        catch(FileNotFoundException ex){\r\n            ex.printStackTrace();\r\n        }\r\n        return number;\r\n    }\r\n    public CarContainer getCarContainer() {\r\n        return carContainer;\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/git/management/Habitat.java b/src/main/java/com/example/git/management/Habitat.java
+--- a/src/main/java/com/example/git/management/Habitat.java	(revision 28f3e77ef9323af960336f5a4c17ca1f80d8f46b)
++++ b/src/main/java/com/example/git/management/Habitat.java	(date 1713956847959)
+@@ -10,8 +10,6 @@
+ import java.util.Random;
+ 
+ public class Habitat {
+-    @FXML
+-    private Pane imgPane;
+     private static final int width = 1260;
+     private static final int height = 810;
+     private CarContainer carContainer = CarContainer.getInstance();
+@@ -92,4 +90,22 @@
+     public CarContainer getCarContainer() {
+         return carContainer;
+     }
++    public float getTruckProbability() {
++        return p1;
++    }
++    public float getPassengerProbability(){
++        return p2;
++    }
++    public int getN1(){
++        return n1;
++    }
++    public int getN2(){
++        return n2;
++    }
++    public int getLifeTimeN1(){
++        return lifeTimeN1;
++    }
++    public int getLifeTimeN2(){
++        return lifeTimeN2;
++    }
+ }
+\ No newline at end of file
+Index: src/main/java/com/example/git/management/CarContainer.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.git.management;\r\nimport com.example.git.transports.Transport;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.HashMap;\r\nimport java.util.TreeSet;\r\npublic class CarContainer {\r\n    private static CarContainer instance;\r\n    private ArrayList<Transport> carList;\r\n    private TreeSet<Integer> idSet;\r\n    private HashMap<Integer, Long> birthTimeMap;\r\n\r\n    private CarContainer() {\r\n        carList = new ArrayList<>();\r\n        idSet = new TreeSet<>();\r\n        birthTimeMap = new HashMap<>();\r\n    }\r\n\r\n    public static CarContainer getInstance() {\r\n        if (instance == null) {\r\n            instance = new CarContainer();\r\n        }\r\n        return instance;\r\n    }\r\n\r\n    public void addCar(Transport transport,long birthTime) {\r\n        carList.add(transport);\r\n        int id = transport.getId();\r\n        idSet.add(id);\r\n        birthTimeMap.put(id,birthTime);\r\n    }\r\n\r\n    public ArrayList<Transport> getCarList() {\r\n        return carList;\r\n    }\r\n    public HashMap<Integer, Long> getBirthTimeMap(){\r\n        return  birthTimeMap;\r\n    }\r\n    public TreeSet<Integer> getIdSet(){\r\n        return  idSet;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/git/management/CarContainer.java b/src/main/java/com/example/git/management/CarContainer.java
+--- a/src/main/java/com/example/git/management/CarContainer.java	(revision 28f3e77ef9323af960336f5a4c17ca1f80d8f46b)
++++ b/src/main/java/com/example/git/management/CarContainer.java	(date 1713956847972)
+@@ -1,10 +1,13 @@
+ package com.example.git.management;
+ import com.example.git.transports.Transport;
+ 
++import java.io.Serializable;
+ import java.util.ArrayList;
+ import java.util.HashMap;
+ import java.util.TreeSet;
+-public class CarContainer {
++
++public class CarContainer  implements Serializable {
++    private static final long serialVersionUID = 1L; // Уникальный идентификатор версии класса для сериализации
+     private static CarContainer instance;
+     private ArrayList<Transport> carList;
+     private TreeSet<Integer> idSet;
+@@ -29,6 +32,11 @@
+         idSet.add(id);
+         birthTimeMap.put(id,birthTime);
+     }
++    public void cleans(){
++        carList.clear();
++        idSet.clear();
++        birthTimeMap.clear();
++    }
+ 
+     public ArrayList<Transport> getCarList() {
+         return carList;
+Index: src/main/java/com/example/git/transports/Truck.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.git.transports;\r\n\r\nimport com.example.git.management.IBehaviour;\r\nimport javafx.scene.image.Image;\r\n\r\nimport java.io.FileNotFoundException;\r\nimport java.util.Random;\r\n\r\npublic class Truck extends Transport implements IBehaviour {\r\n    private long creationTime;\r\n    public static int intTruck =0;\r\n    public static Random rand = new Random();\r\n    private static Image img = new Image(\"police.png\");\r\n\r\n    public Truck(int x, int y,int finalyX,int finalyY, int id, long lifetime) throws FileNotFoundException {\r\n        super(x, y,finalyX,finalyY, img, id, lifetime);\r\n        creationTime = System.currentTimeMillis(); // Запоминаем время создания\r\n        System.out.println(\"x:\" + x + \" y: \" + y);\r\n        intTruck ++;\r\n    }\r\n\r\n    // Метод для проверки истечения времени жизни\r\n    public boolean isLifeTimeExpired(long currentTime, long lifeTime,long pauseTime) {\r\n        long elapsedTime = currentTime - creationTime - pauseTime;\r\n        return elapsedTime / 1000 >= lifeTime;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/git/transports/Truck.java b/src/main/java/com/example/git/transports/Truck.java
+--- a/src/main/java/com/example/git/transports/Truck.java	(revision 28f3e77ef9323af960336f5a4c17ca1f80d8f46b)
++++ b/src/main/java/com/example/git/transports/Truck.java	(date 1713956847976)
+@@ -10,7 +10,7 @@
+     private long creationTime;
+     public static int intTruck =0;
+     public static Random rand = new Random();
+-    private static Image img = new Image("police.png");
++    private final static Image img = new Image("police.png");
+ 
+     public Truck(int x, int y,int finalyX,int finalyY, int id, long lifetime) throws FileNotFoundException {
+         super(x, y,finalyX,finalyY, img, id, lifetime);
+@@ -18,7 +18,6 @@
+         System.out.println("x:" + x + " y: " + y);
+         intTruck ++;
+     }
+-
+     // Метод для проверки истечения времени жизни
+     public boolean isLifeTimeExpired(long currentTime, long lifeTime,long pauseTime) {
+         long elapsedTime = currentTime - creationTime - pauseTime;
+Index: src/main/java/com/example/git/management/HelloController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.git.management;\r\n\r\nimport com.example.git.AI.PassengerAI;\r\nimport com.example.git.AI.TruckAI;\r\nimport com.example.git.HelloApplication;\r\nimport com.example.git.transports.Passenger;\r\nimport com.example.git.transports.Transport;\r\nimport com.example.git.transports.Truck;\r\nimport javafx.application.Platform;\r\nimport javafx.fxml.FXML;\r\nimport javafx.fxml.FXMLLoader;\r\nimport javafx.fxml.Initializable;\r\nimport javafx.scene.Scene;\r\nimport javafx.scene.control.*;\r\nimport javafx.scene.input.KeyEvent;\r\nimport javafx.scene.layout.Pane;\r\nimport javafx.stage.Stage;\r\n\r\nimport java.io.FileNotFoundException;\r\nimport java.io.IOException;\r\nimport java.net.URL;\r\nimport java.util.*;\r\n\r\npublic class HelloController implements Initializable {\r\n    Habitat habitat = new Habitat();\r\n    private TruckAI truckAI;\r\n    private PassengerAI passengerAI;\r\n    private Console console;\r\n    Timer timer;\r\n    @FXML\r\n    public Pane root, imgPane, modalPane,upPane,downPane;\r\n    public long initializationTime;\r\n    @FXML\r\n    private Label timerLabel, textTimer;\r\n    @FXML\r\n    private Button startButton, stopButton,lookButton,truckOnButton,truckOffButton,passengerOnButton,passengerOffButton;\r\n    @FXML\r\n    private RadioButton open, close;\r\n    @FXML\r\n    private CheckBox CheckBoxMain;\r\n    @FXML\r\n    private CheckMenuItem CheckBoxMenu;\r\n    @FXML\r\n    private MenuItem MenuStartBtn, MenuStopBtn,consoleButtonMenu;\r\n    @FXML\r\n    private RadioMenuItem MenuRadioBtnHide, MenuRadioBtnShow;\r\n    @FXML\r\n    private ComboBox<String> passengerComboBox, truckComboBox,truckAiThread,passengerAiThread,mainAiThread;\r\n    @FXML\r\n    private TextField truckTextField, passengerTextField, lifeTimeTruck, lifeTimePassenger;\r\n    long pauseTime = 0;\r\n\r\n    @FXML\r\n    public void menuBox() {\r\n        CheckBoxMain.setSelected(CheckBoxMenu.isSelected());\r\n    }\r\n    @FXML\r\n    public void mainBox() {\r\n        CheckBoxMenu.setSelected(CheckBoxMain.isSelected());\r\n    }\r\n    @FXML\r\n    public void currentObject() {\r\n        long start = System.currentTimeMillis();\r\n        timer.cancel();\r\n        Statistic statistic = new Statistic(this);\r\n        truckAI.pause();\r\n        passengerAI.pause();\r\n        statistic.openModalWindowLife(habitat.getCarContainer().getBirthTimeMap());\r\n        pauseTime += System.currentTimeMillis() - start;\r\n        start();\r\n        isButtonAI();\r\n    }\r\n    @FXML\r\n    public void check() {\r\n        String truckInput = truckTextField.getText();\r\n        String passengerInput = passengerTextField.getText();\r\n\r\n        String truckInputTime = lifeTimeTruck.getText();\r\n        String passengerInputTime = lifeTimePassenger.getText();\r\n\r\n        try {\r\n            int truckValue = Integer.parseInt(truckInput);\r\n            int passengerValue = Integer.parseInt(passengerInput);\r\n\r\n            int truckTimeLive = Integer.parseInt(truckInputTime);\r\n            int passengerTimeLive = Integer.parseInt(passengerInputTime);\r\n\r\n            if (truckValue == 0 || truckValue >= 100) {\r\n                truckTextField.setText(\"1\");\r\n                throw new IllegalArgumentException();\r\n            } else if (passengerValue == 0 || passengerValue >= 100) {\r\n                passengerTextField.setText(\"1\");\r\n                throw new IllegalArgumentException();\r\n            } else if (truckTimeLive == 0 || truckTimeLive >= 100) {\r\n                lifeTimeTruck.setText(\"1\");\r\n                throw new IllegalArgumentException();\r\n            } else if (passengerTimeLive == 0 || passengerTimeLive >= 100) {\r\n                lifeTimePassenger.setText(\"1\");\r\n                throw new IllegalArgumentException();\r\n            }\r\n        } catch (IllegalArgumentException e) {\r\n            showAlert();\r\n        }\r\n    }\r\n    @FXML\r\n    public void handleNumericInput(KeyEvent event) {\r\n        TextField textField = (TextField) event.getSource();\r\n        String text = textField.getText();\r\n        if (!text.matches(\"\\\\d*\")) {\r\n            textField.setText(text.replaceAll(\"[^\\\\d]\", \"\"));\r\n        }\r\n    }\r\n\r\n    @Override\r\n    public void initialize(URL url, ResourceBundle resourceBundle) {\r\n        truckAI = new TruckAI(habitat.getCarContainer().getCarList());\r\n        passengerAI = new PassengerAI(habitat.getCarContainer().getCarList());\r\n        ToggleGroup group = new ToggleGroup();\r\n        open.setToggleGroup(group);\r\n        close.setToggleGroup(group);\r\n\r\n        passengerComboBox.getItems().addAll(\"0\", \"10\", \"20\", \"30\", \"40\", \"50\", \"60\", \"70\", \"80\", \"90\", \"100\");\r\n        passengerComboBox.setValue(\"50\"); // Установка начального значения\r\n        truckComboBox.getItems().addAll(\"0\", \"10\", \"20\", \"30\", \"40\", \"50\", \"60\", \"70\", \"80\", \"90\", \"100\");\r\n        truckComboBox.setValue(\"50\"); // Установка начального значения\r\n\r\n        passengerAiThread.getItems().addAll(\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\",\"8\",\"9\",\"10\");\r\n        passengerAiThread.setValue(\"5\");\r\n        truckAiThread.getItems().addAll(\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\",\"8\",\"9\",\"10\");\r\n        truckAiThread.setValue(\"5\");\r\n        mainAiThread.getItems().addAll(\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\",\"8\",\"9\",\"10\");\r\n        mainAiThread.setValue(\"5\");\r\n\r\n        passengerComboBox.setOnAction(event -> {\r\n            String selectedValue = passengerComboBox.getValue();\r\n            habitat.setPassengerProbability(Float.parseFloat(selectedValue) / 100);\r\n        });\r\n        truckComboBox.setOnAction(event -> {\r\n            String selectedValue = truckComboBox.getValue();\r\n            habitat.setTruckProbability(Float.parseFloat(selectedValue) / 100);\r\n        });\r\n        truckAiThread.setOnAction(event ->{\r\n            int selectedValue = Integer.parseInt(truckAiThread.getValue());\r\n            truckAI.setPriority(selectedValue);\r\n        });\r\n        passengerAiThread.setOnAction(event ->{\r\n            int selectedValue = Integer.parseInt(passengerAiThread.getValue());\r\n            passengerAI.setPriority(selectedValue);\r\n        });\r\n        mainAiThread.setOnAction(event ->{\r\n            int selectedValue = Integer.parseInt(mainAiThread.getValue());\r\n            Thread.currentThread().setPriority(selectedValue);\r\n        });\r\n        MenuStartBtn.setOnAction(event -> {\r\n            stopInitialize();\r\n            start();\r\n        });\r\n        MenuStopBtn.setOnAction(event -> {\r\n            pauseIntialize();\r\n            if (CheckBoxMenu.isSelected()) {\r\n                model();\r\n            }\r\n        });\r\n        consoleButtonMenu.setOnAction(event ->{\r\n            try {\r\n                getConsole();\r\n            } catch (IOException e) {\r\n                throw new RuntimeException(e);\r\n            }\r\n        });\r\n        open.setOnAction(event -> {\r\n            swapTimer();\r\n            MenuRadioBtnShow.setSelected(true);\r\n        });\r\n        close.setOnAction(event -> {\r\n            swapTimer();\r\n            MenuRadioBtnHide.setSelected(true);\r\n        });\r\n        MenuRadioBtnShow.setOnAction(event -> {\r\n            swapTimer();\r\n            open.setSelected(true);\r\n        });\r\n        MenuRadioBtnHide.setOnAction(event -> {\r\n            swapTimer();\r\n            close.setSelected(true);\r\n        });\r\n        startButton.setOnAction(event -> {\r\n            stopInitialize();\r\n            start();\r\n        });\r\n        stopButton.setOnAction(event -> {\r\n            pauseIntialize();\r\n            if (CheckBoxMain.isSelected()) {\r\n                model();\r\n            }\r\n        });\r\n        truckOnButton.setOnAction(event ->{\r\n            swapAIButton(1);\r\n                truckAI.resumeAI();\r\n\r\n        });\r\n        truckOffButton.setOnAction(event -> {\r\n            swapAIButton(1);\r\n            truckAI.pause();\r\n        });\r\n        passengerOnButton.setOnAction(event ->{\r\n            swapAIButton(2);\r\n            passengerAI.resumeAI();\r\n        });\r\n        passengerOffButton.setOnAction(event ->{\r\n            swapAIButton(2);\r\n            passengerAI.pause();\r\n        });\r\n    }\r\n\r\n    private void getConsole() throws IOException\r\n    {\r\n        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource(\"console.fxml\"));\r\n\r\n        Stage consoleStage = new Stage();\r\n        Scene consoleScene = new Scene(fxmlLoader.load());\r\n\r\n        console = fxmlLoader.getController();\r\n        console.setHelloController(this);\r\n\r\n        consoleStage.setTitle(\"Консоль\");\r\n        consoleStage.setMinWidth(300);\r\n        consoleStage.setMinHeight(300);\r\n\r\n        consoleStage.setScene(consoleScene);\r\n        consoleStage.show();\r\n    }\r\n\r\n    private void swapAIButton(int number){\r\n        switch (number){\r\n            case 1:{\r\n                truckOnButton.setDisable(!(truckOnButton.isDisable()));\r\n                truckOffButton.setDisable(!(truckOffButton.isDisable()));\r\n                break;\r\n            }\r\n            case 2:{\r\n                passengerOnButton.setDisable(!(passengerOnButton.isDisabled()));\r\n                passengerOffButton.setDisable(!(passengerOffButton.isDisabled()));\r\n                break;\r\n            }\r\n        }\r\n    }\r\n    public void onKey() {\r\n        imgPane.getScene().setOnKeyReleased((KeyEvent event) -> {\r\n            switch (event.getCode()) {\r\n                case B -> {\r\n                    if (!startButton.isDisabled()) {\r\n                        stopInitialize();\r\n                        start();\r\n                    }\r\n                }\r\n                case E -> {\r\n                    if (!stopButton.isDisabled()) {\r\n                        pauseIntialize();\r\n                        if (CheckBoxMain.isSelected()) {\r\n                            model();\r\n                        }\r\n                    }\r\n                }\r\n                case T -> {\r\n                    timerLabel.setVisible(!timerLabel.isVisible());\r\n                    textTimer.setVisible(!textTimer.isVisible());\r\n                    if (open.isSelected()) {\r\n                        close.setSelected(!close.isSelected());\r\n                        MenuRadioBtnHide.setSelected(!MenuRadioBtnHide.isSelected());\r\n                    } else {\r\n                        open.setSelected(!open.isSelected());\r\n                        MenuRadioBtnShow.setSelected(!MenuRadioBtnShow.isSelected());\r\n                    }\r\n                    open.setDisable(!open.isDisabled());\r\n                    close.setDisable(!close.isDisabled());\r\n\r\n                    MenuRadioBtnShow.setDisable(!MenuRadioBtnShow.isDisable());\r\n                    MenuRadioBtnHide.setDisable(!MenuRadioBtnHide.isDisable());\r\n                }\r\n            }\r\n        });\r\n    }\r\n\r\n    private void swapTimer() {\r\n        timerLabel.setVisible(!timerLabel.isVisible());\r\n        textTimer.setVisible(!textTimer.isVisible());\r\n\r\n        MenuRadioBtnShow.setDisable(!(MenuRadioBtnShow.isDisable()));\r\n        MenuRadioBtnHide.setDisable(!(MenuRadioBtnHide.isDisable()));\r\n\r\n        open.setDisable(!(open.isDisabled()));\r\n        close.setDisable(!(close.isDisabled()));\r\n    }\r\n\r\n    private void showAlert() {\r\n        Alert alert = new Alert(Alert.AlertType.ERROR);\r\n        alert.setTitle(\"Ошибка\");\r\n        alert.setHeaderText(\"Неверное значение\");\r\n        alert.setContentText(\"Значения должны быть цифрой, которая больше 0 и не превышать 100\");\r\n        alert.showAndWait();\r\n    }\r\n    private void isButtonAI(){\r\n        if (passengerOnButton.isDisabled()){\r\n            passengerAI.resumeAI();\r\n        }\r\n        if (truckOnButton.isDisabled()){\r\n            truckAI.resumeAI();\r\n        }\r\n    }\r\n    private void startTimer() {\r\n        long time = System.currentTimeMillis() - initializationTime - pauseTime;\r\n        timerLabel.setText(String.valueOf(time / 1000));\r\n    }\r\n    public void start() {\r\n        if (!startButton.isDisabled()) {\r\n            swapDisable();\r\n        }\r\n        isButtonAI();\r\n        lookButton.setDisable(false);\r\n        habitat.setTruckTime(Integer.parseInt(truckTextField.getText()));\r\n        habitat.setPassengerTime(Integer.parseInt(passengerTextField.getText()));\r\n        habitat.setLifeTimeN1(Integer.parseInt(lifeTimeTruck.getText()));\r\n        habitat.setLifeTimeN2(Integer.parseInt(lifeTimePassenger.getText()));\r\n        if (initializationTime == 0) {\r\n            initializationTime = System.currentTimeMillis();\r\n        }\r\n\r\n        timer = new Timer();\r\n        timer.scheduleAtFixedRate(new TimerTask() {\r\n            @Override\r\n            public void run() {\r\n                Platform.runLater(()->{\r\n                    startTimer();\r\n                    try {\r\n                        int number = habitat.Update( System.currentTimeMillis() - initializationTime);\r\n                        CarContainer carContainer = habitat.getCarContainer();\r\n                        if (number == 1){\r\n                            imgPane.getChildren().add(carContainer.getCarList().get(carContainer.getCarList().size()-1).getImageView());\r\n                        }\r\n                        else if (number == 2) {\r\n                            imgPane.getChildren().add(carContainer.getCarList().get(carContainer.getCarList().size()-1).getImageView());\r\n                            imgPane.getChildren().add(carContainer.getCarList().get(carContainer.getCarList().size()-2).getImageView());\r\n                        }\r\n                        checkDeath(carContainer);\r\n                    } catch (FileNotFoundException e) {\r\n                        throw new RuntimeException(e);\r\n                    }\r\n                });\r\n            }\r\n        }, 0, 1000);\r\n    }\r\n    private void checkDeath(CarContainer carContainer) {\r\n        if (!(carContainer.getBirthTimeMap().isEmpty())) {\r\n            long currentTime = System.currentTimeMillis(); // Текущее время\r\n            Iterator<Transport> iterator = carContainer.getCarList().iterator();\r\n            while (iterator.hasNext()) {\r\n                Transport transport = iterator.next();\r\n                if (transport instanceof Truck) {\r\n                    Truck truck = (Truck) transport; // Приведение к типу Truck\r\n                    if (truck.isLifeTimeExpired(currentTime, habitat.lifeTimeN1,pauseTime)) {\r\n                        imgPane.getChildren().remove(truck.getImageView());\r\n                        iterator.remove(); // Удаление из списка\r\n                        carContainer.getBirthTimeMap().remove(truck.getId());\r\n                        carContainer.getIdSet().remove(truck.getId());\r\n                        System.out.println(\"Удалили грузовик\");\r\n                    }\r\n                } else if (transport instanceof Passenger) {\r\n                    Passenger passenger = (Passenger) transport;\r\n                    if (passenger.isLifeTimeExpired(currentTime, habitat.lifeTimeN2,pauseTime)) {\r\n                        imgPane.getChildren().remove(passenger.getImageView());\r\n                        iterator.remove(); // Удаление из списка\r\n                        carContainer.getBirthTimeMap().remove(passenger.getId());\r\n                        carContainer.getIdSet().remove(passenger.getId());\r\n                    }\r\n                } else {\r\n                    System.out.println(\"Ничего не удаляем\");\r\n                }\r\n            }\r\n        }\r\n    }\r\n    private void pauseIntialize() {\r\n        swapDisable();\r\n        timer.cancel();\r\n        truckAI.pause();\r\n        passengerAI.pause();\r\n    }\r\n\r\n    private void swapDisable() {\r\n        startButton.setDisable(!(startButton.isDisabled()));\r\n        stopButton.setDisable(!(stopButton.isDisabled()));\r\n\r\n        MenuStartBtn.setDisable(startButton.isDisabled());\r\n        MenuStopBtn.setDisable(stopButton.isDisabled());\r\n\r\n        truckTextField.setDisable(!(truckTextField.isDisabled()));\r\n        lifeTimeTruck.setDisable(!(lifeTimeTruck.isDisabled()));\r\n        truckComboBox.setDisable(!(truckComboBox.isDisabled()));\r\n\r\n        passengerTextField.setDisable(!(passengerTextField.isDisabled()));\r\n        lifeTimePassenger.setDisable(!(lifeTimePassenger.isDisabled()));\r\n        passengerComboBox.setDisable(!(passengerComboBox.isDisabled()));\r\n    }\r\n\r\n    public void stopInitialize() {\r\n        if (timer != null) {\r\n            timer.cancel();\r\n            pauseTime = 0;\r\n            timer = null;\r\n            initializationTime = 0;\r\n            Passenger.intPassenger = 0;\r\n            Truck.intTruck = 0;\r\n            CarContainer carContainer = habitat.getCarContainer();\r\n            carContainer.getCarList().forEach((tmp) -> imgPane.getChildren().remove(tmp.getImageView()));\r\n            habitat.getCarContainer().getCarList().clear();\r\n            habitat.getCarContainer().getIdSet().clear();\r\n            habitat.getCarContainer().getBirthTimeMap().clear();\r\n            carContainer.getCarList().clear();\r\n        }\r\n    }\r\n\r\n    public TruckAI getTruckAI(){\r\n        return truckAI;\r\n    }\r\n    public PassengerAI getPassengerAI(){\r\n        return passengerAI;\r\n    }\r\n    public void swapAI(int number){\r\n        if (number == 1) {\r\n            passengerOnButton.setDisable(false);\r\n            passengerOffButton.setDisable(true);\r\n\r\n            truckOnButton.setDisable(false);\r\n            truckOffButton.setDisable(true);\r\n        }else {\r\n            passengerOnButton.setDisable(true);\r\n            passengerOffButton.setDisable(false);\r\n\r\n            truckOnButton.setDisable(true);\r\n            truckOffButton.setDisable(false);\r\n        }\r\n    }\r\n\r\n    public void model() {\r\n        long start = System.currentTimeMillis();\r\n        Statistic statistic = new Statistic(this);\r\n        statistic.openModalWindow(start);\r\n        pauseTime += System.currentTimeMillis() - start;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/git/management/HelloController.java b/src/main/java/com/example/git/management/HelloController.java
+--- a/src/main/java/com/example/git/management/HelloController.java	(revision 28f3e77ef9323af960336f5a4c17ca1f80d8f46b)
++++ b/src/main/java/com/example/git/management/HelloController.java	(date 1713956850029)
+@@ -14,9 +14,12 @@
+ import javafx.scene.control.*;
+ import javafx.scene.input.KeyEvent;
+ import javafx.scene.layout.Pane;
++import javafx.scene.text.Text;
+ import javafx.stage.Stage;
+ 
++import java.io.FileInputStream;
+ import java.io.FileNotFoundException;
++import java.io.FileOutputStream;
+ import java.io.IOException;
+ import java.net.URL;
+ import java.util.*;
+@@ -110,7 +113,6 @@
+             textField.setText(text.replaceAll("[^\\d]", ""));
+         }
+     }
+-
+     @Override
+     public void initialize(URL url, ResourceBundle resourceBundle) {
+         truckAI = new TruckAI(habitat.getCarContainer().getCarList());
+@@ -122,14 +124,12 @@
+         passengerComboBox.getItems().addAll("0", "10", "20", "30", "40", "50", "60", "70", "80", "90", "100");
+         passengerComboBox.setValue("50"); // Установка начального значения
+         truckComboBox.getItems().addAll("0", "10", "20", "30", "40", "50", "60", "70", "80", "90", "100");
+-        truckComboBox.setValue("50"); // Установка начального значения
++
+ 
+         passengerAiThread.getItems().addAll("1","2","3","4","5","6","7","8","9","10");
+-        passengerAiThread.setValue("5");
+         truckAiThread.getItems().addAll("1","2","3","4","5","6","7","8","9","10");
+-        truckAiThread.setValue("5");
+         mainAiThread.getItems().addAll("1","2","3","4","5","6","7","8","9","10");
+-        mainAiThread.setValue("5");
++        downloadConfig();
+ 
+         passengerComboBox.setOnAction(event -> {
+             String selectedValue = passengerComboBox.getValue();
+@@ -156,6 +156,7 @@
+             start();
+         });
+         MenuStopBtn.setOnAction(event -> {
++            saveConfig();
+             pauseIntialize();
+             if (CheckBoxMenu.isSelected()) {
+                 model();
+@@ -189,6 +190,7 @@
+             start();
+         });
+         stopButton.setOnAction(event -> {
++            saveConfig();
+             pauseIntialize();
+             if (CheckBoxMain.isSelected()) {
+                 model();
+@@ -212,7 +214,61 @@
+             passengerAI.pause();
+         });
+     }
++    private void saveConfig(){
++        Properties saveProps = new Properties();
++        saveProps.setProperty("probabilityTruck", String.valueOf(habitat.getTruckProbability()));
++        saveProps.setProperty("probabilityPassenger", String.valueOf(habitat.getPassengerProbability())); // Записываем вероятность рождения
++
++        saveProps.setProperty("truckTextField",String.valueOf(habitat.getN1()));
++        saveProps.setProperty("passengerTextField",String.valueOf(habitat.getN2())); //Записываем переиод рождения
++
++        saveProps.setProperty("lifeTimeTruck",String.valueOf(habitat.getLifeTimeN1()));
++        saveProps.setProperty("lifeTimePassenger",String.valueOf(habitat.getLifeTimeN2())); //Записывем время жизни
++
++        saveProps.setProperty("truckAiThread", truckAiThread.getValue());
++        saveProps.setProperty("passengerAiThread", passengerAiThread.getValue());
++        saveProps.setProperty("mainAiThread", mainAiThread.getValue());
++        try {
++            saveProps.storeToXML(new FileOutputStream("config.xml"), "");
++        } catch (IOException e) {
++            throw new RuntimeException(e);
++        }
++    }
++    private void downloadConfig() {
++        Properties loadProps = new Properties();
++        try {
++            loadProps.loadFromXML(new FileInputStream("config.xml"));
++        } catch (IOException e) {
++            throw new RuntimeException(e);
++        }
++        //Вероятность рождения
++        habitat.setTruckProbability(Float.parseFloat(loadProps.getProperty("probabilityTruck")));
++        truckComboBox.setValue(String.valueOf((int) (habitat.getTruckProbability()*100)));
++        habitat.setPassengerProbability(Float.parseFloat(loadProps.getProperty("probabilityPassenger")));
++        passengerComboBox.setValue(String.valueOf((int) (habitat.getPassengerProbability()*100)));
+ 
++
++        //Приоритеты потоков
++        truckAI.setPriority(Integer.parseInt(loadProps.getProperty("truckAiThread")));
++        truckAiThread.setValue(loadProps.getProperty("truckAiThread"));
++        passengerAI.setPriority(Integer.parseInt(loadProps.getProperty("passengerAiThread")));
++        passengerAiThread.setValue(loadProps.getProperty("passengerAiThread"));
++        Thread.currentThread().setPriority(Integer.parseInt(loadProps.getProperty("mainAiThread")));
++        mainAiThread.setValue(loadProps.getProperty("mainAiThread"));
++
++        //Период рождения
++        habitat.setTruckTime(Integer.parseInt(loadProps.getProperty("truckTextField")));
++        truckTextField.setText(String.valueOf(loadProps.getProperty("truckTextField")));
++        habitat.setPassengerTime(Integer.parseInt(loadProps.getProperty("passengerTextField")));
++        passengerTextField.setText(String.valueOf(loadProps.getProperty("passengerTextField")));
++
++        //Время жизни
++        habitat.setLifeTimeN1(Integer.parseInt(loadProps.getProperty("lifeTimeTruck")));
++        lifeTimeTruck.setText(loadProps.getProperty("lifeTimeTruck"));
++        habitat.setLifeTimeN2(Integer.parseInt(loadProps.getProperty("lifeTimePassenger")));
++        lifeTimePassenger.setText(loadProps.getProperty("lifeTimePassenger"));
++
++    }
+     private void getConsole() throws IOException
+     {
+         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("console.fxml"));
+@@ -230,7 +286,6 @@
+         consoleStage.setScene(consoleScene);
+         consoleStage.show();
+     }
+-
+     private void swapAIButton(int number){
+         switch (number){
+             case 1:{
+@@ -281,7 +336,6 @@
+             }
+         });
+     }
+-
+     private void swapTimer() {
+         timerLabel.setVisible(!timerLabel.isVisible());
+         textTimer.setVisible(!textTimer.isVisible());
+@@ -292,7 +346,6 @@
+         open.setDisable(!(open.isDisabled()));
+         close.setDisable(!(close.isDisabled()));
+     }
+-
+     private void showAlert() {
+         Alert alert = new Alert(Alert.AlertType.ERROR);
+         alert.setTitle("Ошибка");
+@@ -325,7 +378,6 @@
+         if (initializationTime == 0) {
+             initializationTime = System.currentTimeMillis();
+         }
+-
+         timer = new Timer();
+         timer.scheduleAtFixedRate(new TimerTask() {
+             @Override
+@@ -385,7 +437,6 @@
+         truckAI.pause();
+         passengerAI.pause();
+     }
+-
+     private void swapDisable() {
+         startButton.setDisable(!(startButton.isDisabled()));
+         stopButton.setDisable(!(stopButton.isDisabled()));
+@@ -401,7 +452,6 @@
+         lifeTimePassenger.setDisable(!(lifeTimePassenger.isDisabled()));
+         passengerComboBox.setDisable(!(passengerComboBox.isDisabled()));
+     }
+-
+     public void stopInitialize() {
+         if (timer != null) {
+             timer.cancel();
+@@ -418,7 +468,6 @@
+             carContainer.getCarList().clear();
+         }
+     }
+-
+     public TruckAI getTruckAI(){
+         return truckAI;
+     }
+@@ -440,11 +489,10 @@
+             truckOffButton.setDisable(false);
+         }
+     }
+-
+     public void model() {
+         long start = System.currentTimeMillis();
+         Statistic statistic = new Statistic(this);
+         statistic.openModalWindow(start);
+         pauseTime += System.currentTimeMillis() - start;
+     }
+-}
++}
+\ No newline at end of file
+Index: src/main/java/com/example/git/transports/Transport.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>    package com.example.git.transports;\r\n\r\n    import javafx.scene.image.Image;\r\n    import javafx.scene.image.ImageView;\r\n\r\n\r\n    public abstract class Transport\r\n    {\r\n        private int id;\r\n        private int finalX,finalY;\r\n        private final long lifetime;\r\n        final ImageView imgView;\r\n        public Transport(int x, int y,int finalX,int finalY, Image img, int id, long lifetime){\r\n            this.id = id;\r\n            this.finalX = finalX;\r\n            this.finalY = finalY;\r\n            this.lifetime = lifetime;\r\n            imgView = new ImageView(img);\r\n            imgView.setLayoutX(x);\r\n            imgView.setLayoutY(y);\r\n            imgView.setFitWidth(200);\r\n            imgView.setFitHeight(150);\r\n        }\r\n        public ImageView getImageView() {return imgView;}\r\n        public int getId(){return id;}\r\n        public  int getFinalX(){return finalX;}\r\n        public  int getFinalY(){return finalY;}\r\n    }\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/git/transports/Transport.java b/src/main/java/com/example/git/transports/Transport.java
+--- a/src/main/java/com/example/git/transports/Transport.java	(revision 28f3e77ef9323af960336f5a4c17ca1f80d8f46b)
++++ b/src/main/java/com/example/git/transports/Transport.java	(date 1713956850061)
+@@ -3,24 +3,32 @@
+     import javafx.scene.image.Image;
+     import javafx.scene.image.ImageView;
+ 
++    import java.io.Serializable;
+ 
+-    public abstract class Transport
++
++    public abstract class Transport implements Serializable
+     {
+         private int id;
+-        private int finalX,finalY;
++        private int x,y,finalX,finalY;
+         private final long lifetime;
+-        final ImageView imgView;
++        transient ImageView imgView;
+         public Transport(int x, int y,int finalX,int finalY, Image img, int id, long lifetime){
+             this.id = id;
+             this.finalX = finalX;
+             this.finalY = finalY;
+             this.lifetime = lifetime;
++            this.x = x;
++            this.y = y;
+             imgView = new ImageView(img);
+             imgView.setLayoutX(x);
+             imgView.setLayoutY(y);
+             imgView.setFitWidth(200);
+             imgView.setFitHeight(150);
+         }
++        public void setImgView(ImageView imgView){this.imgView = imgView;}
++        public long getLifetime(){return lifetime;}
++        public int getX(){return x;}
++        public int getY(){return y;}
+         public ImageView getImageView() {return imgView;}
+         public int getId(){return id;}
+         public  int getFinalX(){return finalX;}
+Index: pom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\"\r\n         xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n         xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd\">\r\n    <modelVersion>4.0.0</modelVersion>\r\n\r\n    <groupId>com.example</groupId>\r\n    <artifactId>git</artifactId>\r\n    <version>1.0-SNAPSHOT</version>\r\n    <name>git</name>\r\n\r\n    <properties>\r\n        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\r\n        <junit.version>5.10.0</junit.version>\r\n    </properties>\r\n\r\n    <dependencies>\r\n        <dependency>\r\n            <groupId>org.openjfx</groupId>\r\n            <artifactId>javafx-controls</artifactId>\r\n            <version>19.0.2</version>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>org.openjfx</groupId>\r\n            <artifactId>javafx-fxml</artifactId>\r\n            <version>19.0.2</version>\r\n        </dependency>\r\n\r\n        <dependency>\r\n            <groupId>org.junit.jupiter</groupId>\r\n            <artifactId>junit-jupiter-api</artifactId>\r\n            <version>${junit.version}</version>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>org.junit.jupiter</groupId>\r\n            <artifactId>junit-jupiter-engine</artifactId>\r\n            <version>${junit.version}</version>\r\n            <scope>test</scope>\r\n        </dependency>\r\n    </dependencies>\r\n\r\n    <build>\r\n        <plugins>\r\n            <plugin>\r\n                <groupId>org.apache.maven.plugins</groupId>\r\n                <artifactId>maven-compiler-plugin</artifactId>\r\n                <version>3.11.0</version>\r\n                <configuration>\r\n                    <source>19</source>\r\n                    <target>19</target>\r\n                </configuration>\r\n            </plugin>\r\n            <plugin>\r\n                <groupId>org.openjfx</groupId>\r\n                <artifactId>javafx-maven-plugin</artifactId>\r\n                <version>0.0.8</version>\r\n                <executions>\r\n                    <execution>\r\n                        <!-- Default configuration for running with: mvn clean javafx:run -->\r\n                        <id>default-cli</id>\r\n                        <configuration>\r\n                            <mainClass>com.example.git/com.example.git.HelloApplication</mainClass>\r\n                            <launcher>app</launcher>\r\n                            <jlinkZipName>app</jlinkZipName>\r\n                            <jlinkImageName>app</jlinkImageName>\r\n                            <noManPages>true</noManPages>\r\n                            <stripDebug>true</stripDebug>\r\n                            <noHeaderFiles>true</noHeaderFiles>\r\n                        </configuration>\r\n                    </execution>\r\n                </executions>\r\n            </plugin>\r\n        </plugins>\r\n    </build>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/pom.xml b/pom.xml
+--- a/pom.xml	(revision 28f3e77ef9323af960336f5a4c17ca1f80d8f46b)
++++ b/pom.xml	(date 1713956850066)
+@@ -37,6 +37,12 @@
+             <version>${junit.version}</version>
+             <scope>test</scope>
+         </dependency>
++
++        <dependency>
++            <groupId>com.example</groupId>
++            <artifactId>git</artifactId>
++            <version>1.0-SNAPSHOT</version>
++        </dependency>
+     </dependencies>
+ 
+     <build>
+Index: .idea/encodings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"Encoding\">\r\n    <file url=\"file://$PROJECT_DIR$/src/main/java\" charset=\"UTF-8\" />\r\n    <file url=\"file://$PROJECT_DIR$/src/main/resources\" charset=\"UTF-8\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/encodings.xml b/.idea/encodings.xml
+--- a/.idea/encodings.xml	(revision 28f3e77ef9323af960336f5a4c17ca1f80d8f46b)
++++ b/.idea/encodings.xml	(date 1713956850072)
+@@ -1,6 +1,7 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="Encoding">
++    <file url="file://$PROJECT_DIR$/car_data.ser" charset="windows-1251" />
+     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+   </component>
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"f32cf832-ed7d-4a95-8d2b-1e70564c6b12\" name=\"Changes\" comment=\"Лаба 4: изменён стиль приложения\">\r\n      <change afterPath=\"$PROJECT_DIR$/.idea/uiDesigner.xml\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/main/java/com/example/git/management/Console.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/main/resources/com/example/git/console.fxml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_01_04_2024_21_07__Changes_.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_01_04_2024_21_07__Changes_.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_01_04_2024_21_21__Changes_.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_01_04_2024_21_21__Changes_.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_01_04_2024_21_31__Changes_.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_01_04_2024_21_31__Changes_.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/example/git/management/BaseAI.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/com/example/git/AI/BaseAI.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/example/git/management/HelloController.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/com/example/git/management/HelloController.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/example/git/management/PassengerAI.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/com/example/git/AI/PassengerAI.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/example/git/management/Statistic.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/com/example/git/management/Statistic.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/example/git/management/TruckAI.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/com/example/git/AI/TruckAI.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/module-info.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/module-info.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/resources/com/example/git/hello-view.fxml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/resources/com/example/git/hello-view.fxml\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Class\" />\r\n        <option value=\"FxmlFile\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"24fafd89521e7d5e7b5b3a284f0aa45c49d9dbe6\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n    <option name=\"RESET_MODE\" value=\"MIXED\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\"><![CDATA[{\r\n  \"lastFilter\": {\r\n    \"state\": \"OPEN\",\r\n    \"assignee\": \"DizaledFeed1\"\r\n  }\r\n}]]></component>\r\n  <component name=\"GithubPullRequestsUISettings\"><![CDATA[{\r\n  \"selectedUrlAndAccountId\": {\r\n    \"url\": \"https://github.com/DizaledFeed1/test_git.git\",\r\n    \"accountId\": \"b43774dd-fdc4-4323-a7d6-cb95613ce01b\"\r\n  }\r\n}]]></component>\r\n  <component name=\"MavenImportPreferences\">\r\n    <option name=\"generalSettings\">\r\n      <MavenGeneralSettings>\r\n        <option name=\"mavenHomeTypeForPersistence\" value=\"WRAPPER\" />\r\n      </MavenGeneralSettings>\r\n    </option>\r\n  </component>\r\n  <component name=\"ProblemsViewState\">\r\n    <option name=\"selectedTabId\" value=\"CurrentFile\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 8\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2eSXktIzgeoFWehDZxshAooexYq\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"Application.Console.executor\": \"Run\",\r\n    \"Application.HelloApplication.executor\": \"Run\",\r\n    \"Application.Statistic.executor\": \"Run\",\r\n    \"RunOnceActivity.OpenProjectViewOnStart\": \"true\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"SHARE_PROJECT_CONFIGURATION_FILES\": \"true\",\r\n    \"git-widget-placeholder\": \"main\",\r\n    \"ignore.virus.scanning.warn.message\": \"true\",\r\n    \"kotlin-language-version-configured\": \"true\",\r\n    \"last_opened_file_path\": \"C:/Users/Dizaled/IdeaProjects/git/src/main/resources/com/example/git\",\r\n    \"node.js.detected.package.eslint\": \"true\",\r\n    \"node.js.detected.package.tslint\": \"true\",\r\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\r\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\r\n    \"nodejs_package_manager_path\": \"npm\",\r\n    \"settings.editor.selected.configurable\": \"reference.settings.project.maven.repository.indices\",\r\n    \"vue.rearranger.settings.migration\": \"true\"\r\n  }\r\n}]]></component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"CopyFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\Dizaled\\IdeaProjects\\git\\src\\main\\resources\\com\\example\\git\" />\r\n      <recent name=\"C:\\Users\\Dizaled\\IdeaProjects\\git\\src\\main\\resources\" />\r\n      <recent name=\"C:\\Users\\Dizaled\\IdeaProjects\\git\\src\\main\\java\\com\\example\\git\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\">\r\n    <configuration default=\"true\" type=\"JetRunConfigurationType\">\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration default=\"true\" type=\"KotlinStandaloneScriptRunConfigurationType\">\r\n      <option name=\"filePath\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"f32cf832-ed7d-4a95-8d2b-1e70564c6b12\" name=\"Changes\" comment=\"\" />\r\n      <created>1711899099160</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1711899099160</updated>\r\n      <workItem from=\"1711899100225\" duration=\"430000\" />\r\n      <workItem from=\"1711899628581\" duration=\"1558000\" />\r\n      <workItem from=\"1711945173504\" duration=\"6080000\" />\r\n      <workItem from=\"1711951386943\" duration=\"16332000\" />\r\n      <workItem from=\"1712292683695\" duration=\"1162000\" />\r\n      <workItem from=\"1712293853663\" duration=\"23158000\" />\r\n      <workItem from=\"1712320346417\" duration=\"3000\" />\r\n      <workItem from=\"1712555496418\" duration=\"907000\" />\r\n      <workItem from=\"1712556467058\" duration=\"7438000\" />\r\n      <workItem from=\"1712571237304\" duration=\"739000\" />\r\n      <workItem from=\"1712572334553\" duration=\"1927000\" />\r\n      <workItem from=\"1712574789947\" duration=\"71000\" />\r\n      <workItem from=\"1712576535989\" duration=\"128000\" />\r\n      <workItem from=\"1712647308360\" duration=\"245000\" />\r\n      <workItem from=\"1712816311243\" duration=\"1437000\" />\r\n      <workItem from=\"1712817873052\" duration=\"7968000\" />\r\n      <workItem from=\"1713070817760\" duration=\"17511000\" />\r\n      <workItem from=\"1713088497574\" duration=\"9371000\" />\r\n      <workItem from=\"1713101320853\" duration=\"4055000\" />\r\n      <workItem from=\"1713163907698\" duration=\"17839000\" />\r\n      <workItem from=\"1713189371021\" duration=\"3613000\" />\r\n      <workItem from=\"1713194963047\" duration=\"487000\" />\r\n      <workItem from=\"1713195951894\" duration=\"1504000\" />\r\n      <workItem from=\"1713249108136\" duration=\"7555000\" />\r\n      <workItem from=\"1713262035249\" duration=\"2777000\" />\r\n      <workItem from=\"1713271840592\" duration=\"1708000\" />\r\n      <workItem from=\"1713332971016\" duration=\"3000\" />\r\n      <workItem from=\"1713434089130\" duration=\"8623000\" />\r\n      <workItem from=\"1713443016711\" duration=\"909000\" />\r\n      <workItem from=\"1713456837226\" duration=\"3240000\" />\r\n      <workItem from=\"1713461867067\" duration=\"1283000\" />\r\n      <workItem from=\"1713522417116\" duration=\"6920000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"start\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1711899160603</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1711899160603</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"2\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1711899289892</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1711899289892</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"2\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1711899366709</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1711899366709</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"готовая 2-я лаба по проге\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1711901084990</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1711901084990</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"Готовая 2-я лаба с исправленными багульками\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1711951210081</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1711951210081</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00006\" summary=\"3-я лаба добавил идендификаторы(id),время жизни,время рождения, поля для ввода пользовательских значений.\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1711954861577</created>\r\n      <option name=\"number\" value=\"00006\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1711954861577</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00007\" summary=\"3-я лаба реализация метода checkDeath\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1711962215823</created>\r\n      <option name=\"number\" value=\"00007\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1711962215823</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00008\" summary=\"оптимизированный код\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1712302429738</created>\r\n      <option name=\"number\" value=\"00008\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00008\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1712302429738</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00009\" summary=\"оптимизированный код\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1712302439831</created>\r\n      <option name=\"number\" value=\"00009\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00009\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1712302439831</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00010\" summary=\"Лаба 3: добавлена зависимость размеров Pane от экрана\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1712303981575</created>\r\n      <option name=\"number\" value=\"00010\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00010\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1712303981575</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00011\" summary=\"Лаба 3: готовы поля для ввода времени жизни, добавлена кнопка показа текущих объектов. Багулька с грузовиками, сделать модальное окно\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1712309582892</created>\r\n      <option name=\"number\" value=\"00011\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00011\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1712309582892</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00012\" summary=\"Лаба 3: готовая (возможны багульки)\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1712571950840</created>\r\n      <option name=\"number\" value=\"00012\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00012\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1712571950840</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00013\" summary=\"Лаба 3: исправлен баг кнопки текущие объекты, добавлена возможность вводить с клавиатуры времене жизни\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1712574177142</created>\r\n      <option name=\"number\" value=\"00013\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00013\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1712574177142</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00014\" summary=\"Лаба 4: реализовано движение объектов. Движение работает некоректно, объекты едут не в те места, нет проверки места появления объекта\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1713084199408</created>\r\n      <option name=\"number\" value=\"00014\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00014\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1713084199408</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00015\" summary=\"Лаба 4: реализовано движение объектов. Нет проверки места появления объекта\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1713095374122</created>\r\n      <option name=\"number\" value=\"00015\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00015\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1713095374122</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00016\" summary=\"Лаба 4: Возможны багульки\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1713097559614</created>\r\n      <option name=\"number\" value=\"00016\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00016\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1713097559615</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00017\" summary=\"Лаба 4: остались 4 и 5 пункт\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1713105344721</created>\r\n      <option name=\"number\" value=\"00017\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00017\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1713105344721</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00018\" summary=\"Лаба 4: остался 5 пункт и мелочовка\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1713460050523</created>\r\n      <option name=\"number\" value=\"00018\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00018\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1713460050523</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00019\" summary=\"Лаба 4: готовая (возможны багульки)\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1713525182028</created>\r\n      <option name=\"number\" value=\"00019\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00019\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1713525182028</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00020\" summary=\"Лаба 4: изменён стиль приложения\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1713536032258</created>\r\n      <option name=\"number\" value=\"00020\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00020\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1713536032258</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"21\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State>\r\n              <option name=\"FILTERS\">\r\n                <map>\r\n                  <entry key=\"branch\">\r\n                    <value>\r\n                      <list>\r\n                        <option value=\"origin/main\" />\r\n                      </list>\r\n                    </value>\r\n                  </entry>\r\n                </map>\r\n              </option>\r\n            </State>\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"start\" />\r\n    <MESSAGE value=\"2\" />\r\n    <MESSAGE value=\"готовая 2-я лаба по проге\" />\r\n    <MESSAGE value=\"Готовая 2-я лаба с исправленными багульками\" />\r\n    <MESSAGE value=\"3-я лаба добавил идендификаторы(id),время жизни,время рождения, поля для ввода пользовательских значений.\" />\r\n    <MESSAGE value=\"3-я лаба реализация метода checkDeath\" />\r\n    <MESSAGE value=\"оптимизированный код\" />\r\n    <MESSAGE value=\"Лаба 3: добавлена зависимость размеров Pane от экрана\" />\r\n    <MESSAGE value=\"Лаба 3: готовы поля для ввода времени жизни, добавлена кнопка показа текущих объектов. Багулька с грузовиками, сделать модальное окно\" />\r\n    <MESSAGE value=\"Лаба 3: готовая (возможны багульки)\" />\r\n    <MESSAGE value=\"Лаба 3: исправлен баг кнопки текущие объекты, добавлена возможность вводить с клавиатуры времене жизни\" />\r\n    <MESSAGE value=\"Лаба 4: реализовано движение объектов. Движение работает некоректно, объекты едут не в те места, нет проверки места появления объекта\" />\r\n    <MESSAGE value=\"Лаба 4: реализовано движение объектов. Нет проверки места появления объекта\" />\r\n    <MESSAGE value=\"Лаба 4: Возможны багульки\" />\r\n    <MESSAGE value=\"Лаба 4: остались 4 и 5 пункт\" />\r\n    <MESSAGE value=\"Лаба 4: остался 5 пункт и мелочовка\" />\r\n    <MESSAGE value=\"Лаба 4: готовая (возможны багульки)\" />\r\n    <MESSAGE value=\"Лаба 4: изменён стиль приложения\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Лаба 4: изменён стиль приложения\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 28f3e77ef9323af960336f5a4c17ca1f80d8f46b)
++++ b/.idea/workspace.xml	(date 1713956850269)
+@@ -4,20 +4,14 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="f32cf832-ed7d-4a95-8d2b-1e70564c6b12" name="Changes" comment="Лаба 4: изменён стиль приложения">
+-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/Console.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/example/git/console.fxml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_01_04_2024_21_07__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_01_04_2024_21_07__Changes_.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_01_04_2024_21_21__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_01_04_2024_21_21__Changes_.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_01_04_2024_21_31__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_01_04_2024_21_31__Changes_.xml" afterDir="false" />
++    <list default="true" id="f32cf832-ed7d-4a95-8d2b-1e70564c6b12" name="Changes" comment="Лаба 5: добавил консоль">
++      <change afterPath="$PROJECT_DIR$/src/main/resources/config.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/management/BaseAI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/AI/BaseAI.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/management/Console.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/Console.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/management/Habitat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/Habitat.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/management/HelloController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/HelloController.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/management/PassengerAI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/AI/PassengerAI.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/management/Statistic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/Statistic.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/management/TruckAI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/AI/TruckAI.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/git/console.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/git/console.fxml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/git/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/git/hello-view.fxml" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+@@ -42,18 +36,18 @@
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+     <option name="RESET_MODE" value="MIXED" />
+   </component>
+-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+-  "lastFilter": {
+-    "state": "OPEN",
+-    "assignee": "DizaledFeed1"
++  <component name="GitHubPullRequestSearchHistory">{
++  &quot;lastFilter&quot;: {
++    &quot;state&quot;: &quot;OPEN&quot;,
++    &quot;assignee&quot;: &quot;DizaledFeed1&quot;
+   }
+-}]]></component>
+-  <component name="GithubPullRequestsUISettings"><![CDATA[{
+-  "selectedUrlAndAccountId": {
+-    "url": "https://github.com/DizaledFeed1/test_git.git",
+-    "accountId": "b43774dd-fdc4-4323-a7d6-cb95613ce01b"
++}</component>
++  <component name="GithubPullRequestsUISettings">{
++  &quot;selectedUrlAndAccountId&quot;: {
++    &quot;url&quot;: &quot;https://github.com/DizaledFeed1/test_git.git&quot;,
++    &quot;accountId&quot;: &quot;b43774dd-fdc4-4323-a7d6-cb95613ce01b&quot;
+   }
+-}]]></component>
++}</component>
+   <component name="MavenImportPreferences">
+     <option name="generalSettings">
+       <MavenGeneralSettings>
+@@ -315,7 +309,15 @@
+       <option name="project" value="LOCAL" />
+       <updated>1713536032258</updated>
+     </task>
+-    <option name="localTasksCounter" value="21" />
++    <task id="LOCAL-00021" summary="Лаба 5: добавил консоль">
++      <option name="closed" value="true" />
++      <created>1713628758143</created>
++      <option name="number" value="00021" />
++      <option name="presentableId" value="LOCAL-00021" />
++      <option name="project" value="LOCAL" />
++      <updated>1713628758143</updated>
++    </task>
++    <option name="localTasksCounter" value="22" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+@@ -363,6 +365,7 @@
+     <MESSAGE value="Лаба 4: остался 5 пункт и мелочовка" />
+     <MESSAGE value="Лаба 4: готовая (возможны багульки)" />
+     <MESSAGE value="Лаба 4: изменён стиль приложения" />
+-    <option name="LAST_COMMIT_MESSAGE" value="Лаба 4: изменён стиль приложения" />
++    <MESSAGE value="Лаба 5: добавил консоль" />
++    <option name="LAST_COMMIT_MESSAGE" value="Лаба 5: добавил консоль" />
+   </component>
+ </project>
+\ No newline at end of file

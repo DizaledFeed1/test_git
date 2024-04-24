@@ -18,6 +18,9 @@ public class Passenger extends Transport implements IBehaviour {
         creationTime = System.currentTimeMillis(); // Запоминаем время создания
         intPassenger++;
     }
+    public void setCreationTime(long creationTime){
+        this.creationTime = creationTime;
+    }
     public boolean isLifeTimeExpired(long currentTime, long lifeTime,long pauseTime) {
         long elapsedTime = currentTime - creationTime - pauseTime;
         return elapsedTime / 1000 >= lifeTime;

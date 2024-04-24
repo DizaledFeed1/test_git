@@ -99,8 +99,8 @@
             <ComboBox fx:id="passengerAiThread" layoutX="200.0" layoutY="159.0" prefHeight="25.0" prefWidth="56.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);" />
             <ComboBox fx:id="mainAiThread" layoutX="335.0" layoutY="159.0" prefHeight="25.0" prefWidth="56.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);" />
             <Line endX="1169.0" layoutX="91.0" layoutY="25.0" startX="-91.0" stroke="#412a42" strokeWidth="2.0" />
-            <Button layoutX="65.0"  mnemonicParsing="false"  style="-fx-background-color: rgba(0, 0, 0, 0.5);" text="Загрузить" textFill="#c6c6c6"  />
-            <Button layoutX="132.0" mnemonicParsing="false" style="-fx-background-color: rgba(0, 0, 0, 0.5);" text="Сохранить" textFill="#c6c6c6" />
+            <Button layoutX="65.0"  mnemonicParsing="false"  onAction="#dowloadCarData" style="-fx-background-color: rgba(0, 0, 0, 0.5);" text="Загрузить" textFill="#c6c6c6"  />
+            <Button layoutX="132.0" mnemonicParsing="false" onAction="#saveCarData" style="-fx-background-color: rgba(0, 0, 0, 0.5);" text="Сохранить" textFill="#c6c6c6" />
             </children>
         </Pane>
         <Pane fx:id="imgPane" layoutY="200.0" prefHeight="610.0" prefWidth="1260.0" VBox.vgrow="ALWAYS">
