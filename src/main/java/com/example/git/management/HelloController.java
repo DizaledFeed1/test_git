@@ -130,6 +130,14 @@ public class HelloController implements Initializable {
         truckAiThread.getItems().addAll("1","2","3","4","5","6","7","8","9","10");
         mainAiThread.getItems().addAll("1","2","3","4","5","6","7","8","9","10");
         downloadConfig();
+        if (open.isSelected()){
+            timerLabel.setVisible(true);
+            textTimer.setVisible(true);
+        }
+        else {
+            timerLabel.setVisible(false);
+            textTimer.setVisible(false);
+        }
 
         passengerComboBox.setOnAction(event -> {
             String selectedValue = passengerComboBox.getValue();
@@ -228,6 +236,20 @@ public class HelloController implements Initializable {
         saveProps.setProperty("truckAiThread", truckAiThread.getValue());
         saveProps.setProperty("passengerAiThread", passengerAiThread.getValue());
         saveProps.setProperty("mainAiThread", mainAiThread.getValue());
+
+        saveProps.setProperty("checkBoxMenu", String.valueOf(CheckBoxMenu.isSelected()));
+
+        //запись кнопки
+        saveProps.setProperty("truckOnButton", String.valueOf(truckOnButton.isDisable()));
+        saveProps.setProperty("truckOffButton", String.valueOf(truckOffButton.isDisable()));
+        saveProps.setProperty("passengerOnButton", String.valueOf(passengerOnButton.isDisable()));
+        saveProps.setProperty("passengerOffButton", String.valueOf(passengerOffButton.isDisable()));
+
+        //Состояние таймера
+        saveProps.setProperty("open", String.valueOf(open.isSelected()));
+        saveProps.setProperty("openDisabled", String.valueOf(open.isDisabled()));
+        saveProps.setProperty("close", String.valueOf(close.isSelected()));
+        saveProps.setProperty("closeDisabled", String.valueOf(close.isDisabled()));
         try {
             saveProps.storeToXML(new FileOutputStream("config.xml"), "");
         } catch (IOException e) {
@@ -246,7 +268,6 @@ public class HelloController implements Initializable {
         truckComboBox.setValue(String.valueOf((int) (habitat.getTruckProbability()*100)));
         habitat.setPassengerProbability(Float.parseFloat(loadProps.getProperty("probabilityPassenger")));
         passengerComboBox.setValue(String.valueOf((int) (habitat.getPassengerProbability()*100)));
-
 
         //Приоритеты потоков
         truckAI.setPriority(Integer.parseInt(loadProps.getProperty("truckAiThread")));
@@ -267,6 +288,25 @@ public class HelloController implements Initializable {
         lifeTimeTruck.setText(loadProps.getProperty("lifeTimeTruck"));
         habitat.setLifeTimeN2(Integer.parseInt(loadProps.getProperty("lifeTimePassenger")));
         lifeTimePassenger.setText(loadProps.getProperty("lifeTimePassenger"));
+
+        CheckBoxMenu.setSelected(Boolean.parseBoolean(loadProps.getProperty("checkBoxMenu")));
+        CheckBoxMain.setSelected(Boolean.parseBoolean(loadProps.getProperty("checkBoxMenu")));
+
+        //Кнопки AI
+        truckOnButton.setDisable(Boolean.parseBoolean(loadProps.getProperty("truckOnButton")));
+        truckOffButton.setDisable(Boolean.parseBoolean(loadProps.getProperty("truckOffButton")));
+        passengerOnButton.setDisable(Boolean.parseBoolean(loadProps.getProperty("passengerOnButton")));
+        passengerOffButton.setDisable(Boolean.parseBoolean(loadProps.getProperty("passengerOffButton")));
+
+        //Радио батон
+        open.setSelected(Boolean.parseBoolean(loadProps.getProperty("open")));
+        open.setDisable(Boolean.parseBoolean(loadProps.getProperty("openDisabled")));
+        close.setSelected(Boolean.parseBoolean(loadProps.getProperty("close")));
+        close.setDisable(Boolean.parseBoolean(loadProps.getProperty("closeDisabled")));
+        MenuRadioBtnShow.setSelected(Boolean.parseBoolean(loadProps.getProperty("open")));
+        MenuRadioBtnShow.setDisable(Boolean.parseBoolean(loadProps.getProperty("openDisabled")));
+        MenuRadioBtnHide.setSelected(Boolean.parseBoolean(loadProps.getProperty("close")));
+        MenuRadioBtnHide.setDisable(Boolean.parseBoolean(loadProps.getProperty("closeDisabled")));
 
     }
     private void getConsole() throws IOException
@@ -365,11 +405,19 @@ public class HelloController implements Initializable {
         long time = System.currentTimeMillis() - initializationTime - pauseTime;
         timerLabel.setText(String.valueOf(time / 1000));
     }
-    public void start() {
+    private void checkStart(){
         if (!startButton.isDisabled()) {
             swapDisable();
         }
+        if (passengerOffButton.isDisable()){
+            passengerAI.pause();
+        }if (truckOffButton.isDisable()){
+            truckAI.pause();
+        }
         isButtonAI();
+    }
+    public void start() {
+        checkStart();
         lookButton.setDisable(false);
         habitat.setTruckTime(Integer.parseInt(truckTextField.getText()));
         habitat.setPassengerTime(Integer.parseInt(passengerTextField.getText()));

@@ -4,15 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f32cf832-ed7d-4a95-8d2b-1e70564c6b12" name="Changes" comment="Лаба 5: добавил консоль">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/config.xml" afterDir="false" />
+    <list default="true" id="f32cf832-ed7d-4a95-8d2b-1e70564c6b12" name="Changes" comment="Лаба 5: 3 пункт сделан наполовину осталось сделать сохранение правой части проги и 4 пункт">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/management/Console.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/Console.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/management/Habitat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/Habitat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/config.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/management/HelloController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/HelloController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/git/console.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/git/console.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/git/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/git/hello-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -317,7 +312,23 @@
       <option name="project" value="LOCAL" />
       <updated>1713628758143</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Лаба 5: 3 пункт сделан наполовину осталось сделать сохранение правой части проги и 4 пункт">
+      <option name="closed" value="true" />
+      <created>1713885100498</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1713885100498</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Лаба 5: 3 пункт сделан наполовину осталось сделать сохранение правой части проги и 4 пункт">
+      <option name="closed" value="true" />
+      <created>1713885115836</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1713885115836</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -366,6 +377,7 @@
     <MESSAGE value="Лаба 4: готовая (возможны багульки)" />
     <MESSAGE value="Лаба 4: изменён стиль приложения" />
     <MESSAGE value="Лаба 5: добавил консоль" />
-    <option name="LAST_COMMIT_MESSAGE" value="Лаба 5: добавил консоль" />
+    <MESSAGE value="Лаба 5: 3 пункт сделан наполовину осталось сделать сохранение правой части проги и 4 пункт" />
+    <option name="LAST_COMMIT_MESSAGE" value="Лаба 5: 3 пункт сделан наполовину осталось сделать сохранение правой части проги и 4 пункт" />
   </component>
 </project>
