@@ -1,6 +1,6 @@
 package com.example.git.management;
-import com.example.git.transports.Transport;
 
+import com.example.git.transports.Transport;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,7 +36,6 @@ public class CarContainer  implements Serializable {
         idSet.clear();
         birthTimeMap.clear();
     }
-
     public ArrayList<Transport> getCarList() {
         return carList;
     }

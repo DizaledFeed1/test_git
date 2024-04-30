@@ -3,9 +3,13 @@ package com.example.git.management;
 import com.example.git.AI.PassengerAI;
 import com.example.git.AI.TruckAI;
 import com.example.git.HelloApplication;
+
+
+import com.example.git.server.TCPServer;
 import com.example.git.transports.Passenger;
 import com.example.git.transports.Transport;
 import com.example.git.transports.Truck;
+
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,12 +18,17 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.*;
+import java.net.Socket;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class HelloController implements Initializable {
     Habitat habitat = new Habitat();
@@ -48,7 +57,10 @@ public class HelloController implements Initializable {
     private ComboBox<String> passengerComboBox, truckComboBox,truckAiThread,passengerAiThread,mainAiThread;
     @FXML
     private TextField truckTextField, passengerTextField, lifeTimeTruck, lifeTimePassenger;
+    @FXML
+    private ListView serverList;
     long pauseTime = 0;
+    TCPServer server;
 
     @FXML
     public void menuBox() {
@@ -112,6 +124,63 @@ public class HelloController implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        //создание сервера
+        new Thread(() -> {
+            try {
+                server = TCPServer.getInstance();
+                server.start();
+            } catch (IOException e) {
+                e.printStackTrace();
+                // Обработка ошибки инициализации сервера
+            }
+        }).start();
+//        Socket socket = null;
+//        try {
+//            socket = new Socket("127.0.0.1", 8080);
+//            // Остальной код работы с сокетом
+//        } catch (UnknownHostException e) {
+//            e.printStackTrace();
+//            // Обработка ошибки подключения к хосту
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            // Обработка других вводно-выводных ошибок
+//        }
+
+
+//        Socket finalSocket = socket;
+//        new Thread(() -> {
+//            try {
+//                // Бесконечный цикл для отправки запроса каждую секунду
+//                while (true) {
+//                    // Отправляем запрос на сервер
+//                    PrintWriter out = new PrintWriter(finalSocket.getOutputStream(), true);
+//                    out.println("GET_VALUE");
+//
+//                    // Получаем ответ от сервера
+//                    BufferedReader in = new BufferedReader(new InputStreamReader(finalSocket.getInputStream()));
+//                    String response;
+//
+//                    // Создаем список для хранения всех ответов
+//                    List<String> responses = new ArrayList<>();
+//
+//                    while (!((response = in.readLine()).equals(""))) {
+//                        responses.add(response);
+//                    }
+//
+//                    // Очищаем и обновляем список на JavaFX потоке
+//                    Platform.runLater(() -> {
+//                        serverList.getItems().clear();
+//                        serverList.getItems().addAll(responses);
+//                    });
+//
+//                    // Ждем 1 секунду перед отправкой следующего запроса
+//                    Thread.sleep(1000);
+//                }
+//            } catch (IOException | InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }).start();
+
         truckAI = new TruckAI(habitat.getCarContainer().getCarList());
         passengerAI = new PassengerAI(habitat.getCarContainer().getCarList());
         ToggleGroup group = new ToggleGroup();
@@ -219,6 +288,10 @@ public class HelloController implements Initializable {
             passengerAI.pause();
         });
     }
+
+
+
+
     private void saveConfig(){
         Properties saveProps = new Properties();
         saveProps.setProperty("probabilityTruck", String.valueOf(habitat.getTruckProbability()));
@@ -306,48 +379,64 @@ public class HelloController implements Initializable {
         MenuRadioBtnHide.setDisable(Boolean.parseBoolean(loadProps.getProperty("closeDisabled")));
 
     }
-    public void saveCarData(){
+    public void saveCarData() {
         try {
-            FileOutputStream fileOut = new FileOutputStream("carContainer.ser");
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            out.writeObject(habitat.getCarContainer());
-            out.close();
-            fileOut.close();
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Выбор пути сохранения");
+
+            // Указываем расширение по умолчанию и фильтр файлов
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Serialized files (*.ser)", "*.ser");
+            fileChooser.getExtensionFilters().add(extFilter);
+
+            // Показываем диалог сохранения файла и получаем выбранный файл
+            File file = fileChooser.showSaveDialog(null);
+            if (file != null) {
+                FileOutputStream fileOut = new FileOutputStream(file);
+                ObjectOutputStream out = new ObjectOutputStream(fileOut);
+                out.writeObject(habitat.getCarContainer());
+                out.close();
+                fileOut.close();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
     public void dowloadCarData(){
         try {
-            FileInputStream fileIn = new FileInputStream("carContainer.ser");
-            ObjectInputStream in = new ObjectInputStream(fileIn);
-            CarContainer loadedContainer = (CarContainer) in.readObject();
-            in.close();
-            fileIn.close();
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Open Car Data File");
+            File file = fileChooser.showOpenDialog(null);
 
-            ArrayList<Transport> carList = loadedContainer.getCarList();
-            for (Transport transport :carList ) {
-                if (transport instanceof Truck) {
-                    Truck truck = new Truck(transport.getX(),transport.getY(),transport.getFinalX(),transport.getFinalY(),transport.getId(),transport.getLifetime());
-                    long currentTime = System.currentTimeMillis() - pauseTime;
-                    if (initializationTime == 0){
-                        currentTime = 0;
+            if (file !=null) {
+                FileInputStream fileIn = new FileInputStream(file);
+                ObjectInputStream in = new ObjectInputStream(fileIn);
+                CarContainer loadedContainer = (CarContainer) in.readObject();
+                in.close();
+                fileIn.close();
+
+                ArrayList<Transport> carList = loadedContainer.getCarList();
+                for (Transport transport : carList) {
+                    if (transport instanceof Truck) {
+                        Truck truck = new Truck(transport.getX(), transport.getY(), transport.getFinalX(), transport.getFinalY(), transport.getId(), transport.getLifetime());
+                        long currentTime = System.currentTimeMillis() - pauseTime;
+                        if (initializationTime == 0) {
+                            currentTime = 0;
+                        }
+                        truck.setCreationTime(currentTime);
+                        currentTime = currentTime - initializationTime;
+                        habitat.getCarContainer().addCar(truck, currentTime / 1000);
+                        imgPane.getChildren().add(habitat.getCarContainer().getCarList().get(habitat.getCarContainer().getCarList().size() - 1).getImageView());
+                    } else if (transport instanceof Passenger) {
+                        Passenger passenger = new Passenger(transport.getX(), transport.getY(), transport.getFinalX(), transport.getFinalY(), transport.getId(), transport.getLifetime());
+                        long currentTime = System.currentTimeMillis() - pauseTime;
+                        if (initializationTime == 0) {
+                            currentTime = 0;
+                        }
+                        passenger.setCreationTime(currentTime);
+                        currentTime = currentTime - initializationTime;
+                        habitat.getCarContainer().addCar(passenger, currentTime / 1000);
+                        imgPane.getChildren().add(habitat.getCarContainer().getCarList().get(habitat.getCarContainer().getCarList().size() - 1).getImageView());
                     }
-                    truck.setCreationTime(currentTime);
-                    currentTime = currentTime - initializationTime;
-                    habitat.getCarContainer().addCar(truck,currentTime/1000);
-                    imgPane.getChildren().add(habitat.getCarContainer().getCarList().get(habitat.getCarContainer().getCarList().size()-1).getImageView());
-                }
-                else if (transport instanceof Passenger) {
-                    Passenger passenger = new Passenger(transport.getX(),transport.getY(),transport.getFinalX(),transport.getFinalY(),transport.getId(),transport.getLifetime());
-                    long currentTime = System.currentTimeMillis() - pauseTime;
-                    if (initializationTime == 0){
-                        currentTime = 0;
-                    }
-                    passenger.setCreationTime(currentTime);
-                    currentTime = currentTime - initializationTime;
-                    habitat.getCarContainer().addCar(passenger,currentTime/1000);
-                    imgPane.getChildren().add(habitat.getCarContainer().getCarList().get(habitat.getCarContainer().getCarList().size()-1).getImageView());
                 }
             }
             System.out.println("контейнер заменён");
@@ -356,7 +445,6 @@ public class HelloController implements Initializable {
         }
         currentObject();
     }
-
     private void getConsole() throws IOException
     {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("console.fxml"));

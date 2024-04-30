@@ -7,9 +7,10 @@ import javafx.scene.layout.Pane;
 
 
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 import java.util.Random;
 
-public class Habitat {
+public class Habitat implements Serializable {
     private static final int width = 1260;
     private static final int height = 810;
     private CarContainer carContainer = CarContainer.getInstance();

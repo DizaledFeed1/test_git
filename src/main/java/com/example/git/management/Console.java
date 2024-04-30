@@ -5,7 +5,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
-import java.security.Key;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -31,19 +30,21 @@ public class Console {
         String commandName = parts[0].toLowerCase(Locale.ROOT);
         switch (commandName){
             case "help" -> {
-                printConsole("\n\"stopAI\" - остановить расчёт движения объектов \n" +
+                printConsole("\"stopAI\" - остановить расчёт движения объектов \n" +
                         "\"resumAI\" - продолжить расчёт движения объектов");
             }
             case "stopai" ->{
                 stopAI();
                  textArea.clear();
+                printConsole("работа потоков приостановлена");
             }
             case"resumai" ->{
                 resumAI();
                 textArea.clear();
+                printConsole("работа потоков возобновелна");
             }
             default -> {
-                printConsole("\nвведите \"help\" - для отображения всех доступных команд");
+                printConsole("введите \"help\" - для отображения всех доступных команд");
             }
         }
         System.out.println("Введено: " + commandName);
@@ -59,7 +60,7 @@ public class Console {
         helloController.getPassengerAI().pause();
     }
     private void printConsole(String text){
-        textArea.setText(text + "\n");
+        textArea.setText("\n" + text + "\n");
         textArea.setStyle("-fx-text-fill:red;-fx-control-inner-background: rgba(88,88,88);");
     }
 
