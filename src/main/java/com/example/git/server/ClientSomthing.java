@@ -1,9 +1,11 @@
 package com.example.git.server;
 
 import javafx.application.Platform;
+import javafx.scene.control.ListView;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.LinkedList;
 
 public class ClientSomthing {
     private Socket socket;
@@ -11,11 +13,13 @@ public class ClientSomthing {
     private BufferedWriter out; // поток чтения в сокет
     private String addr; // ip адрес клиента
     private int port; // порт соединения
+    private ListView<String> serverList;
 
 
-    public ClientSomthing(String addr, int port) {
+    public ClientSomthing(String addr, int port, ListView<String> serverList) {
         this.addr = addr;
         this.port = port;
+        this.serverList = serverList;
         try {
             this.socket = new Socket(addr, port);
         } catch (IOException e) {
@@ -47,6 +51,7 @@ public class ClientSomthing {
         try {
             if (!socket.isClosed()) {
                 out.write("stop\n");
+                serverList.getItems().clear();
                 out.flush();
                 socket.close();
                 in.close();
@@ -69,8 +74,12 @@ public class ClientSomthing {
                         ClientSomthing.this.downService(); // харакири
                         break; // выходим из цикла если пришло "stop"
                     }
-                    javafx.application.Platform.runLater(() -> {
-
+                    String[] clients = str.split(" "); // Разделить строку по пробелам
+                    Platform.runLater(() -> {
+                        serverList.getItems().clear(); // Очистить список перед добавлением новых клиентов
+                        for (String client : clients) {
+                            serverList.getItems().add(client); // Добавить каждого клиента в список отдельно
+                        }
                     });
                 }
             } catch (IOException e) {

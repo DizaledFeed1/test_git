@@ -4,28 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f32cf832-ed7d-4a95-8d2b-1e70564c6b12" name="Changes" comment="сейв">
-      <change afterPath="$PROJECT_DIR$/config.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/git/server/ClientSomthing.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/git/server/ServerSomthing.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_24_04_2024_18_06_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_24_04_2024_18_06_[Changes]2/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_24_04_2024_18_06__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_24_04_2024_18_06__Changes_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_24_04_2024_18_07_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_24_04_2024_18_07__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_24_04_2024_18_08_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_24_04_2024_18_08__Changes_.xml" beforeDir="false" />
+    <list default="true" id="f32cf832-ed7d-4a95-8d2b-1e70564c6b12" name="Changes" comment="6-лаба подключение и отключение от сервера">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/HelloApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/management/Console.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/Console.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/management/Habitat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/Habitat.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/management/HelloController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/HelloController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/server/ClientSomthing.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/server/ClientSomthing.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/server/TCPServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/server/TCPServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/git/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/git/hello-view.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/config.xml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -350,7 +333,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713885115836</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="6-лаба подключение и отключение от сервера">
+      <option name="closed" value="true" />
+      <created>1716632365225</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1716632365226</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -401,6 +392,7 @@
     <MESSAGE value="Лаба 4: изменён стиль приложения" />
     <MESSAGE value="Лаба 5: добавил консоль" />
     <MESSAGE value="Лаба 5: 3 пункт сделан наполовину осталось сделать сохранение правой части проги и 4 пункт" />
-    <option name="LAST_COMMIT_MESSAGE" value="Лаба 5: 3 пункт сделан наполовину осталось сделать сохранение правой части проги и 4 пункт" />
+    <MESSAGE value="6-лаба подключение и отключение от сервера" />
+    <option name="LAST_COMMIT_MESSAGE" value="6-лаба подключение и отключение от сервера" />
   </component>
 </project>

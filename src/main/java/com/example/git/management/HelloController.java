@@ -251,7 +251,7 @@ public class HelloController implements Initializable {
         int port = 8080;
         new Thread(() -> {
             try {
-                clientSomthing = new ClientSomthing(ipAddr, port);
+                clientSomthing = new ClientSomthing(ipAddr, port,serverList);
             } catch (Exception e) {
                 e.printStackTrace();
                 // В случае ошибки, нужно обновить UI в потоке JavaFX
