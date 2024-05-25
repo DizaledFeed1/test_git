@@ -2,6 +2,7 @@ package com.example.git;
 
 import com.example.git.management.Habitat;
 import javafx.application.Application;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -18,6 +19,10 @@ public class HelloApplication extends Application {
         Scene scene = new Scene(root, Habitat.getWidth(), Habitat.getHeight());
         stage.setScene(scene);
         stage.getIcons().add(new Image("icon.png", 64, 20, true, true));
+        stage.setOnCloseRequest(event ->{
+            System.exit(0);
+        });
+
 //        stage.setMaximized(true);
         stage.setResizable(false);
         stage.show();

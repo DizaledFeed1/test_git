@@ -5,12 +5,15 @@ import com.example.git.AI.TruckAI;
 import com.example.git.HelloApplication;
 
 
+import com.example.git.server.ClientSomthing;
 import com.example.git.server.TCPServer;
 import com.example.git.transports.Passenger;
 import com.example.git.transports.Transport;
 import com.example.git.transports.Truck;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -20,29 +23,28 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.util.Duration;
-
 import java.io.*;
 import java.net.Socket;
 import java.net.URL;
-import java.net.UnknownHostException;
 import java.util.*;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.atomic.AtomicBoolean;
+
 
 public class HelloController implements Initializable {
     Habitat habitat = new Habitat();
     private TruckAI truckAI;
     private PassengerAI passengerAI;
     private Console console;
+    private static Socket clientSocket; //сокет для общения
+    private static BufferedReader in; // поток чтения из сокета
+    private static BufferedWriter out; // поток записи в сокет
     Timer timer;
     @FXML
-    public Pane root, imgPane, modalPane,upPane,downPane;
+    public Pane root, imgPane, modalPane, upPane, downPane;
     public long initializationTime;
     @FXML
     private Label timerLabel, textTimer;
     @FXML
-    private Button startButton, stopButton,lookButton,truckOnButton,truckOffButton,passengerOnButton,passengerOffButton;
+    private Button startButton, stopButton, lookButton, truckOnButton, truckOffButton, passengerOnButton, passengerOffButton,connectButton,disconnectButton;
     @FXML
     private RadioButton open, close;
     @FXML
@@ -50,26 +52,29 @@ public class HelloController implements Initializable {
     @FXML
     private CheckMenuItem CheckBoxMenu;
     @FXML
-    private MenuItem MenuStartBtn, MenuStopBtn,consoleButtonMenu;
+    private MenuItem MenuStartBtn, MenuStopBtn, consoleButtonMenu;
     @FXML
     private RadioMenuItem MenuRadioBtnHide, MenuRadioBtnShow;
     @FXML
-    private ComboBox<String> passengerComboBox, truckComboBox,truckAiThread,passengerAiThread,mainAiThread;
+    private ComboBox<String> passengerComboBox, truckComboBox, truckAiThread, passengerAiThread, mainAiThread;
     @FXML
     private TextField truckTextField, passengerTextField, lifeTimeTruck, lifeTimePassenger;
     @FXML
-    private ListView serverList;
+    private ListView<String> serverList;
+    private  ClientSomthing clientSomthing;
     long pauseTime = 0;
-    TCPServer server;
+
 
     @FXML
     public void menuBox() {
         CheckBoxMain.setSelected(CheckBoxMenu.isSelected());
     }
+
     @FXML
     public void mainBox() {
         CheckBoxMenu.setSelected(CheckBoxMain.isSelected());
     }
+
     @FXML
     public void currentObject() {
         long start = System.currentTimeMillis();
@@ -82,6 +87,7 @@ public class HelloController implements Initializable {
         start();
         isButtonAI();
     }
+
     @FXML
     public void check() {
         String truckInput = truckTextField.getText();
@@ -113,7 +119,9 @@ public class HelloController implements Initializable {
         } catch (IllegalArgumentException e) {
             showAlert();
         }
+        saveConfig();
     }
+
     @FXML
     public void handleNumericInput(KeyEvent event) {
         TextField textField = (TextField) event.getSource();
@@ -122,64 +130,10 @@ public class HelloController implements Initializable {
             textField.setText(text.replaceAll("[^\\d]", ""));
         }
     }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //создание сервера
-        new Thread(() -> {
-            try {
-                server = TCPServer.getInstance();
-                server.start();
-            } catch (IOException e) {
-                e.printStackTrace();
-                // Обработка ошибки инициализации сервера
-            }
-        }).start();
-//        Socket socket = null;
-//        try {
-//            socket = new Socket("127.0.0.1", 8080);
-//            // Остальной код работы с сокетом
-//        } catch (UnknownHostException e) {
-//            e.printStackTrace();
-//            // Обработка ошибки подключения к хосту
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            // Обработка других вводно-выводных ошибок
-//        }
-
-
-//        Socket finalSocket = socket;
-//        new Thread(() -> {
-//            try {
-//                // Бесконечный цикл для отправки запроса каждую секунду
-//                while (true) {
-//                    // Отправляем запрос на сервер
-//                    PrintWriter out = new PrintWriter(finalSocket.getOutputStream(), true);
-//                    out.println("GET_VALUE");
-//
-//                    // Получаем ответ от сервера
-//                    BufferedReader in = new BufferedReader(new InputStreamReader(finalSocket.getInputStream()));
-//                    String response;
-//
-//                    // Создаем список для хранения всех ответов
-//                    List<String> responses = new ArrayList<>();
-//
-//                    while (!((response = in.readLine()).equals(""))) {
-//                        responses.add(response);
-//                    }
-//
-//                    // Очищаем и обновляем список на JavaFX потоке
-//                    Platform.runLater(() -> {
-//                        serverList.getItems().clear();
-//                        serverList.getItems().addAll(responses);
-//                    });
-//
-//                    // Ждем 1 секунду перед отправкой следующего запроса
-//                    Thread.sleep(1000);
-//                }
-//            } catch (IOException | InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//        }).start();
+        disconnectButton.setDisable(true);
 
         truckAI = new TruckAI(habitat.getCarContainer().getCarList());
         passengerAI = new PassengerAI(habitat.getCarContainer().getCarList());
@@ -208,10 +162,12 @@ public class HelloController implements Initializable {
         passengerComboBox.setOnAction(event -> {
             String selectedValue = passengerComboBox.getValue();
             habitat.setPassengerProbability(Float.parseFloat(selectedValue) / 100);
+            saveConfig();
         });
         truckComboBox.setOnAction(event -> {
             String selectedValue = truckComboBox.getValue();
             habitat.setTruckProbability(Float.parseFloat(selectedValue) / 100);
+            saveConfig();
         });
         truckAiThread.setOnAction(event ->{
             int selectedValue = Integer.parseInt(truckAiThread.getValue());
@@ -288,97 +244,165 @@ public class HelloController implements Initializable {
             passengerAI.pause();
         });
     }
+    public void connect(){
+        connectButton.setDisable(true);
+        disconnectButton.setDisable(false);
+        String ipAddr = "localhost";
+        int port = 8080;
+        new Thread(() -> {
+            try {
+                clientSomthing = new ClientSomthing(ipAddr, port);
+            } catch (Exception e) {
+                e.printStackTrace();
+                // В случае ошибки, нужно обновить UI в потоке JavaFX
+                javafx.application.Platform.runLater(() -> {
+                    connectButton.setDisable(false);
+                    disconnectButton.setDisable(true);
+                });
+            }
+        }).start();
+    }
+    public void disconnect(){
+        connectButton.setDisable(false);
+        disconnectButton.setDisable(true);
+        clientSomthing.disconnect();
+    }
 
+    private void setText (String serverWord){
+        // Разделяем строку на слова по пробелам
+        String[] words = serverWord.split(" ");
 
+        // Создаем ObservableList и добавляем в него слова
+        ObservableList<String> items = FXCollections.observableArrayList(words);
 
-
-    private void saveConfig(){
-        Properties saveProps = new Properties();
-        saveProps.setProperty("probabilityTruck", String.valueOf(habitat.getTruckProbability()));
-        saveProps.setProperty("probabilityPassenger", String.valueOf(habitat.getPassengerProbability())); // Записываем вероятность рождения
-
-        saveProps.setProperty("truckTextField",String.valueOf(habitat.getN1()));
-        saveProps.setProperty("passengerTextField",String.valueOf(habitat.getN2())); //Записываем переиод рождения
-
-        saveProps.setProperty("lifeTimeTruck",String.valueOf(habitat.getLifeTimeN1()));
-        saveProps.setProperty("lifeTimePassenger",String.valueOf(habitat.getLifeTimeN2())); //Записывем время жизни
-
-        saveProps.setProperty("truckAiThread", truckAiThread.getValue());
-        saveProps.setProperty("passengerAiThread", passengerAiThread.getValue());
-        saveProps.setProperty("mainAiThread", mainAiThread.getValue());
-
-        saveProps.setProperty("checkBoxMenu", String.valueOf(CheckBoxMenu.isSelected()));
-
-        //запись кнопки
-        saveProps.setProperty("truckOnButton", String.valueOf(truckOnButton.isDisable()));
-        saveProps.setProperty("truckOffButton", String.valueOf(truckOffButton.isDisable()));
-        saveProps.setProperty("passengerOnButton", String.valueOf(passengerOnButton.isDisable()));
-        saveProps.setProperty("passengerOffButton", String.valueOf(passengerOffButton.isDisable()));
-
-        //Состояние таймера
-        saveProps.setProperty("open", String.valueOf(open.isSelected()));
-        saveProps.setProperty("openDisabled", String.valueOf(open.isDisabled()));
-        saveProps.setProperty("close", String.valueOf(close.isSelected()));
-        saveProps.setProperty("closeDisabled", String.valueOf(close.isDisabled()));
-        try {
-            saveProps.storeToXML(new FileOutputStream("config.xml"), "");
+        // Устанавливаем элементы в ListView
+        serverList.setItems(items);
+    }
+    private void saveConfig() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("config.txt"))) {
+            writer.write("probabilityTruck=" + habitat.getTruckProbability());
+            writer.newLine();
+            writer.write("probabilityPassenger=" + habitat.getPassengerProbability());
+            writer.newLine();
+            writer.write("truckTextField=" + habitat.getN1());
+            writer.newLine();
+            writer.write("passengerTextField=" + habitat.getN2());
+            writer.newLine();
+            writer.write("lifeTimeTruck=" + habitat.getLifeTimeN1());
+            writer.newLine();
+            writer.write("lifeTimePassenger=" + habitat.getLifeTimeN2());
+            writer.newLine();
+            writer.write("truckAiThread=" + truckAiThread.getValue());
+            writer.newLine();
+            writer.write("passengerAiThread=" + passengerAiThread.getValue());
+            writer.newLine();
+            writer.write("mainAiThread=" + mainAiThread.getValue());
+            writer.newLine();
+            writer.write("checkBoxMenu=" + CheckBoxMenu.isSelected());
+            writer.newLine();
+            writer.write("truckOnButton=" + truckOnButton.isDisable());
+            writer.newLine();
+            writer.write("truckOffButton=" + truckOffButton.isDisable());
+            writer.newLine();
+            writer.write("passengerOnButton=" + passengerOnButton.isDisable());
+            writer.newLine();
+            writer.write("passengerOffButton=" + passengerOffButton.isDisable());
+            writer.newLine();
+            writer.write("open=" + open.isSelected());
+            writer.newLine();
+            writer.write("openDisabled=" + open.isDisabled());
+            writer.newLine();
+            writer.write("close=" + close.isSelected());
+            writer.newLine();
+            writer.write("closeDisabled=" + close.isDisabled());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+
     private void downloadConfig() {
-        Properties loadProps = new Properties();
-        try {
-            loadProps.loadFromXML(new FileInputStream("config.xml"));
+        try (BufferedReader reader = new BufferedReader(new FileReader("config.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("=");
+                String key = parts[0];
+                String value = parts[1];
+                switch (key) {
+                    case "probabilityTruck":
+                        habitat.setTruckProbability(Float.parseFloat(value));
+                        truckComboBox.setValue(String.valueOf((int) (habitat.getTruckProbability() * 100)));
+                        break;
+                    case "probabilityPassenger":
+                        habitat.setPassengerProbability(Float.parseFloat(value));
+                        passengerComboBox.setValue(String.valueOf((int) (habitat.getPassengerProbability() * 100)));
+                        break;
+                    case "truckTextField":
+                        habitat.setTruckTime(Integer.parseInt(value));
+                        truckTextField.setText(value);
+                        break;
+                    case "passengerTextField":
+                        habitat.setPassengerTime(Integer.parseInt(value));
+                        passengerTextField.setText(value);
+                        break;
+                    case "lifeTimeTruck":
+                        habitat.setLifeTimeN1(Integer.parseInt(value));
+                        lifeTimeTruck.setText(value);
+                        break;
+                    case "lifeTimePassenger":
+                        habitat.setLifeTimeN2(Integer.parseInt(value));
+                        lifeTimePassenger.setText(value);
+                        break;
+                    case "truckAiThread":
+                        truckAI.setPriority(Integer.parseInt(value));
+                        truckAiThread.setValue(value);
+                        break;
+                    case "passengerAiThread":
+                        passengerAI.setPriority(Integer.parseInt(value));
+                        passengerAiThread.setValue(value);
+                        break;
+                    case "mainAiThread":
+                        Thread.currentThread().setPriority(Integer.parseInt(value));
+                        mainAiThread.setValue(value);
+                        break;
+                    case "checkBoxMenu":
+                        CheckBoxMenu.setSelected(Boolean.parseBoolean(value));
+                        CheckBoxMain.setSelected(Boolean.parseBoolean(value));
+                        break;
+                    case "truckOnButton":
+                        truckOnButton.setDisable(Boolean.parseBoolean(value));
+                        break;
+                    case "truckOffButton":
+                        truckOffButton.setDisable(Boolean.parseBoolean(value));
+                        break;
+                    case "passengerOnButton":
+                        passengerOnButton.setDisable(Boolean.parseBoolean(value));
+                        break;
+                    case "passengerOffButton":
+                        passengerOffButton.setDisable(Boolean.parseBoolean(value));
+                        break;
+                    case "open":
+                        open.setSelected(Boolean.parseBoolean(value));
+                        MenuRadioBtnShow.setSelected(Boolean.parseBoolean(value));
+                        break;
+                    case "openDisabled":
+                        open.setDisable(Boolean.parseBoolean(value));
+                        MenuRadioBtnShow.setDisable(Boolean.parseBoolean(value));
+                        break;
+                    case "close":
+                        close.setSelected(Boolean.parseBoolean(value));
+                        MenuRadioBtnHide.setSelected(Boolean.parseBoolean(value));
+                        break;
+                    case "closeDisabled":
+                        close.setDisable(Boolean.parseBoolean(value));
+                        MenuRadioBtnHide.setDisable(Boolean.parseBoolean(value));
+                        break;
+                }
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        //Вероятность рождения
-        habitat.setTruckProbability(Float.parseFloat(loadProps.getProperty("probabilityTruck")));
-        truckComboBox.setValue(String.valueOf((int) (habitat.getTruckProbability()*100)));
-        habitat.setPassengerProbability(Float.parseFloat(loadProps.getProperty("probabilityPassenger")));
-        passengerComboBox.setValue(String.valueOf((int) (habitat.getPassengerProbability()*100)));
-
-        //Приоритеты потоков
-        truckAI.setPriority(Integer.parseInt(loadProps.getProperty("truckAiThread")));
-        truckAiThread.setValue(loadProps.getProperty("truckAiThread"));
-        passengerAI.setPriority(Integer.parseInt(loadProps.getProperty("passengerAiThread")));
-        passengerAiThread.setValue(loadProps.getProperty("passengerAiThread"));
-        Thread.currentThread().setPriority(Integer.parseInt(loadProps.getProperty("mainAiThread")));
-        mainAiThread.setValue(loadProps.getProperty("mainAiThread"));
-
-        //Период рождения
-        habitat.setTruckTime(Integer.parseInt(loadProps.getProperty("truckTextField")));
-        truckTextField.setText(String.valueOf(loadProps.getProperty("truckTextField")));
-        habitat.setPassengerTime(Integer.parseInt(loadProps.getProperty("passengerTextField")));
-        passengerTextField.setText(String.valueOf(loadProps.getProperty("passengerTextField")));
-
-        //Время жизни
-        habitat.setLifeTimeN1(Integer.parseInt(loadProps.getProperty("lifeTimeTruck")));
-        lifeTimeTruck.setText(loadProps.getProperty("lifeTimeTruck"));
-        habitat.setLifeTimeN2(Integer.parseInt(loadProps.getProperty("lifeTimePassenger")));
-        lifeTimePassenger.setText(loadProps.getProperty("lifeTimePassenger"));
-
-        CheckBoxMenu.setSelected(Boolean.parseBoolean(loadProps.getProperty("checkBoxMenu")));
-        CheckBoxMain.setSelected(Boolean.parseBoolean(loadProps.getProperty("checkBoxMenu")));
-
-        //Кнопки AI
-        truckOnButton.setDisable(Boolean.parseBoolean(loadProps.getProperty("truckOnButton")));
-        truckOffButton.setDisable(Boolean.parseBoolean(loadProps.getProperty("truckOffButton")));
-        passengerOnButton.setDisable(Boolean.parseBoolean(loadProps.getProperty("passengerOnButton")));
-        passengerOffButton.setDisable(Boolean.parseBoolean(loadProps.getProperty("passengerOffButton")));
-
-        //Радио батон
-        open.setSelected(Boolean.parseBoolean(loadProps.getProperty("open")));
-        open.setDisable(Boolean.parseBoolean(loadProps.getProperty("openDisabled")));
-        close.setSelected(Boolean.parseBoolean(loadProps.getProperty("close")));
-        close.setDisable(Boolean.parseBoolean(loadProps.getProperty("closeDisabled")));
-        MenuRadioBtnShow.setSelected(Boolean.parseBoolean(loadProps.getProperty("open")));
-        MenuRadioBtnShow.setDisable(Boolean.parseBoolean(loadProps.getProperty("openDisabled")));
-        MenuRadioBtnHide.setSelected(Boolean.parseBoolean(loadProps.getProperty("close")));
-        MenuRadioBtnHide.setDisable(Boolean.parseBoolean(loadProps.getProperty("closeDisabled")));
-
     }
+
     public void saveCarData() {
         try {
             FileChooser fileChooser = new FileChooser();

@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.util.Random;
 
 public class Habitat implements Serializable {
+    private static Habitat instance;
     private static final int width = 1260;
     private static final int height = 810;
     private CarContainer carContainer = CarContainer.getInstance();
@@ -21,6 +22,13 @@ public class Habitat implements Serializable {
     public int lifeTimeN1 = 5;
     public int lifeTimeN2 = 7;
     int finalX,finalY,startX,startY;
+
+    public static Habitat getInstance() {
+        if (instance == null) {
+            instance = new Habitat();
+        }
+        return instance;
+    }
 
     public void setTruckProbability(float probability) {
         this.p1 = probability;

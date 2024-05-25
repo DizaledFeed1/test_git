@@ -154,6 +154,16 @@
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
             <ListView fx:id="serverList" layoutX="429.0" layoutY="132.0" prefHeight="65.0" prefWidth="239.0" />
+            <Button fx:id="connectButton" layoutX="205.0" mnemonicParsing="false" onAction="#connect" style="-fx-background-color: rgba(0, 0, 0, 0.5);" text="Подключиться " textFill="#c6c6c6">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="disconnectButton" layoutX="302.0" mnemonicParsing="false" onAction="#disconnect" style="-fx-background-color: rgba(0, 0, 0, 0.5);" text="Отключиться" textFill="#c6c6c6">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
             </children>
         </Pane>
         <Pane fx:id="imgPane" layoutY="200.0" prefHeight="610.0" prefWidth="1260.0" VBox.vgrow="ALWAYS">

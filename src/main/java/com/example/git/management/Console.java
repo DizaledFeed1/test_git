@@ -17,17 +17,24 @@ public class Console {
         this.helloController = helloController;
     }
     public void enterConsole (KeyEvent keyEvent){
-        textArea.getScene().setOnKeyReleased((KeyEvent event) ->{
-            if (Objects.requireNonNull(event.getCode()) == KeyCode.ENTER)
-            {
-                handleCommand(textArea.getText());
-            }
-        });
+        if (keyEvent.getCode() == KeyCode.ENTER) {
+            String command = textArea.getText().trim(); // Получаем весь введенный текст и удаляем пробелы по краям
+            int lastNewLineIndex = command.lastIndexOf("\n"); // Находим индекс последнего символа новой строки
+            String lastLine = command.substring(lastNewLineIndex + 1); // Выделяем слово после последнего символа новой строки
+            handleCommand(lastLine); // Передаем слово на обработку команды
+        }
     }
     private void handleCommand(String command){
         textArea.setStyle("-fx-text-fill:yellow;-fx-control-inner-background: rgba(88,88,88);");
-        String[] parts = command.split("\\s+");
-        String commandName = parts[0].toLowerCase(Locale.ROOT);
+        command = command.trim();
+
+        // Находим индекс последнего пробела в строке
+        int lastSpaceIndex = command.lastIndexOf(" ");
+
+        // Если в строке нет пробелов, последнее слово - это вся строка
+        String lastWord = (lastSpaceIndex == -1) ? command : command.substring(lastSpaceIndex + 1);
+
+        String commandName = lastWord.toLowerCase(Locale.ROOT);
         switch (commandName){
             case "help" -> {
                 printConsole("\"stopAI\" - остановить расчёт движения объектов \n" +
@@ -35,12 +42,10 @@ public class Console {
             }
             case "stopai" ->{
                 stopAI();
-                 textArea.clear();
                 printConsole("работа потоков приостановлена");
             }
             case"resumai" ->{
                 resumAI();
-                textArea.clear();
                 printConsole("работа потоков возобновелна");
             }
             default -> {
@@ -60,8 +65,7 @@ public class Console {
         helloController.getPassengerAI().pause();
     }
     private void printConsole(String text){
-        textArea.setText("\n" + text + "\n");
-        textArea.setStyle("-fx-text-fill:red;-fx-control-inner-background: rgba(88,88,88);");
+        textArea.appendText(text + "\n");
     }
 
 }

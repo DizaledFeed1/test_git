@@ -2,6 +2,7 @@ module com.example.git {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.xml;
+    requires java.sql;
 
 
     opens com.example.git to javafx.fxml;
