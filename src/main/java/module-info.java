@@ -4,7 +4,6 @@ module com.example.git {
     requires java.xml;
     requires java.sql;
 
-
     opens com.example.git to javafx.fxml;
     exports com.example.git;
     exports com.example.git.transports;
@@ -13,4 +12,5 @@ module com.example.git {
     opens com.example.git.management to javafx.fxml;
     exports com.example.git.AI;
     opens com.example.git.AI to javafx.fxml;
+    opens com.example.git.server to javafx.fxml;
 }

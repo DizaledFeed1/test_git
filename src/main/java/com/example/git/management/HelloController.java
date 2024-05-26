@@ -6,7 +6,7 @@ import com.example.git.HelloApplication;
 
 
 import com.example.git.server.ClientSomthing;
-import com.example.git.server.TCPServer;
+import com.example.git.server.ServerController;
 import com.example.git.transports.Passenger;
 import com.example.git.transports.Transport;
 import com.example.git.transports.Truck;
@@ -63,6 +63,7 @@ public class HelloController implements Initializable {
     private ListView<String> serverList;
     private  ClientSomthing clientSomthing;
     long pauseTime = 0;
+    private ServerController serverController;
 
 
     @FXML
@@ -254,7 +255,6 @@ public class HelloController implements Initializable {
                 clientSomthing = new ClientSomthing(ipAddr, port,serverList);
             } catch (Exception e) {
                 e.printStackTrace();
-                // В случае ошибки, нужно обновить UI в потоке JavaFX
                 javafx.application.Platform.runLater(() -> {
                     connectButton.setDisable(false);
                     disconnectButton.setDisable(true);
@@ -267,17 +267,25 @@ public class HelloController implements Initializable {
         disconnectButton.setDisable(true);
         clientSomthing.disconnect();
     }
+    public void trade() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("server.fxml"));
 
-    private void setText (String serverWord){
-        // Разделяем строку на слова по пробелам
-        String[] words = serverWord.split(" ");
+        Stage serverStage = new Stage();
+        Scene serverScene = new Scene(fxmlLoader.load());
 
-        // Создаем ObservableList и добавляем в него слова
-        ObservableList<String> items = FXCollections.observableArrayList(words);
+        serverController = fxmlLoader.getController();
+        serverController.setHelloController(this);
+        serverController.setServerList(serverList);
+        serverController.setClientSomthing(clientSomthing);
 
-        // Устанавливаем элементы в ListView
-        serverList.setItems(items);
+        serverStage.setTitle("Обмен");
+        serverStage.setMinWidth(300);
+        serverStage.setMinHeight(300);
+
+        serverStage.setScene(serverScene);
+        serverStage.show();
     }
+
     private void saveConfig() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("config.txt"))) {
             writer.write("probabilityTruck=" + habitat.getTruckProbability());
@@ -702,5 +710,8 @@ public class HelloController implements Initializable {
         Statistic statistic = new Statistic(this);
         statistic.openModalWindow(start);
         pauseTime += System.currentTimeMillis() - start;
+    }
+    public ListView<String> getServerList(){
+        return serverList;
     }
 }

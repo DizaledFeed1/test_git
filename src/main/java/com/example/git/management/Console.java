@@ -6,7 +6,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 import java.util.Locale;
-import java.util.Objects;
+
 
 public class Console {
     private HelloController helloController;

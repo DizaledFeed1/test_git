@@ -164,6 +164,11 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
+            <Button fx:id="tradeButton" layoutX="390.0" mnemonicParsing="false" onAction="#trade" style="-fx-background-color: rgba(0, 0, 0, 0.5);" text="Обмен" textFill="#c6c6c6">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
             </children>
         </Pane>
         <Pane fx:id="imgPane" layoutY="200.0" prefHeight="610.0" prefWidth="1260.0" VBox.vgrow="ALWAYS">

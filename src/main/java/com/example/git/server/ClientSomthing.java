@@ -1,10 +1,12 @@
 package com.example.git.server;
 
+import com.example.git.transports.Transport;
 import javafx.application.Platform;
 import javafx.scene.control.ListView;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class ClientSomthing {
@@ -14,7 +16,6 @@ public class ClientSomthing {
     private String addr; // ip адрес клиента
     private int port; // порт соединения
     private ListView<String> serverList;
-
 
     public ClientSomthing(String addr, int port, ListView<String> serverList) {
         this.addr = addr;
@@ -102,4 +103,20 @@ public class ClientSomthing {
             }
         }
     }
+    public void writeCars(ArrayList<Transport> cars) {
+        try {
+            // Открываем поток для записи данных в сокет
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+
+            // Отправляем список машин на сервер
+            objectOutputStream.writeObject(cars);
+            objectOutputStream.flush();
+
+            // После отправки закрываем поток
+            objectOutputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

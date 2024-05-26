@@ -4,11 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f32cf832-ed7d-4a95-8d2b-1e70564c6b12" name="Changes" comment="6-лаба подключение и отключение от сервера">
+    <list default="true" id="f32cf832-ed7d-4a95-8d2b-1e70564c6b12" name="Changes" comment="6-лаба подключение и отключение от сервера вывод клиентов в список">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/git/server/ServerController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/example/git/server.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.txt" beforeDir="false" afterPath="$PROJECT_DIR$/config.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/management/Console.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/Console.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/management/HelloController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/management/HelloController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/server/ClientSomthing.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/server/ClientSomthing.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/server/ServerSomthing.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/server/ServerSomthing.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/git/server/TCPServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/git/server/TCPServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/git/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/git/hello-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,8 +75,12 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Application.App1.executor": "Run",
+    "Application.App2.executor": "Run",
+    "Application.App3.executor": "Run",
     "Application.Console.executor": "Run",
     "Application.HelloApplication.executor": "Run",
+    "Application.Server.executor": "Run",
     "Application.Statistic.executor": "Run",
     "Application.TCPServer.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
@@ -95,7 +106,35 @@
       <recent name="C:\Users\Dizaled\IdeaProjects\git\src\main\java\com\example\git" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.App1">
+    <configuration name="App1" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="com.example.git.HelloApplication" />
+      <module name="git" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="App2" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="com.example.git.HelloApplication" />
+      <module name="git" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="App3" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="com.example.git.HelloApplication" />
+      <module name="git" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Server" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="com.example.git.server.TCPServer" />
+      <module name="git" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <method v="2">
         <option name="Make" enabled="true" />
@@ -107,6 +146,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.Server" />
+      <item itemvalue="Application.App3" />
+      <item itemvalue="Application.App2" />
+      <item itemvalue="Application.App1" />
+    </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -341,7 +386,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716632365226</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="6-лаба подключение и отключение от сервера вывод клиентов в список">
+      <option name="closed" value="true" />
+      <created>1716634480124</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1716634480124</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -393,6 +446,7 @@
     <MESSAGE value="Лаба 5: добавил консоль" />
     <MESSAGE value="Лаба 5: 3 пункт сделан наполовину осталось сделать сохранение правой части проги и 4 пункт" />
     <MESSAGE value="6-лаба подключение и отключение от сервера" />
-    <option name="LAST_COMMIT_MESSAGE" value="6-лаба подключение и отключение от сервера" />
+    <MESSAGE value="6-лаба подключение и отключение от сервера вывод клиентов в список" />
+    <option name="LAST_COMMIT_MESSAGE" value="6-лаба подключение и отключение от сервера вывод клиентов в список" />
   </component>
 </project>

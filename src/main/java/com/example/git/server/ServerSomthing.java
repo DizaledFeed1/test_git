@@ -1,45 +1,47 @@
 package com.example.git.server;
 
-import javafx.collections.ObservableList;
+import com.example.git.transports.Transport;
 
 import java.io.*;
 import java.net.Socket;
-
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.stream.Collectors;
 
 class ServerSomthing extends Thread {
 
-    private Socket socket; // сокет, через который сервер общается с клиентом,
-    // кроме него - клиент и сервер никак не связаны
+    private Socket socket; // сокет, через который сервер общается с клиентом
     private BufferedReader in; // поток чтения из сокета
-    private BufferedWriter out; // поток завписи в сокет
+    private BufferedWriter out; // поток записи в сокет
+    private int clientId; // уникальный идентификатор клиента
 
-    public ServerSomthing(Socket socket) throws IOException {
+    public ServerSomthing(Socket socket, int clientId) throws IOException {
         this.socket = socket;
-        // если потоку ввода/вывода приведут к генерированию искдючения, оно проброситься дальше
+        this.clientId = clientId;
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-        // сооюбщений новому поключению
+        out.write("ID:" + clientId + "\n"); // отправка уникального идентификатора клиенту
+        out.flush();
         start(); // вызываем run()
     }
+
     @Override
     public void run() {
         String word;
         try {
             while (true) {
                 word = in.readLine();
-                if (word.equals("stop")) {
+                if (word == null || word.equals("stop")) {
                     downService();
-                }else if (word.equals("connect")) {
-                    try {
-                        System.out.println("Echoing: " + word);
-                        for (ServerSomthing vr : TCPServer.serverList) {
-                            vr.send(String.valueOf(TCPServer.serverList)); // отослать принятое сообщение с привязанного клиента всем остальным влючая его
-                        }
-                    } catch (NullPointerException ignored) {}
+                    break;
+                } else if (word.equals("connect")) {
+                    sendAllClients();
+                } else {
+                    sendCars();
                 }
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            downService(); // Обработка исключений
         }
     }
 
@@ -48,27 +50,50 @@ class ServerSomthing extends Thread {
             out.write(msg + "\n");
             out.flush();
         } catch (IOException ignored) {}
-
     }
 
-    /**
-     * закрытие сервера
-     * прерывание себя как нити и удаление из списка нитей
-     */
+    private void sendAllClients() {
+        String clients = TCPServer.serverList.stream()
+                .map(ServerSomthing::getClientInfo)
+                .collect(Collectors.joining(" "));
+        for (ServerSomthing vr : TCPServer.serverList) {
+            vr.send(clients);
+        }
+    }
+
+    private String getClientInfo() {
+        return clientId + ":" + socket.getInetAddress().toString();
+    }
+
     private void downService() {
         try {
-            if(!socket.isClosed()) {
+            if (!socket.isClosed()) {
                 socket.close();
                 in.close();
                 out.close();
-                for (ServerSomthing vr : TCPServer.serverList) {
-                    if(vr.equals(this)) vr.interrupt();
-                    TCPServer.serverList.remove(this);
-                }
-                for (ServerSomthing vr : TCPServer.serverList) {
-                    vr.send(String.valueOf(TCPServer.serverList)); // отослать принятое сообщение с привязанного клиента всем остальным влючая его
-                }
             }
         } catch (IOException ignored) {}
+        synchronized (TCPServer.serverList) {
+            TCPServer.serverList.remove(this);
+            sendAllClients(); // Отправляем обновленный список клиентов
+        }
+    }
+    private void sendCars() {
+        try {
+            // Создаем поток для чтения сериализованных данных из сокета
+            ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
+
+            // Десериализуем список машин
+            ArrayList<Transport> carsList = (ArrayList<Transport>) objectInputStream.readObject();
+
+            // Теперь у вас есть список объектов carsList, который вы можете использовать на сервере
+            // Продолжите обработку этого списка по вашему желанию
+
+            // Закрываем потоки
+            objectInputStream.close();
+
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }
